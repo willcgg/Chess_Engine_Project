@@ -20,11 +20,12 @@ namespace Chess_Engine_Project
         private void BoardUI_Load(object sender, EventArgs e)
         {
 			this.CenterToScreen();
-			drawBoard();
+			drawBoardToScreen();
         }
 
-		public void drawBoard()
+		public void drawBoardToScreen()
 		{
+
 			Bitmap board = new Bitmap(800, 800);
 			Graphics g = Graphics.FromImage(board);
 
@@ -46,10 +47,13 @@ namespace Chess_Engine_Project
 				}
 			}
 			boardImageBox.Image = board;
+			loadPiecesToScreen();
 		}
 
-		public void loadPieces() 
+		public void loadPiecesToScreen() 
 		{
+			Bitmap pieces = new Bitmap(270, 90);
+			Graphics g = Graphics.FromImage(pieces);
 
 		}
 	}
