@@ -7,12 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UnityEngine;
 
 namespace Chess_Engine_Project
 {
     public partial class BoardUI : Form
     {
-        public BoardUI()
+
+		public Bitmap board = new Bitmap(800, 800);
+
+		public BoardUI()
         {
             InitializeComponent();
         }
@@ -20,13 +24,13 @@ namespace Chess_Engine_Project
         private void BoardUI_Load(object sender, EventArgs e)
         {
 			this.CenterToScreen();
-			drawBoardToScreen();
+			DrawBoardToScreen();
         }
 
-		public void drawBoardToScreen()
+		public void DrawBoardToScreen()
 		{
 
-			Bitmap board = new Bitmap(800, 800);
+			
 			Graphics g = Graphics.FromImage(board);
 
 			for (int file = 0; file < 8; file++)
@@ -47,13 +51,52 @@ namespace Chess_Engine_Project
 				}
 			}
 			boardImageBox.Image = board;
-			loadPiecesToScreen();
+			DrawPiecesToBoard();
 		}
 
-		public void loadPiecesToScreen() 
+		public void DrawPiecesToBoard() 
 		{
-			Bitmap pieces = new Bitmap(270, 90);
-			Graphics g = Graphics.FromImage(pieces);
+			Graphics g = Graphics.FromImage(board);
+			Font font = new Font("UTF-8", 52);
+
+			//black pieces
+			g.DrawString("♟", font, Brushes.Black, 0, 100);
+			g.DrawString("♟", font, Brushes.Black, 100, 100);
+			g.DrawString("♟", font, Brushes.Black, 200, 100);
+			g.DrawString("♟", font, Brushes.Black, 300, 100);
+			g.DrawString("♟", font, Brushes.Black, 400, 100);
+			g.DrawString("♟", font, Brushes.Black, 500, 100);
+			g.DrawString("♟", font, Brushes.Black, 600, 100);
+			g.DrawString("♟", font, Brushes.Black, 700, 100);
+			g.DrawString("♟", font, Brushes.Black, 800, 100);
+			g.DrawString("♜", font, Brushes.Black, 0, 0);
+			g.DrawString("♞", font, Brushes.Black, 100, 0);
+			g.DrawString("♝", font, Brushes.Black, 200, 0);
+			g.DrawString("♛", font, Brushes.Black, 300, 0);
+			g.DrawString("♚", font, Brushes.Black, 400, 0);
+			g.DrawString("♝", font, Brushes.Black, 500, 0);
+			g.DrawString("♞", font, Brushes.Black, 600, 0);
+			g.DrawString("♜", font, Brushes.Black, 700,  0);
+
+			//white pieces
+			g.DrawString("♙", font, Brushes.White, 0, 600);
+			g.DrawString("♙", font, Brushes.White, 100, 600);
+			g.DrawString("♙", font, Brushes.White, 200, 600);
+			g.DrawString("♙", font, Brushes.White, 300, 600);
+			g.DrawString("♙", font, Brushes.White, 400, 600);
+			g.DrawString("♙", font, Brushes.White, 500, 600);
+			g.DrawString("♙", font, Brushes.White, 600, 600);
+			g.DrawString("♙", font, Brushes.White, 700, 600);
+			g.DrawString("♖", font, Brushes.White, 0, 700);
+			g.DrawString("♘", font, Brushes.White, 100, 700);
+			g.DrawString("♗", font, Brushes.White, 200, 700);
+			g.DrawString("♕", font, Brushes.White, 300, 700);
+			g.DrawString("♔", font, Brushes.White, 400, 700);
+			g.DrawString("♗", font, Brushes.White, 500, 700);
+			g.DrawString("♘", font, Brushes.White, 600, 700);
+			g.DrawString("♖", font, Brushes.White, 700, 700);
+
+
 
 		}
 	}
