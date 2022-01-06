@@ -12,48 +12,10 @@ namespace Chess_Engine_Project
 
         public Board()
         {
-            //10x12 board representation '-1' represents blocker piece or invalid move; 0-63 represents the actual chessboard
-            board = new int[120];
-            //black pieces
-            board[21] = Piece.black | Piece.rook;
-            board[22] = Piece.black | Piece.knight;
-            board[23] = Piece.black | Piece.bishop;
-            board[24] = Piece.black | Piece.queen;
-            board[25] = Piece.black | Piece.king;
-            board[26] = Piece.black | Piece.bishop;
-            board[27] = Piece.black | Piece.knight;
-            board[28] = Piece.black | Piece.rook;
-            board[31] = Piece.black | Piece.pawn;
-            board[32] = Piece.black | Piece.pawn;
-            board[33] = Piece.black | Piece.pawn;
-            board[34] = Piece.black | Piece.pawn;
-            board[35] = Piece.black | Piece.pawn;
-            board[36] = Piece.black | Piece.pawn;
-            board[37] = Piece.black | Piece.pawn;
-            board[38] = Piece.black | Piece.pawn;
-            //white pieces
-            board[91] = Piece.white | Piece.rook;
-            board[92] = Piece.white | Piece.knight;
-            board[93] = Piece.white | Piece.bishop;
-            board[94] = Piece.white | Piece.queen;
-            board[95] = Piece.white | Piece.king;
-            board[96] = Piece.white | Piece.bishop;
-            board[97] = Piece.white | Piece.knight;
-            board[98] = Piece.white | Piece.rook;
-            board[81] = Piece.white | Piece.pawn;
-            board[82] = Piece.white | Piece.pawn;
-            board[83] = Piece.white | Piece.pawn;
-            board[84] = Piece.white | Piece.pawn;
-            board[85] = Piece.white | Piece.pawn;
-            board[86] = Piece.white | Piece.pawn;
-            board[87] = Piece.white | Piece.pawn;
-            board[88] = Piece.white | Piece.pawn;
-        }
-       
-
-    }
-}
-/*{
+            /*
+            10x12 board representation '-1' represents blocker piece or invalid move; 0-63 represents the actual chessboard
+            Board will look like below in memory
+            {
                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                -1,  0,  1,  2,  3,  4,  5,  6,  7, -1,
@@ -68,3 +30,64 @@ namespace Chess_Engine_Project
                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
            };
            */
+
+            //initialising board state
+            board = new int[120];
+            //black pieces
+            for (int x = 31; x < 39; x++)
+            {
+                board[x] = Piece.black | Piece.pawn;
+            }
+            board[21] = Piece.black | Piece.rook;
+            board[22] = Piece.black | Piece.knight;
+            board[23] = Piece.black | Piece.bishop;
+            board[24] = Piece.black | Piece.queen;
+            board[25] = Piece.black | Piece.king;
+            board[26] = Piece.black | Piece.bishop;
+            board[27] = Piece.black | Piece.knight;
+            board[28] = Piece.black | Piece.rook;
+
+            //white pieces
+            for (int x = 81; x < 89; x++)
+            {
+                board[x] = Piece.white | Piece.pawn;
+            }
+            board[91] = Piece.white | Piece.rook;
+            board[92] = Piece.white | Piece.knight;
+            board[93] = Piece.white | Piece.bishop;
+            board[94] = Piece.white | Piece.queen;
+            board[95] = Piece.white | Piece.king;
+            board[96] = Piece.white | Piece.bishop;
+            board[97] = Piece.white | Piece.knight;
+            board[98] = Piece.white | Piece.rook;
+
+            //empty squares
+            for (int x = 41; x < 79; x++)
+            {
+                board[x] = Piece.empty;
+            }
+
+
+            //blocker pieces
+            for (int x = 0; x < 21; x++)
+            {
+                board[x] = Piece.blockerPiece;
+            }
+            for (int x = 100; x < 120; x++)
+            {
+                board[x] = Piece.blockerPiece;
+            }
+            for (int x = 29; x < 100; x+=10)
+            {
+                board[x] = Piece.blockerPiece;
+            }
+            for (int x = 30; x < 100; x += 10)
+            {
+                board[x] = Piece.blockerPiece;
+            }
+            
+        }
+       
+
+    }
+}

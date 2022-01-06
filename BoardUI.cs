@@ -41,7 +41,7 @@ namespace Chess_Engine_Project
 					if (isLightSquare)
 					{
 						//filling in light squares
-						g.FillRectangle(Brushes.Wheat, file * 100, rank * 100, 100, 100);
+						g.FillRectangle(Brushes.DarkKhaki, file * 100, rank * 100, 100, 100);
 					}
 					else
 					{
@@ -60,15 +60,10 @@ namespace Chess_Engine_Project
 			Font font = new Font("UTF-8", 52);
 
 			//black pieces
-			g.DrawString("♟", font, Brushes.Black, 0, 100);
-			g.DrawString("♟", font, Brushes.Black, 100, 100);
-			g.DrawString("♟", font, Brushes.Black, 200, 100);
-			g.DrawString("♟", font, Brushes.Black, 300, 100);
-			g.DrawString("♟", font, Brushes.Black, 400, 100);
-			g.DrawString("♟", font, Brushes.Black, 500, 100);
-			g.DrawString("♟", font, Brushes.Black, 600, 100);
-			g.DrawString("♟", font, Brushes.Black, 700, 100);
-			g.DrawString("♟", font, Brushes.Black, 800, 100);
+			for (int file = 0; file < 8; file++)
+			{
+				g.DrawString("♟", font, Brushes.Black, file*100, 100);
+			}
 			g.DrawString("♜", font, Brushes.Black, 0, 0);
 			g.DrawString("♞", font, Brushes.Black, 100, 0);
 			g.DrawString("♝", font, Brushes.Black, 200, 0);
@@ -79,14 +74,10 @@ namespace Chess_Engine_Project
 			g.DrawString("♜", font, Brushes.Black, 700,  0);
 
 			//white pieces
-			g.DrawString("♙", font, Brushes.White, 0, 600);
-			g.DrawString("♙", font, Brushes.White, 100, 600);
-			g.DrawString("♙", font, Brushes.White, 200, 600);
-			g.DrawString("♙", font, Brushes.White, 300, 600);
-			g.DrawString("♙", font, Brushes.White, 400, 600);
-			g.DrawString("♙", font, Brushes.White, 500, 600);
-			g.DrawString("♙", font, Brushes.White, 600, 600);
-			g.DrawString("♙", font, Brushes.White, 700, 600);
+			for (int file = 0; file < 8; file++)
+			{
+				g.DrawString("♙", font, Brushes.White, file*100, 600);
+			}
 			g.DrawString("♖", font, Brushes.White, 0, 700);
 			g.DrawString("♘", font, Brushes.White, 100, 700);
 			g.DrawString("♗", font, Brushes.White, 200, 700);

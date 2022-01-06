@@ -8,6 +8,7 @@ namespace Chess_Engine_Project
 {
     class Piece
     {
+        //piece codes
         public const int empty = 0;
         public const int king = 1;
         public const int pawn = 2;
@@ -16,11 +17,8 @@ namespace Chess_Engine_Project
         public const int rook = 5;
         public const int queen = 6;
         public const int blockerPiece = 7;       
-
         public const int white = 8;
         public const int black = 16;
-
-
 
     }
 }
