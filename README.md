@@ -1,5 +1,7 @@
 # Chess_Engine_Project
 
+![image](https://user-images.githubusercontent.com/72136270/150233630-81f824cc-5b3f-4c25-9abe-14c3e9277ad1.png "Chess Engine GUI")
+
 ## About
 This is a chess engine project written in C#. The purpose of this project is to analyse chess positions for insight, training for players up to a certain elo rating, and also just for a bit of fun for anyone who wants to play a bit of chess at their own pace.
 
