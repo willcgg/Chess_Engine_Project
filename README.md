@@ -18,6 +18,8 @@ git clone https://github.com/willcgg/Chess_Engine_Project.git
 
 ## Usage
 
+To run the project open it in visual studio code editor and run the solution.
+
 ```bash
 # For development, switch to the dev branch
 git switch development
