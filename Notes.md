@@ -27,3 +27,33 @@
 5. Discussed properly structuring repo, branches, classes e.t.c 
 6. Discussed keeping more notes on project 
 7. Come more prepared for next meeting; prep questions, whats my focus, whats blocking me, any clarification on anything and going in the right direction?
+
+## SUPERVISOR MEETING 20/01/2022 @10-10:45am
+
+### Action Points:
+
+- Make small changes to poster
+- Bullet point more, too wordy
+- More related images
+- Talk more about future application
+
+### Notes from meeting: 
+feels too wordy, 
+1-2 secs of attention for brain to break it down
+make more bullet points, bold more important sentences 
+time complexity, deeply engaging and understanding them
+computing principles and coding principles
+legal move evaluation
+Computer able to make random valid moves 
+crux of this is trying to understand algorithmic complexity of a solution search algorithm
+algorithms im studying could be used in other domains, where are we using computers to search for a solution
+computers are really good at this form of branching and searching so this could be really useful in other domains
+im involved in personal study and growth on this problem domain search and evaluating
+same algorithms that solve many problems in other games and things
+model climate change, whats the best move to make...
+talk about complexity, legal move validation/search e.g. castling and en-passant
+
+difficult questions?
+this project is personal exploration, im going to find out...
+
+c# can be compiled for various platforms get logo, language is good enough for objectives and goals of proejct
