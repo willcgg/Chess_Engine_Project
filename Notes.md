@@ -57,3 +57,14 @@ difficult questions?
 this project is personal exploration, im going to find out...
 
 c# can be compiled for various platforms get logo, language is good enough for objectives and goals of proejct
+
+## SUPERVISOR MEETING 20/01/2022 @3-3:50pm
+
+### Action Points:
+- Agreed on project marking scheme
+- Create project write up document, assign headings and start getting some research and literature reviews down of the domain and its problems from the agreed mark scheme.
+- Split project up into 3 diff projects: Visual UI, Unit tests, and the actual chess engine itself
+
+### Notes from meeting: 
+Spoke about tactics to keeping work flow moving and balancing work load by switching between working on documentation and the actual solution itself. Not only will this help not miss anything but it will mean there is not a huge bulk of writing to do at the end of the project.
+Spoke about this getting the ball rolling now so should be able to come to regular weeekly meetings with more direction and questions on particular coding problems and things rather than general, 'what do i do help me!'
