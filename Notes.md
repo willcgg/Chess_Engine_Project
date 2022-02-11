@@ -68,3 +68,11 @@ c# can be compiled for various platforms get logo, language is good enough for o
 ### Notes from meeting: 
 Spoke about tactics to keeping work flow moving and balancing work load by switching between working on documentation and the actual solution itself. Not only will this help not miss anything but it will mean there is not a huge bulk of writing to do at the end of the project.
 Spoke about this getting the ball rolling now so should be able to come to regular weeekly meetings with more direction and questions on particular coding problems and things rather than general, 'what do i do help me!'
+
+## SUPERVISOR MEETNING 09/02/2022 @10-10:35
+
+### Action Points
+- Spoke more in depth about project report
+
+### Notes from meeting:
+Supervisor spoke and explained more in depth what each section of the report needed to display to the reader.
