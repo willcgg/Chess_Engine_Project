@@ -2,6 +2,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Chess_Project_Tests
 {
+    /// <summary>
+    /// Class to check all aspects of the GUI are functioning correctly
+    /// </summary>
     [TestClass]
     public class GUI_Tests
     {
@@ -33,7 +36,6 @@ namespace Chess_Project_Tests
         }
         ///  <summary>
         ///  Checks all pieces display correct valid moves to users
-        ///  Given a good position to check all possibilities: ie. en passant, in-check, pinned pieces etc
         ///  </summary>
         [TestMethod]
         public void Piece_Movement_Validation()
@@ -46,8 +48,8 @@ namespace Chess_Project_Tests
 
         }
         ///  <summary>
-        ///  tests GUI buttons to ensure they function correctly
-        ///  i.e next, back and reset buttons
+        ///  <para>Tests GUI buttons to ensure they function correctly</para>
+        ///  <para>i.e next, back and reset buttons</para>
         ///  </summary>
         [TestMethod]
         public void GUI_Buttons_Test()
