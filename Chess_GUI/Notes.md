@@ -76,3 +76,14 @@ Spoke about this getting the ball rolling now so should be able to come to regul
 
 ### Notes from meeting:
 Supervisor spoke and explained more in depth what each section of the report needed to display to the reader.
+
+## SUPERVISOR MEETNING 24/02/2022 @10-10:45
+
+### Action Points
+- Reviewed report content, got some reccomendations on what to write about
+- Spoke about setting up unit tests first to get started on code
+
+### Notes from meeting:
+3ghz processor, how many operations can this perform? Given this many positions how long will it take… ball park estimate, different search depth
+Spoke about getting on with code, trying to do some testing, think about class structure
+Write tests until your happy with how they look and how the code you write will function well. 

@@ -14,4 +14,9 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Chess_Engine\Chess_Engine.csproj" />
+    <ProjectReference Include="..\Chess_GUI\Chess_GUI.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -22,14 +22,11 @@ namespace Chess_Engine_Project
 
         private void BoardUI_Load(object sender, EventArgs e)
         {
-			this.CenterToScreen();
 			DrawBoardToScreen();
         }
 
 		public void DrawBoardToScreen()
 		{
-
-			
 			Graphics g = Graphics.FromImage(board);
 
 			for (int file = 0; file < 8; file++)
@@ -40,12 +37,12 @@ namespace Chess_Engine_Project
 					if (isLightSquare)
 					{
 						//filling in light squares
-						g.FillRectangle(Brushes.DarkKhaki, file * 100, rank * 100, 100, 100);
+						g.FillRectangle(Brushes.SlateGray, file * 100, rank * 100, 100, 100);
 					}
 					else
 					{
 						//filling in dark squares 
-						g.FillRectangle(Brushes.Sienna, file * 100, rank * 100, 100, 100);
+						g.FillRectangle(Brushes.LightSteelBlue, file * 100, rank * 100, 100, 100);
 					}
 				}
 			}
@@ -89,5 +86,5 @@ namespace Chess_Engine_Project
 
 
 		}
-	}
+    }
 }

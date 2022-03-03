@@ -1,2 +1,17 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+
+namespace Chess_Engine
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello, World!");
+            Board Board_State = new Board();
+            Console.WriteLine("Board Internally created");
+            int myNum = (int)Piece.PieceType.bishop;
+            Console.WriteLine(myNum);
+
+        }
+    }
+}
