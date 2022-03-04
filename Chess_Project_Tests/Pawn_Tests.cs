@@ -13,7 +13,6 @@ namespace Chess_Project_Tests
 
         [TestMethod]
         public void Pawn_Movement_Valid() {
-
             //  arrange
             board = new Board();
             PopulateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
@@ -24,13 +23,12 @@ namespace Chess_Project_Tests
 
             //  assert
             Assert.True(board[81] == Peice.PeiceType.empty);        // Checks piece has moved
-            Assert.True(board[71] == Peice.PeiceType.w_pawn);         // 
-            
+            Assert.True(board[71] == Peice.PeiceType.w_pawn);       // 
+            Assert.ThrowsException();
         }
 
         [TestMethod]
-        public void Pawn_Movement_En_Passant() {
-
+        public void Pawn_Movement_En_Passant() { 
             //  arrange
             board = new Board();
             PopulateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
@@ -45,7 +43,6 @@ namespace Chess_Project_Tests
             Assert.True(board[71] == Peice.PeiceType.empty);           // Checking piece has moved
             Assert.True(board[82] == Peice.PeiceType.w_pawn);          // 
             Assert.True(board[72] == Peice.PeiceType.empty);           // Checks black piece was correctly removed from the board
-
         }
 
         [TestMethod]

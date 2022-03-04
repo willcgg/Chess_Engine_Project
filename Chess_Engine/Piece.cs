@@ -9,6 +9,7 @@ namespace Chess_Engine
         public enum PieceType
         {
             blockerPiece = -1,   //-1
+            empty = 0,           //0
             w_pawn = 1,          //1
             b_pawn = 2,          //1
             w_knight = 3,        //3

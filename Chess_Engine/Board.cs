@@ -34,55 +34,62 @@ namespace Chess_Engine
             //black pieces
             for (int x = 31; x < 39; x++)
             {
-                board[x] = PieceColour.black | PieceType.pawn;
+                board[x] = (int)Piece.PieceType.b_pawn;
             }
             board[21] = (int) Piece.PieceType.b_rook;
             board[22] = (int)Piece.PieceType.b_knight;
             board[23] = (int)Piece.PieceType.b_bishop;
             board[24] = (int)Piece.PieceType.b_queen;
-            board[25] = Piece.black | Piece.king;
-            board[26] = Piece.black | Piece.bishop;
-            board[27] = Piece.black | Piece.knight;
-            board[28] = Piece.black | Piece.rook;
+            board[25] = (int)Piece.PieceType.b_king;
+            board[26] = (int)Piece.PieceType.b_bishop;
+            board[27] = (int)Piece.PieceType.b_knight;
+            board[28] = (int)Piece.PieceType.b_rook; ;
 
             //white pieces
             for (int x = 81; x < 89; x++)
             {
-                board[x] = Piece.white | Piece.pawn;
+                board[x] = (int)Piece.PieceType.w_pawn;
             }
-            board[91] = Piece.white | Piece.rook;
-            board[92] = Piece.white | Piece.knight;
-            board[93] = Piece.white | Piece.bishop;
-            board[94] = Piece.white | Piece.queen;
-            board[95] = Piece.white | Piece.king;
-            board[96] = Piece.white | Piece.bishop;
-            board[97] = Piece.white | Piece.knight;
-            board[98] = Piece.white | Piece.rook;
+            board[91] = (int)Piece.PieceType.w_rook;
+            board[92] = (int)Piece.PieceType.w_knight;
+            board[93] = (int)Piece.PieceType.w_bishop;
+            board[94] = (int)Piece.PieceType.w_queen;
+            board[95] = (int)Piece.PieceType.w_king;
+            board[96] = (int)Piece.PieceType.w_bishop;
+            board[97] = (int)Piece.PieceType.w_knight;
+            board[98] = (int)Piece.PieceType.w_rook;
 
             //empty squares
             for (int x = 41; x < 79; x++)
             {
-                board[x] = Piece.empty;
+                board[x] = (int)Piece.PieceType.empty;
             }
-
 
             //blocker pieces
             for (int x = 0; x < 21; x++)
             {
-                board[x] = Piece.blockerPiece;
+                board[x] = (int)Piece.PieceType.blockerPiece;
             }
             for (int x = 100; x < 120; x++)
             {
-                board[x] = Piece.blockerPiece;
+                board[x] = (int)Piece.PieceType.blockerPiece;
             }
             for (int x = 29; x < 100; x += 10)
             {
-                board[x] = Piece.blockerPiece;
+                board[x] = (int)Piece.PieceType.blockerPiece;
             }
             for (int x = 30; x < 100; x += 10)
             {
-                board[x] = Piece.blockerPiece;
+                board[x] = (int)Piece.PieceType.blockerPiece;
             }
+
+            string bs = "";
+            foreach (int i in board)
+                bs += $"{i},\t";
+
+                
+
+            Console.WriteLine(bs);
             
         }
     }
