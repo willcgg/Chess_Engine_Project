@@ -34,11 +34,13 @@ namespace Chess_Project_Tests
         public void Rook_Movement()
         {
             //  arrange
+            Rook_Tests rt = new Rook_Tests();
 
-            //  act
-
-            //  assert
-
+            //  act & assert
+            rt.Movement_Valid();
+            rt.Movement_Castle_Tests();
+            rt.Movement_in_Check();
+            rt.Movement_Pinned();
         }
         /// <summary>
         /// <para>Checks all possible bishop movements</para>
@@ -47,11 +49,12 @@ namespace Chess_Project_Tests
         public void Bishop_Movement()
         {
             //  arrange
+            Bishop_Tests bt = new Bishop_Tests();
 
-            //  act
-
-            //  assert
-
+            //  act & assert
+            bt.Movement_Valid();
+            bt.Movement_in_Check();
+            bt.Movement_Pinned();
         }
         /// <summary>
         /// Checks all possible knight movements
@@ -60,11 +63,12 @@ namespace Chess_Project_Tests
         public void Knight_Movement()
         {
             //  arrange
+            Knight_Tests kt = new Knight_Tests();
 
-            //  act
-
-            //  assert
-
+            //  act & assert
+            kt.Movement_Valid();
+            kt.Movement_in_Check();
+            kt.Movement_Pinned();
         }
         /// <summary>
         /// Checks all possible queen movements
@@ -73,11 +77,12 @@ namespace Chess_Project_Tests
         public void Queen_Movement()
         {
             //  arrange
+            Queen_Tests qt = new Queen_Tests();
 
-            //  act
-
-            //  assert
-
+            //  act & assert
+            qt.Movement_Valid();
+            qt.Movement_in_Check();
+            qt.Movement_Pinned();
         }
         /// <summary>
         /// Checks all possible king movements
@@ -86,11 +91,12 @@ namespace Chess_Project_Tests
         public void King_Movement()
         {
             //  arrange
+            King_Tests kt = new King_Tests();
 
-            //  act
-
-            //  assert
-
+            //  act & assert
+            kt.Movement_Valid();
+            kt.Movement_Castle_Tests();
+            kt.Movement_in_Check();
         }
 
     }

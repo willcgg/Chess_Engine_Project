@@ -27,7 +27,7 @@ namespace Chess_Engine
                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
            };
-           
+           */
 
             //initialising board state
             board = new int[120];
@@ -36,10 +36,10 @@ namespace Chess_Engine
             {
                 board[x] = PieceColour.black | PieceType.pawn;
             }
-            board[21] = Piece.PieceColour.black + Piece.PieceType.rook;
-            board[22] = Piece.black | Piece.knight;
-            board[23] = Piece.black | Piece.bishop;
-            board[24] = Piece.black | Piece.queen;
+            board[21] = (int) Piece.PieceType.b_rook;
+            board[22] = (int)Piece.PieceType.b_knight;
+            board[23] = (int)Piece.PieceType.b_bishop;
+            board[24] = (int)Piece.PieceType.b_queen;
             board[25] = Piece.black | Piece.king;
             board[26] = Piece.black | Piece.bishop;
             board[27] = Piece.black | Piece.knight;
@@ -83,7 +83,7 @@ namespace Chess_Engine
             {
                 board[x] = Piece.blockerPiece;
             }
-            */
+            
         }
     }
 }

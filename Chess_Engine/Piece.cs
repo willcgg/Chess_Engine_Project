@@ -9,21 +9,18 @@ namespace Chess_Engine
         public enum PieceType
         {
             blockerPiece = -1,   //-1
-            pawn = 1,           //1
-            knight = 2,         //3
-            bishop = 3,         //4
-            rook = 4,           //5
-            queen = 5,          //9
-            king = 6            //10
+            w_pawn = 1,          //1
+            b_pawn = 2,          //1
+            w_knight = 3,        //3
+            b_knight = 4,        //4
+            w_bishop = 5,        //5
+            b_bishop = 6,        //6
+            w_rook = 7,          //7
+            b_rook = 8,          //8
+            w_queen = 9,         //9
+            b_queen = 10,        //10
+            w_king = 11,         //11
+            b_king = 12          //12
         }
-        public enum PieceColour
-        {
-            black = 0,          //8
-            white = 1           //1
-        }
-
-
-
-
     }
 }
