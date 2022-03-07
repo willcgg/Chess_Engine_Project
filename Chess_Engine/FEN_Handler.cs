@@ -11,98 +11,210 @@ namespace Chess_Engine
     /// </summary>
     class FEN_Handler
     {
-        /*
-         * board array representation
-         * board is in the middle of the board with 2 sentinel rows and 1 coloumn either side
-         *   0  , 1 , 2 , 3, 4, 5, 6, 7, 8, 9
-         *   10,11,12 ...
-         *   20,21, ...
-         *   30
-         *   40
-         *   50
-         *   60
-         *   70
-         *   80
-         *   90, ..................... 98, 99
-         *   100, ........................ 109
-         *   110,111,112, ................ 119
-         * Therefore, the boards starting position in the array is 21 and ends at 98
-        */
-
+        // Public vars
+        string[] FEN_Seg;
+        string[] FEN_Pos;
+        Board b;
 
         /*
           FEN FIELDS:
-        > Piece placement (from White's perspective). Each rank is described, starting with rank 8 and ending with rank 1; within each rank,
-        the contents of each square are described from file "a" through file "h". Following the Standard Algebraic Notation (SAN), each piece
-        is identified by a single letter taken from the standard English names
-        (pawn = "P", knight = "N", bishop = "B", rook = "R", queen = "Q" and king = "K").
-        White pieces are designated using upper-case letters ("PNBRQK") while black pieces use lowercase ("pnbrqk").
-        Empty squares are noted using digits 1 through 8 (the number of empty squares), and "/" separates ranks.
-
+        > Piece placement. Either upper or lower case char to represent each piece, or a number to represent empty squares
         > Active color. "w" means White moves next, "b" means Black moves next.
-
-        > Castling availability. If neither side can castle, this is "-". Otherwise, this has one or more letters: "K" (White can castle kingside),
-        "Q" (White can castle queenside), "k" (Black can castle kingside), and/or "q" (Black can castle queenside). A move that temporarily prevents
-        castling does not negate this notation.
-
+        > Castling availability. - means neither side can castle, KQ means white can castle king and queen side, k means black can only castle king side
         > En passant target square in algebraic notation. If there's no en passant target square, this is "-". If a pawn has just made a two-square move,
-        this is the position "behind" the pawn. This is recorded regardless of whether there is a pawn in position to make an en passant capture.[6]
-
+        this is the position "behind" the pawn. This is recorded regardless of whether there is a pawn in position to make an en passant capture.
         > Halfmove clock: The number of halfmoves since the last capture or pawn advance, used for the fifty-move rule.
-
         > Fullmove number: The number of the full move. It starts at 1, and is incremented after Black's move.
         */
 
-        // Constants
-        const string FEN_START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";     // Default start position
-        // variables
-        string[] FEN_Rows;                          // User inputted FEN string, checked before passed as param
-        Dictionary<string, Piece.Type> FEN_Dict;    // Dictionary to hold what piece types are represented by what letters in FEN string
-
-        public void Handler(string FEN)
+        public FEN_Handler(string FEN, Board board)
         {
-            // Initialising variables 
-            FEN_Dict = new Dictionary<string, Piece.Type>();
-            FEN_Dict.Add("p", Piece.Type.b_pawn);
-            FEN_Dict.Add("b", Piece.Type.b_bishop);
-            FEN_Dict.Add("n", Piece.Type.b_knight);
-            FEN_Dict.Add("r", Piece.Type.b_rook);
-            FEN_Dict.Add("q", Piece.Type.b_queen);
-            FEN_Dict.Add("k", Piece.Type.b_king);
-            FEN_Dict.Add("P", Piece.Type.w_pawn);
-            FEN_Dict.Add("B", Piece.Type.w_bishop);
-            FEN_Dict.Add("N", Piece.Type.w_knight);
-            FEN_Dict.Add("R", Piece.Type.w_rook);
-            FEN_Dict.Add("Q", Piece.Type.w_queen);
-            FEN_Dict.Add("K", Piece.Type.w_king);
-
-            FEN_Rows = new string[13];
+            // init vars
+            FEN_Seg = new string[6];
+            FEN_Pos = new string[8];
+            b = board;
 
             // Split string into respective fields
             // String Format:   "string char string string int int"
-            string[] FEN_Seg = FEN.Split(" ");             // Splits FEN into parts [{Position}, {Active Colour}, {Castle Availabiility}, {En-Passant Availability}, {Half-Ply}, {Full-Ply}]
-            string[] FEN_Pos = FEN_Seg[0].Split("/");      // Splits the position part of the FEN into seperate rows
+            FEN_Seg = FEN.Split(" ");             // Splits FEN into parts [{Position}, {Active Colour}, {Castle Availabiility}, {En-Passant Availability}, {Half-Ply}, {Full-Ply}]
+            FEN_Pos = FEN_Seg[0].Split("/");      // Splits the position part of the FEN into seperate rows
 
-            int count = 0;
-            foreach (string row in FEN_Pos)
-            {
-                FEN_Rows[count] = row;
-                count++;
-            }
-            
-            for(int index = 1; index < FEN_Seg.Length; index++)
-            {
-                FEN_Rows[count] = FEN_Seg[index];
-                count++;
-            }
-
-            foreach (string i in FEN_Rows)
-                Console.WriteLine(i);
-            
-            
+            // Preparing board params
+            b.board = Create_Board(FEN_Pos);                // Calling the creation of the board
+            b.side_to_move = char.Parse(FEN_Seg[1]);
+            Can_Castle(FEN_Seg[2]);
+            b.en_passant_target = FEN_Seg[3];
+            b.half_ply = int.Parse(FEN_Seg[4]);
+            b.full_ply = int.Parse(FEN_Seg[5]);
+            Console.WriteLine("Board Ready...");
         }
 
+        /// <summary>
+        /// Takes in FEN representation of board position and returns integer array representation
+        /// <para>Board Array Representation
+        /// Board is in the middle of the 10x12 array with 2 sentinel rows and 1 coloumn either side
+        /// <para>0  , 1 , 2 , 3, 4, 5, 6, 7, 8, 9</para>   
+        /// <para>10,11,12 ...</para>   
+        /// <para>20,21, ...</para>   
+        /// <para>30</para>   
+        /// <para>40</para>   
+        /// <para>50</para>   
+        /// <para>60</para>   
+        /// <para>70</para>   
+        /// <para>80</para>   
+        /// <para>90, ..................... 98, 99</para>   
+        /// <para>100, ........................ 109</para>   
+        /// <para>110,111,112, ................ 119</para>   
+        /// Therefore, the boards starting position in the array is 21 and ends at 98</para>
+        /// </summary>
+        /// <param name="FEN_Pos"></param>
+        /// <returns></returns>
+        public int[] Create_Board(string[] FEN_Pos) {
+            // Init
+            int[] b = new int[120];
+            int pointer = 21;                   // real board starting pos
 
+            foreach(string row in FEN_Pos)      // looping through each row in FEN_Pos
+            {
+                foreach(char piece in row)      // looping through each character in each row
+                {
+                    switch(piece)               // switch case to identify each character to a piece or number of empty spaces
+                    {
+                        case '1':
+                            b[pointer] = (int)Piece.Type.empty;
+                            break;
+                        case '2':
+                            b[pointer] = (int)Piece.Type.empty;
+                            b[pointer+1] = (int)Piece.Type.empty;
+                            pointer ++;
+                            break;
+                        case '3':
+                            for(int i = pointer; i < pointer + 3; i++)
+                                b[i] = (int)Piece.Type.empty;
+                            pointer += 2;
+                            break;
+                        case '4':
+                            for (int i = pointer; i < pointer + 4; i++)
+                                b[i] = (int)Piece.Type.empty;
+                            pointer += 3;
+                            break;
+                        case '5':
+                            for (int i = pointer; i < pointer + 5; i++)
+                                b[i] = (int)Piece.Type.empty;
+                            pointer += 4;
+                            break;
+                        case '6':
+                            for (int i = pointer; i < pointer + 6; i++)
+                                b[i] = (int)Piece.Type.empty;
+                            pointer += 5;
+                            break;
+                        case '7':
+                            for (int i = pointer; i < pointer + 7; i++)
+                                b[i] = (int)Piece.Type.empty;
+                            pointer += 6;
+                            break;
+                        case 'p':
+                            b[pointer] = (int)Piece.Type.b_pawn;
+                            break;
+                        case 'b':
+                            b[pointer] = (int)Piece.Type.b_bishop;
+                            break;
+                        case 'n':
+                            b[pointer] = (int)Piece.Type.b_knight;
+                            break;
+                        case 'r':
+                            b[pointer] = (int)Piece.Type.b_rook;
+                            break;
+                        case 'q':
+                            b[pointer] = (int)Piece.Type.b_queen;
+                            break;
+                        case 'k':
+                            b[pointer] = (int)Piece.Type.b_king;
+                            break;
+                        case 'P':
+                            b[pointer] = (int)Piece.Type.w_pawn;
+                            break;
+                        case 'B':
+                            b[pointer] = (int)Piece.Type.w_bishop;
+                            break;
+                        case 'N':
+                            b[pointer] = (int)Piece.Type.w_knight;
+                            break;
+                        case 'R':
+                            b[pointer] = (int)Piece.Type.w_rook;
+                            break;
+                        case 'Q':
+                            b[pointer] = (int)Piece.Type.w_queen;
+                            break;
+                        case 'K':
+                            b[pointer] = (int)Piece.Type.w_king;
+                            break;
+                        default:
+                            for (int i = pointer; i < pointer + 8; i++)
+                                b[i] = (int)Piece.Type.empty;
+                            pointer += 7;
+                            break;
+                    }
+                    pointer++;  // adds one to pointer after each char
+                }
+                pointer += 2;   // adds 2 to the pointer to avoid sentinel columns
+            }
 
+            // blocker pieces
+            for (int x = 0; x < 21; x++)        
+            {
+                b[x] = (int)Piece.Type.blockerPiece;        // first 2 rows
+            }
+            for (int x = 100; x < 120; x++)
+            {
+                b[x] = (int)Piece.Type.blockerPiece;        // final 2 rows
+            }
+            for (int x = 30; x < 91; x += 10)
+            {
+                b[x] = (int)Piece.Type.blockerPiece;        // left column
+            }
+            for (int x = 29; x < 100; x += 10)
+            {
+                b[x] = (int)Piece.Type.blockerPiece;        // right column
+            }
+
+            // returning the custom board from FEN
+            return b;
+        }
+
+        /// <summary>
+        /// Loops through param char's to determine each colours castle availability in board memory.
+        /// </summary>
+        /// <param name="castle_availability"></param>
+        public void Can_Castle(string castle_availability)
+        { 
+            // Loop through castle_availability strings char's
+            foreach (char side in castle_availability)
+            {
+                switch(side)        // finds if each char exists in the string and if it does sets the board objects castle availability to true
+                {
+                    case 'k':
+                        b.b_k_castle = true;
+                        break;
+                    case 'q':
+                        b.b_q_castle = true;
+                        break;
+                    case 'K':
+                        b.w_k_castle = true;
+                        break;
+                    case 'Q':
+                        b.w_q_castle = true;
+                        break;
+                    case '-':       // if string is '-' then no colour can castle on either side
+                        b.b_k_castle = false;
+                        b.b_q_castle = false;
+                        b.w_k_castle = false;
+                        b.w_q_castle = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }
