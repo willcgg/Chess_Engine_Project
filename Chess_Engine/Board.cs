@@ -34,53 +34,53 @@ namespace Chess_Engine
             //black pieces
             for (int x = 31; x < 39; x++)
             {
-                board[x] = (int)Piece.PieceType.b_pawn;
+                board[x] = (int)Piece.Type.b_pawn;
             }
-            board[21] = (int) Piece.PieceType.b_rook;
-            board[22] = (int)Piece.PieceType.b_knight;
-            board[23] = (int)Piece.PieceType.b_bishop;
-            board[24] = (int)Piece.PieceType.b_queen;
-            board[25] = (int)Piece.PieceType.b_king;
-            board[26] = (int)Piece.PieceType.b_bishop;
-            board[27] = (int)Piece.PieceType.b_knight;
-            board[28] = (int)Piece.PieceType.b_rook; ;
+            board[21] = (int) Piece.Type.b_rook;
+            board[22] = (int)Piece.Type.b_knight;
+            board[23] = (int)Piece.Type.b_bishop;
+            board[24] = (int)Piece.Type.b_queen;
+            board[25] = (int)Piece.Type.b_king;
+            board[26] = (int)Piece.Type.b_bishop;
+            board[27] = (int)Piece.Type.b_knight;
+            board[28] = (int)Piece.Type.b_rook; ;
 
             //white pieces
             for (int x = 81; x < 89; x++)
             {
-                board[x] = (int)Piece.PieceType.w_pawn;
+                board[x] = (int)Piece.Type.w_pawn;
             }
-            board[91] = (int)Piece.PieceType.w_rook;
-            board[92] = (int)Piece.PieceType.w_knight;
-            board[93] = (int)Piece.PieceType.w_bishop;
-            board[94] = (int)Piece.PieceType.w_queen;
-            board[95] = (int)Piece.PieceType.w_king;
-            board[96] = (int)Piece.PieceType.w_bishop;
-            board[97] = (int)Piece.PieceType.w_knight;
-            board[98] = (int)Piece.PieceType.w_rook;
+            board[91] = (int)Piece.Type.w_rook;
+            board[92] = (int)Piece.Type.w_knight;
+            board[93] = (int)Piece.Type.w_bishop;
+            board[94] = (int)Piece.Type.w_queen;
+            board[95] = (int)Piece.Type.w_king;
+            board[96] = (int)Piece.Type.w_bishop;
+            board[97] = (int)Piece.Type.w_knight;
+            board[98] = (int)Piece.Type.w_rook;
 
             //empty squares
             for (int x = 41; x < 79; x++)
             {
-                board[x] = (int)Piece.PieceType.empty;
+                board[x] = (int)Piece.Type.empty;
             }
 
             //blocker pieces
             for (int x = 0; x < 21; x++)
             {
-                board[x] = (int)Piece.PieceType.blockerPiece;
+                board[x] = (int)Piece.Type.blockerPiece;
             }
             for (int x = 100; x < 120; x++)
             {
-                board[x] = (int)Piece.PieceType.blockerPiece;
+                board[x] = (int)Piece.Type.blockerPiece;
             }
             for (int x = 29; x < 100; x += 10)
             {
-                board[x] = (int)Piece.PieceType.blockerPiece;
+                board[x] = (int)Piece.Type.blockerPiece;
             }
             for (int x = 30; x < 100; x += 10)
             {
-                board[x] = (int)Piece.PieceType.blockerPiece;
+                board[x] = (int)Piece.Type.blockerPiece;
             }
 
             string bs = "";

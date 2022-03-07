@@ -6,7 +6,7 @@ namespace Chess_Engine
 {
     class Piece
     {
-        public enum PieceType
+        public enum Type
         {
             blockerPiece = -1,   //-1
             empty = 0,           //0
