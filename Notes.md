@@ -87,3 +87,22 @@ Supervisor spoke and explained more in depth what each section of the report nee
 3ghz processor, how many operations can this perform? Given this many positions how long will it take… ball park estimate, different search depth
 Spoke about getting on with code, trying to do some testing, think about class structure
 Write tests until your happy with how they look and how the code you write will function well. 
+
+## SUPERVISOR MEETING 07/03/2022 @3-3:45pm
+
+## Action Points
+- Merge branches back to master and use better branch technique
+- Focus on VisualBoardClickFeedback feature so users can interact with the GUI
+- Next, ModifyBoardState method to represent these changes in the engines memory
+- Look into some sort of new easier human readable board representation for use in testing
+- Write about data structures used inside the document for the project
+
+## Notes:
+Adopt feature branch strategy, ticket no and keywords
+Merge all branches so there is only one and branches for features
+Focus on VisualBoardClickFeedback feature:
+When click on a piece get some feedback for the user to see that something has happened, for example highlight valid squares to move to
+Next, ModifyBoardState
+ASCI board representation from board state to make tests more readable, diff way of representing boards from FEN
+BoardtoFENstring update FEN in GUI when user makes move
+Doc - talk about data structures
