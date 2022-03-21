@@ -6,7 +6,7 @@ namespace Chess_Engine
 {
     class Board
     {
-        // Constants
+        #region Constants
         const string FEN_DEFAULT = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
         const int a8 = 91;
         const int a7 = 81;
@@ -72,8 +72,9 @@ namespace Chess_Engine
         const int h3 = 48;
         const int h2 = 38;
         const int h1 = 28;
+        #endregion
 
-        // Public Vars
+        #region Public Vars
         public int[] board;
         public string en_passant_target;
         public int half_ply;
@@ -83,8 +84,9 @@ namespace Chess_Engine
         public bool b_k_castle;
         public bool b_q_castle;
         public char side_to_move;
-        
-        
+        #endregion
+
+        #region Constructors
         /// <summary>
         /// Initialising board object
         /// </summary>
@@ -94,7 +96,9 @@ namespace Chess_Engine
             new FEN_Handler(FEN_DEFAULT, this);     // instatiating default start position
             Console.WriteLine("Board Initialised");
         }
+        #endregion
 
+        #region Methods
         /// <summary>
         /// Creating board based on custom FEN input
         /// </summary>
@@ -118,5 +122,7 @@ namespace Chess_Engine
 
             return new int[120];
         }
+        #endregion
     }
+
 }
