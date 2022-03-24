@@ -67,7 +67,7 @@ namespace Chess_Engine_Project
             this.FENTextBox.BackColor = System.Drawing.SystemColors.Menu;
             this.FENTextBox.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FENTextBox.Location = new System.Drawing.Point(72, 52);
-            this.FENTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FENTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.FENTextBox.Name = "FENTextBox";
             this.FENTextBox.Size = new System.Drawing.Size(751, 35);
             this.FENTextBox.TabIndex = 2;
@@ -80,19 +80,20 @@ namespace Chess_Engine_Project
             this.FENGenerateButton.FlatAppearance.BorderSize = 2;
             this.FENGenerateButton.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FENGenerateButton.Location = new System.Drawing.Point(72, 91);
-            this.FENGenerateButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FENGenerateButton.Margin = new System.Windows.Forms.Padding(2);
             this.FENGenerateButton.Name = "FENGenerateButton";
             this.FENGenerateButton.Size = new System.Drawing.Size(750, 35);
             this.FENGenerateButton.TabIndex = 3;
             this.FENGenerateButton.Text = "Generate Board";
             this.FENGenerateButton.UseVisualStyleBackColor = false;
+            this.FENGenerateButton.Click += new System.EventHandler(this.FENGenerateButton_Click);
             // 
             // BackButton
             // 
             this.BackButton.BackColor = System.Drawing.SystemColors.Info;
             this.BackButton.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BackButton.Location = new System.Drawing.Point(290, 154);
-            this.BackButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BackButton.Margin = new System.Windows.Forms.Padding(2);
             this.BackButton.Name = "BackButton";
             this.BackButton.Size = new System.Drawing.Size(150, 51);
             this.BackButton.TabIndex = 4;
@@ -104,7 +105,7 @@ namespace Chess_Engine_Project
             this.NextButton.BackColor = System.Drawing.SystemColors.Info;
             this.NextButton.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NextButton.Location = new System.Drawing.Point(484, 154);
-            this.NextButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NextButton.Margin = new System.Windows.Forms.Padding(2);
             this.NextButton.Name = "NextButton";
             this.NextButton.Size = new System.Drawing.Size(146, 51);
             this.NextButton.TabIndex = 5;
@@ -120,9 +121,9 @@ namespace Chess_Engine_Project
             this.BoardControlBox.Controls.Add(this.FENGenerateButton);
             this.BoardControlBox.Controls.Add(this.BackButton);
             this.BoardControlBox.Location = new System.Drawing.Point(957, 210);
-            this.BoardControlBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BoardControlBox.Margin = new System.Windows.Forms.Padding(2);
             this.BoardControlBox.Name = "BoardControlBox";
-            this.BoardControlBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BoardControlBox.Padding = new System.Windows.Forms.Padding(2);
             this.BoardControlBox.Size = new System.Drawing.Size(837, 220);
             this.BoardControlBox.TabIndex = 6;
             this.BoardControlBox.TabStop = false;

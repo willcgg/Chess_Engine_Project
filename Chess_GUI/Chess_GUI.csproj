@@ -46,14 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
     <Compile Include="BoardUI.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="BoardUI.Designer.cs">
       <DependentUpon>BoardUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Piece.cs" />
+    <Compile Include="FENHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BoardUI.resx">
@@ -81,6 +80,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Chess_Engine\Chess_Engine.csproj">
+      <Project>{54d8b4fc-49c7-46e9-8e01-9e2dfdf1d5de}</Project>
+      <Name>Chess_Engine</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
