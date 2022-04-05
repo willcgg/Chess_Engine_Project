@@ -46,13 +46,6 @@ https://chess.stackexchange.com/questions/8500/alternatives-to-the-fen-notation
 
 PGN will need to be stored anyway to complete next and back buttons functionality. This will be implemented through a stack of all the moves made in the game. Then when a user wishes to go back a position it will simply pop the top move off the stack which will be the last move played due to the stack's nature in storing data.
 
-Development notes:
-FEN validation: regex checks? TRY CATCH good enough
-Look into how to get clickable pieces on the gui, need some human interaction in the program. COORDINATES CONVERTER Return square on
-Click handlers?
-Click boxes?
-New bitmap?
-New image box?
 
 ### Design
 

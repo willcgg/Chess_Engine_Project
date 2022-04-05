@@ -18,5 +18,7 @@
     <ProjectReference Include="..\Chess_Engine\Chess_Engine.csproj" />
     <ProjectReference Include="..\Chess_GUI\Chess_GUI.csproj" />
   </ItemGroup>
+	
+	
 
 </Project>

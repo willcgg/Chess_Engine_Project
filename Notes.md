@@ -106,3 +106,13 @@ Next, ModifyBoardState
 ASCI board representation from board state to make tests more readable, diff way of representing boards from FEN
 BoardtoFENstring update FEN in GUI when user makes move
 Doc - talk about data structures
+
+## SUPERVISOR MEETING 21/03/2022 @3-3:45pm
+
+## Action Points
+- Implement clickable GUI; approach with image box layers for different needs, and some kind of coordinate converter to get what piece was clicked
+- Implement error catcher for gui in FEN string validation; try catch
+
+## Notes:
+FEN validation: regex checks? TRY CATCH good enough
+Look into how to get clickable pieces on the gui, need some human interaction in the program. COORDINATES CONVERTER Return square on
