@@ -96,11 +96,12 @@ namespace Chess_Engine_Project
 				// Try run it through the engine FEN_Handler, if it creates error then do not accept the FEN
 				try
 				{
-					
+					// FEN_Handler handler = new FEN_Handler(FENTextBox.Text, Board.board);
 				}
 				catch (Exception ex) 
-				{ 
-
+				{
+					MessageBox.Show("Error creating board from FEN, please check FEN format and try again\nError code: " + ex);
+					FENTextBox.Text = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq 1 0"; // resetting fen to correct format for user to copy
 				}
 			}
         }
