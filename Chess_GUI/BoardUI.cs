@@ -139,18 +139,17 @@ namespace Chess_Engine_Project
 
 		private void drawHighlights(int file, int rank) 
 		{
-			Graphics g = Graphics.FromImage(board);
-			bool isLightSquare = (file + rank) % 2 == 1;
-			if (isLightSquare)
-			{
-				//filling in dark squares highlight
-				g.FillRectangle(Brushes.SlateGray, file * 100, rank * 100, 100, 100);
-			}
-			else
-			{
-				//filling in light squares highlight
-				g.FillRectangle(Brushes.LightSteelBlue, file * 100, rank * 100, 100, 100);
-			}
+			Bitmap board_ps = new Bitmap(800, 800);
+			board_ps = board;
+			// Drawing highlight
+			//--------------------
+			Graphics g = Graphics.FromImage(board_ps);
+			Pen pen = new Pen(Color.Turquoise, 5);
+			// Create rectangle.
+			Rectangle rect = new Rectangle(file * 100, rank * 100, 100, 100);
+			// Draw rectangle to screen.
+			g.DrawRectangle(pen, rect);
+			boardImageBox.Image = board_ps;
 		}
 
 	}
