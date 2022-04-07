@@ -116,3 +116,14 @@ Doc - talk about data structures
 ## Notes:
 FEN validation: regex checks? TRY CATCH good enough
 Look into how to get clickable pieces on the gui, need some human interaction in the program. COORDINATES CONVERTER Return square on
+
+
+## SUPERVISOSR MEETING 07/04/2022 @4-5pm
+
+## Action Points
+- Solve project dependency issues from tutorial on teams.
+- Write some unit tests and write about it in documentation.
+- Work on document alongside hitting key criteria from marking scheme.
+
+## Notes
+Create new projects with correct frameworks to try solve issues with linking them together.

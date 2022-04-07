@@ -16,10 +16,10 @@ A lot of people confuse these kinds of projects with implementing aspects of AI 
 One of the main reasons I chose this project is not only because of the advanced understanding I will develop as a result of deep diving into researching these fundamental computing algorithms and concepts; but because of the large scope of other domains which benefit from the application of these algorithms. Examples of a few sectors which benefit from these algorithms include: finance, chemical, gaming, databases and big data, and even travel. 
 
 ### Project Links
-[GITHUB](https://github.com/willcgg/Chess_Engine_Project)
-[TRELLO BOARD](https://trello.com/b/KsboK28s/project-backlog)
+- [GITHUB](https://github.com/willcgg/Chess_Engine_Project)
+- [TRELLO BOARD](https://trello.com/b/KsboK28s/project-backlog)
 
-### Project Analysis
+### Project Analysis (20 Marks)
 
 The language I will be using to produce the engine will be C#. This is for a number of reasons such as: familiarity, portability, object-oriented nature, and finally it being a static language; this makes it easier to find errors, understand the code and also write it. C#'s main advantage is it being an object-oriented language, this makes the code highly efficient, reusable, flexible, scalable and easy to maintain. Additionally, the chess programming world is largely dominated by C and C++  languages, meaning there is a huge community of developers and resources available. Even some of the strongest engines written in other languages were eventually rewritten in C, e.g. Booot written by Alex Morozov in Delphi, it was rewritten due to running into too many 64-bit bugs. It is also commonly used for web and windows applications which fits the project's needs. 
 
