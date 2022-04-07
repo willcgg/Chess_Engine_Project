@@ -24,20 +24,6 @@ namespace Chess_Engine_Project
 
 		public void DrawBoardToScreen()
 		{
-			drawingsPictureBox.Parent = boardImageBox;
-			drawingsPictureBox.Location = boardImageBox.Location;
-			drawingsPictureBox.Size = boardImageBox.Size;
-			clickHandlerPictureBox.Parent = boardImageBox;
-			clickHandlerPictureBox.Location = boardImageBox.Location;
-			clickHandlerPictureBox.Size = boardImageBox.Size;
-			boardImageBox.SendToBack();
-			clickHandlerPictureBox.BringToFront();
-
-			// for debugging click handler
-			Console.WriteLine(clickHandlerPictureBox.Size);
-			Console.WriteLine(clickHandlerPictureBox.Location);
-
-
 			Graphics g = Graphics.FromImage(board);
 
 			for (int file = 0; file < 8; file++)
@@ -120,24 +106,27 @@ namespace Chess_Engine_Project
 			}
         }
 
-        private void clickHandlerPictureBox_Click(object sender, EventArgs e)
+
+        private void boardImageBox_Click(object sender, EventArgs e)
         {
 			// setting up vars
 			MouseEventArgs click = (MouseEventArgs)e;
 			Point coordinates = click.Location;
 			var c_height = click.Y;
 			var c_width = click.X;
-			var t_height = clickHandlerPictureBox.Height;
-			var t_width = clickHandlerPictureBox.Width;
+			var t_height = boardImageBox.Height;
+			var t_width = boardImageBox.Width;
 
 			Console.WriteLine(coordinates);
 
 			// work out row/col
-			var row = c_height / (t_height / 8.8);
-			var col = c_width / (t_width / 8.8);
+			var row = c_height / (t_height / 8.0);
+			var col = c_width / (t_width / 8.0);
 
-			Console.WriteLine(row);
-			Console.WriteLine(row % 1.0);
+			Console.Write("Row: ");
+			Console.WriteLine((row - (row % 1.0)));
+			Console.Write("Col: ");
+			Console.WriteLine((col - (col % 1.0)));
 		}
     }
 }

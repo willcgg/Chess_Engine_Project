@@ -37,12 +37,8 @@ namespace Chess_Engine_Project
             this.NextButton = new System.Windows.Forms.Button();
             this.BoardControlBox = new System.Windows.Forms.GroupBox();
             this.FEN_FORM_LABEL = new System.Windows.Forms.Label();
-            this.drawingsPictureBox = new System.Windows.Forms.PictureBox();
-            this.clickHandlerPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.boardImageBox)).BeginInit();
             this.BoardControlBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.drawingsPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.clickHandlerPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // boardImageBox
@@ -51,12 +47,13 @@ namespace Chess_Engine_Project
             this.boardImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.boardImageBox.ImageLocation = "";
             this.boardImageBox.Location = new System.Drawing.Point(13, 14);
-            this.boardImageBox.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.boardImageBox.Margin = new System.Windows.Forms.Padding(0);
             this.boardImageBox.Name = "boardImageBox";
             this.boardImageBox.Size = new System.Drawing.Size(825, 825);
             this.boardImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.boardImageBox.TabIndex = 0;
             this.boardImageBox.TabStop = false;
+            this.boardImageBox.Click += new System.EventHandler(this.boardImageBox_Click);
             // 
             // FENLabel
             // 
@@ -146,30 +143,6 @@ namespace Chess_Engine_Project
             this.FEN_FORM_LABEL.TabIndex = 6;
             this.FEN_FORM_LABEL.Text = "FEN Input";
             // 
-            // drawingsPictureBox
-            // 
-            this.drawingsPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.drawingsPictureBox.ImageLocation = "";
-            this.drawingsPictureBox.Location = new System.Drawing.Point(10, 11);
-            this.drawingsPictureBox.Margin = new System.Windows.Forms.Padding(0);
-            this.drawingsPictureBox.Name = "drawingsPictureBox";
-            this.drawingsPictureBox.Size = new System.Drawing.Size(825, 825);
-            this.drawingsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.drawingsPictureBox.TabIndex = 7;
-            this.drawingsPictureBox.TabStop = false;
-            // 
-            // clickHandlerPictureBox
-            // 
-            this.clickHandlerPictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.clickHandlerPictureBox.ImageLocation = "";
-            this.clickHandlerPictureBox.Location = new System.Drawing.Point(24, 58);
-            this.clickHandlerPictureBox.Margin = new System.Windows.Forms.Padding(0);
-            this.clickHandlerPictureBox.Name = "clickHandlerPictureBox";
-            this.clickHandlerPictureBox.Size = new System.Drawing.Size(825, 825);
-            this.clickHandlerPictureBox.TabIndex = 8;
-            this.clickHandlerPictureBox.TabStop = false;
-            this.clickHandlerPictureBox.Click += new System.EventHandler(this.clickHandlerPictureBox_Click);
-            // 
             // BoardUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -178,8 +151,6 @@ namespace Chess_Engine_Project
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1924, 1055);
-            this.Controls.Add(this.clickHandlerPictureBox);
-            this.Controls.Add(this.drawingsPictureBox);
             this.Controls.Add(this.BoardControlBox);
             this.Controls.Add(this.boardImageBox);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -191,8 +162,6 @@ namespace Chess_Engine_Project
             ((System.ComponentModel.ISupportInitialize)(this.boardImageBox)).EndInit();
             this.BoardControlBox.ResumeLayout(false);
             this.BoardControlBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.drawingsPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.clickHandlerPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -207,8 +176,6 @@ namespace Chess_Engine_Project
         private System.Windows.Forms.Button NextButton;
         private System.Windows.Forms.GroupBox BoardControlBox;
         private System.Windows.Forms.Label FEN_FORM_LABEL;
-        private System.Windows.Forms.PictureBox drawingsPictureBox;
-        private System.Windows.Forms.PictureBox clickHandlerPictureBox;
     }
 }
 
