@@ -139,8 +139,8 @@ namespace Chess_Engine_Project
 
 		private void drawHighlights(int file, int rank) 
 		{
-			Bitmap board_ps = new Bitmap(800, 800);
-			board_ps = board;
+			// copying current board bitmap (should be clear)
+			Bitmap board_ps = board.Clone() as Bitmap;
 			// Drawing highlight
 			//--------------------
 			Graphics g = Graphics.FromImage(board_ps);
