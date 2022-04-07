@@ -33,12 +33,12 @@ namespace Chess_Engine_Project
 					bool isLightSquare = (file + rank) % 2 == 1;
 					if (isLightSquare)
 					{
-						//filling in light squares
+						//filling in dark squares
 						g.FillRectangle(Brushes.SlateGray, file * 100, rank * 100, 100, 100);
 					}
 					else
 					{
-						//filling in dark squares 
+						//filling in light squares 
 						g.FillRectangle(Brushes.LightSteelBlue, file * 100, rank * 100, 100, 100);
 					}
 				}
@@ -109,6 +109,8 @@ namespace Chess_Engine_Project
 
         private void boardImageBox_Click(object sender, EventArgs e)
         {
+			// Clearing previous clicks highlight
+
 			// setting up vars
 			MouseEventArgs click = (MouseEventArgs)e;
 			Point coordinates = click.Location;
@@ -122,11 +124,34 @@ namespace Chess_Engine_Project
 			// work out row/col
 			var row = c_height / (t_height / 8.0);
 			var col = c_width / (t_width / 8.0);
-
+			// converting to int
+			int rank = (int)(row - (row % 1.0));
+			int file = (int)(col - (col % 1.0));
+			// outputting to console for debugging purposes
 			Console.Write("Row: ");
-			Console.WriteLine((row - (row % 1.0)));
+			Console.WriteLine(rank);
 			Console.Write("Col: ");
-			Console.WriteLine((col - (col % 1.0)));
+			Console.WriteLine(file);
+			// Calling the highlight of the square clicked
+			drawHighlights(file, rank);
 		}
-    }
+
+
+		private void drawHighlights(int file, int rank) 
+		{
+			Graphics g = Graphics.FromImage(board);
+			bool isLightSquare = (file + rank) % 2 == 1;
+			if (isLightSquare)
+			{
+				//filling in dark squares highlight
+				g.FillRectangle(Brushes.SlateGray, file * 100, rank * 100, 100, 100);
+			}
+			else
+			{
+				//filling in light squares highlight
+				g.FillRectangle(Brushes.LightSteelBlue, file * 100, rank * 100, 100, 100);
+			}
+		}
+
+	}
 }
