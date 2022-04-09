@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Chess_Engine_v2;
 
 namespace Chess_Engine_Project
 {
@@ -10,12 +11,15 @@ namespace Chess_Engine_Project
     public partial class BoardUI : Form
     {
 
-		public Bitmap board = new Bitmap(800, 800);
+		Bitmap board;
+		Board b;
 
 		public BoardUI()
         {
             InitializeComponent();
-        }
+			board = new Bitmap(800, 800);
+			b = new Board();
+		}
 
         private void BoardUI_Load(object sender, EventArgs e)
         {
@@ -96,7 +100,7 @@ namespace Chess_Engine_Project
 				// Try run it through the engine FEN_Handler, if it creates error then do not accept the FEN
 				try
 				{
-					// FEN_Handler handler = new FEN_Handler(FENTextBox.Text, Board.board);
+					FEN_Handler handler = new FEN_Handler(FENTextBox.Text, b);
 				}
 				catch (Exception ex) 
 				{

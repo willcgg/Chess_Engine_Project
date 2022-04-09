@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace Chess_Project_Tests_v2
+namespace Chess_Engine_Tests
 {
     /// <summary>
     /// Test class to thoroughly test the pawn pieces valid movement in the engines logic
@@ -14,7 +14,8 @@ namespace Chess_Project_Tests_v2
         Board b;
 
         [TestMethod]
-        public void Pawn_Movement_Valid() {
+        public void Pawn_Movement_Valid()
+        {
             //  arrange
             b = new Board();
 
@@ -23,7 +24,7 @@ namespace Chess_Project_Tests_v2
             b.Make_Move(91, 81, 'b');
             b.Make_Move(22, 52, 'w');      // invalid moves
 
-            
+
 
             //  assert
             Assert.IsTrue(b.board[81] == (int)Piece.Type.empty);        // Checks piece has moved
@@ -31,7 +32,8 @@ namespace Chess_Project_Tests_v2
         }
 
         [TestMethod]
-        public void Pawn_Movement_En_Passant() { 
+        public void Pawn_Movement_En_Passant()
+        {
             //  arrange
             b = new Board();
 
@@ -48,7 +50,8 @@ namespace Chess_Project_Tests_v2
         }
 
         [TestMethod]
-        public void Pawn_Movement_in_Check() {
+        public void Pawn_Movement_in_Check()
+        {
             //  arrange
             b = new Board();
 
@@ -58,7 +61,8 @@ namespace Chess_Project_Tests_v2
         }
 
         [TestMethod]
-        public void Pawn_Movement_Pinned() {
+        public void Pawn_Movement_Pinned()
+        {
             //  arrange
             b = new Board();
 

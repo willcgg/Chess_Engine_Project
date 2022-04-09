@@ -1,20 +1,17 @@
-﻿using Chess_Engine_v2;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Chess_Engine_v2;
 
-namespace Chess_Project_Tests_v2
+namespace Chess_Engine_Tests
 {
-    /// <summary>
-    /// Test class to thoroughly test the queen pieces valid movement in the engines logic
-    /// </summary>
     [TestClass]
-    class Queen_Tests
+    class Bishop_Tests
     {
-
         Board board;
 
         [TestMethod]
         public void Movement_Valid()
         {
+
             //  arrange
             board = new Board();
 

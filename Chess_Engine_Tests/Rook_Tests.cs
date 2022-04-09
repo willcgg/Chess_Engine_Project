@@ -1,14 +1,10 @@
-﻿using Chess_Engine_v2;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Chess_Engine_v2;
 
-
-namespace Chess_Project_Tests_v2
+namespace Chess_Engine_Tests
 {
-    /// <summary>
-    /// Test class to thoroughly test the king pieces valid movement in the engines logic
-    /// </summary>
     [TestClass]
-    class King_Tests
+    class Rook_Tests
     {
         Board board;
 
@@ -45,5 +41,15 @@ namespace Chess_Project_Tests_v2
             //  assert
         }
 
+        [TestMethod]
+        public void Movement_Pinned()
+        {
+            //  arrange
+            board = new Board();
+
+            //  act
+
+            //  assert
+        }
     }
 }

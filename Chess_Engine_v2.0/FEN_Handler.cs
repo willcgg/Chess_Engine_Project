@@ -9,7 +9,7 @@ namespace Chess_Engine_v2
     /// <para>Paramaters: Takes in string as a paramater.</para>
     /// <para>Outputs: pieces to GUI board, creates internal board representation of position</para>
     /// </summary>
-    class FEN_Handler
+    public class FEN_Handler
     {
         // Public vars
         string[] FEN_Seg;

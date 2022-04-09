@@ -1,13 +1,10 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Chess_Engine;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Chess_Engine_v2;
 
-namespace Chess_Project_Tests
+namespace Chess_Engine_Tests
 {
-    /// <summary>
-    /// Class to call all peice movement tests
-    /// </summary>
     [TestClass]
-    public class Piece_Testing
+    class Piece_Testing
     {
         /// <summary>
         /// <para>Checks all possible valid pawn moves</para>
@@ -15,7 +12,8 @@ namespace Chess_Project_Tests
         /// check all possibilities. E.g. en passant, in-check, pinned pieces etc..</para>
         /// </summary>
         [TestMethod]
-        public void Pawn_Movement() {
+        public void Pawn_Movement()
+        {
 
             // Arrange
             Pawn_Tests pt = new Pawn_Tests();
@@ -98,6 +96,5 @@ namespace Chess_Project_Tests
             kt.Movement_Castle_Tests();
             kt.Movement_in_Check();
         }
-
     }
 }

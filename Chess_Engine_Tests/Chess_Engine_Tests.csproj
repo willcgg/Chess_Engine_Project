@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7EF3B77D-D4A9-44EB-A6C5-FD579D2F7383}</ProjectGuid>
+    <ProjectGuid>{4CAFCD8B-D3A5-4BC2-BC58-820E065B1204}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Chess_Project_Tests_v2</RootNamespace>
-    <AssemblyName>Chess_Project_Tests_v2</AssemblyName>
+    <RootNamespace>Chess_Engine_Tests</RootNamespace>
+    <AssemblyName>Chess_Engine_Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -61,16 +61,9 @@
     <Compile Include="Rook_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Chess_Engine_v2.0\Chess_Engine_v2.csproj">
       <Project>{22618920-960d-4e73-a710-f861882492c3}</Project>
       <Name>Chess_Engine_v2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Chess_GUI\Chess_GUI.csproj">
-      <Project>{9d198635-c6ba-479f-a7c9-5090fb509a63}</Project>
-      <Name>Chess_GUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

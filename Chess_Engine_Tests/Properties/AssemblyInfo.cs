@@ -2,18 +2,18 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Chess_Project_Tests_v2")]
+[assembly: AssemblyTitle("Chess_Engine_Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Chess_Project_Tests_v2")]
+[assembly: AssemblyProduct("Chess_Engine_Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("7ef3b77d-d4a9-44eb-a6c5-fd579d2f7383")]
+[assembly: Guid("4cafcd8b-d3a5-4bc2-bc58-820e065b1204")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]

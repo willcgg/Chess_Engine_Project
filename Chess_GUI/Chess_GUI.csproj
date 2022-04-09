@@ -85,5 +85,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Chess_Engine_v2.0\Chess_Engine_v2.csproj">
+      <Project>{22618920-960d-4e73-a710-f861882492c3}</Project>
+      <Name>Chess_Engine_v2</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

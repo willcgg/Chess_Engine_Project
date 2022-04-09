@@ -1,12 +1,11 @@
-﻿using Chess_Engine_v2;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Chess_Engine_v2;
 
-namespace Chess_Project_Tests_v2
+namespace Chess_Engine_Tests
 {
     [TestClass]
     class Board_Tests
     {
-
         [TestMethod]
         public void FEN_Handler_Tests()
         {
@@ -14,9 +13,7 @@ namespace Chess_Project_Tests_v2
             FEN_Handler_Tests ft = new FEN_Handler_Tests();
 
             // Act & Assert
-            ft.FEN_Handler_Default();
-            ft.FEN_Handler_Custom();
+            
         }
-
     }
 }

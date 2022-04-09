@@ -1,8 +1,7 @@
-﻿using Chess_Engine_v2;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Chess_Engine_v2;
 
-
-namespace Chess_Project_Tests_v2
+namespace Chess_Engine_Tests
 {
     [TestClass]
     class FEN_Handler_Tests
@@ -105,7 +104,5 @@ namespace Chess_Project_Tests_v2
             Assert.IsTrue(b_test.b_q_castle == b_q_castle);
             Assert.IsTrue(b_test.side_to_move == side_to_move);
         }
-
-
     }
 }

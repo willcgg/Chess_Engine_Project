@@ -1,15 +1,11 @@
-﻿using Chess_Engine_v2;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Chess_Engine_v2;
 
-namespace Chess_Project_Tests_v2
+namespace Chess_Engine_Tests
 {
-    /// <summary>
-    /// Test class to thoroughly test the rook pieces valid movement in the engines logic
-    /// </summary>
     [TestClass]
-    class Rook_Tests
+    class Knight_Tests
     {
-
         Board board;
 
         [TestMethod]
@@ -24,7 +20,8 @@ namespace Chess_Project_Tests_v2
         }
 
         [TestMethod]
-        public void Movement_Castle_Tests() {
+        public void Movement_Castle_Tests()
+        {
             //  arrange
             board = new Board();
 
@@ -34,7 +31,8 @@ namespace Chess_Project_Tests_v2
         }
 
         [TestMethod]
-        public void Movement_in_Check() {
+        public void Movement_in_Check()
+        {
             //  arrange
             board = new Board();
 
@@ -43,8 +41,8 @@ namespace Chess_Project_Tests_v2
             //  assert
         }
 
-        [TestMethod]
-        public void Movement_Pinned() {
+        public void Movement_Pinned()
+        {
             //  arrange
             board = new Board();
 
