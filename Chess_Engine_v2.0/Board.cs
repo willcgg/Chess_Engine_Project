@@ -76,7 +76,7 @@ namespace Chess_Engine_v2
 
         #region Public Vars
         public int[] board;
-        public string en_passant_target;
+        public int en_passant_target;
         public int half_ply;
         public int full_ply;
         public bool w_k_castle;
