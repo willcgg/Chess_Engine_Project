@@ -142,11 +142,11 @@ namespace Chess_Engine_Project
 			Console.Write("Col: ");
 			Console.WriteLine(file);
 			// Calling the highlight of the square clicked
-			drawHighlights(file, rank);
+			DrawHighlights(file, rank);
 		}
 
 
-		private void drawHighlights(int file, int rank) 
+		private void DrawHighlights(int file, int rank) 
 		{
 			// copying current board bitmap (should be clear)
 			Bitmap board_ps = board.Clone() as Bitmap;

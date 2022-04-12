@@ -30,7 +30,7 @@ namespace Chess_Engine_Tests
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
             };
 
-            string en_passant_target = "-";
+            int en_passant_target = 0;
             int half_ply = 1;
             int full_ply = 0;
             bool w_k_castle = true;
@@ -78,7 +78,7 @@ namespace Chess_Engine_Tests
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
             };
-            string en_passant_target = "e7";
+            int en_passant_target = 35;
             int half_ply = 28;
             int full_ply = 14;
             bool w_k_castle = false;
