@@ -57,7 +57,6 @@
     <Compile Include="BoardUI.Designer.cs">
       <DependentUpon>BoardUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="FENHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BoardUI.resx">
