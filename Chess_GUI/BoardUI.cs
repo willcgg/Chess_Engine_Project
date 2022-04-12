@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Chess_Engine_v2;
 
@@ -12,7 +13,7 @@ namespace Chess_Engine_Project
     {
 
 		Bitmap board;
-		Board b;
+        readonly Board b;
 
 		public BoardUI()
         {
@@ -47,7 +48,7 @@ namespace Chess_Engine_Project
 					}
 				}
 			}
-			boardImageBox.Image = board;
+			BoardPictureBox.Image = board;
 			DrawPiecesToBoard();
 		}
 
@@ -101,7 +102,8 @@ namespace Chess_Engine_Project
 				try
 				{
 					FEN_Handler handler = new FEN_Handler(FENTextBox.Text, b);
-					MessageBox.Show(handler.Convert_To_ASCII());
+					string ASCII_board = handler.Convert_To_ASCII();
+					File.WriteAllText("C:/Users/wc104/source/repos/Chess_Engine_Project/board.txt", ASCII_board);
 				}
 				catch (Exception ex) 
 				{
@@ -114,7 +116,7 @@ namespace Chess_Engine_Project
         }
 
 
-        private void boardImageBox_Click(object sender, EventArgs e)
+        private void BoardPictureBox_Click(object sender, EventArgs e)
         {
 			// Clearing previous clicks highlight
 
@@ -123,8 +125,8 @@ namespace Chess_Engine_Project
 			Point coordinates = click.Location;
 			var c_height = click.Y;
 			var c_width = click.X;
-			var t_height = boardImageBox.Height;
-			var t_width = boardImageBox.Width;
+			var t_height = BoardPictureBox.Height;
+			var t_width = BoardPictureBox.Width;
 
 			Console.WriteLine(coordinates);
 
@@ -156,7 +158,7 @@ namespace Chess_Engine_Project
 			Rectangle rect = new Rectangle(file * 100, rank * 100, 100, 100);
 			// Draw rectangle to screen.
 			g.DrawRectangle(pen, rect);
-			boardImageBox.Image = board_ps;
+			BoardPictureBox.Image = board_ps;
 		}
 
 	}

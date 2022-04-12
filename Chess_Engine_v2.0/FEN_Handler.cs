@@ -239,56 +239,58 @@ namespace Chess_Engine_v2
         /// <returns>ASCII string chess board</returns>
         public string Convert_To_ASCII()
         {
-            string board_ASCII = "|-----------------------|\n";
+            string board_ASCII = "|--------------------------------------|\n";
             int file_count = 0;
             for(int x = 21; x < 99; x++)
             {
                 file_count++;
-                if (file_count % 8 == 0)
-                { 
-                    board_ASCII += "\n|-----------------------|\n";
-                }
                 switch (b.board[x])
                 {
                     case 0:
-                        board_ASCII += "| |";
+                        board_ASCII += "    |";
                         break;
                     case 1:
-                        board_ASCII += "|♙|";
+                        board_ASCII += " ♙ |";
                         break;
                     case 2:
-                        board_ASCII += "|♟|";
+                        board_ASCII += " ♟ |";
                         break;
                     case 3:
-                        board_ASCII += "|♘|";
+                        board_ASCII += " ♘ |";
                         break;
                     case 4:
-                        board_ASCII += "|♞|";
+                        board_ASCII += " ♞ |";
                         break;
                     case 5:
-                        board_ASCII += "|♗|";
+                        board_ASCII += " ♗ |";
                         break;
                     case 6:
-                        board_ASCII += "|♝|";
+                        board_ASCII += " ♝ |";
                         break;
                     case 7:
-                        board_ASCII += "|♖|";
+                        board_ASCII += " ♖ |";
                         break;
                     case 8:
-                        board_ASCII += "|♜|";
+                        board_ASCII += " ♜ |";
                         break;
                     case 9:
-                        board_ASCII += "|♕|";
+                        board_ASCII += " ♕ |";
                         break;
-                    case 10:
-                        board_ASCII += "|♛|";
+                    case 10: 
+                        board_ASCII += " ♛ |";
                         break;
                     case 11:
-                        board_ASCII += "|♔|";
+                        board_ASCII += " ♔ |";
                         break;
                     case 12:
-                        board_ASCII += "|♚|";
+                        board_ASCII += " ♚ |";
                         break;
+                }
+
+                if (file_count % 8 == 0)
+                {
+                    board_ASCII += "\n|--------------------------------------|\n|";
+                    x += 2;
                 }
             }
             return board_ASCII;

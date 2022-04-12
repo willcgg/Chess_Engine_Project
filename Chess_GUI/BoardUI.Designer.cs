@@ -29,7 +29,7 @@ namespace Chess_Engine_Project
         /// </summary>
         private void InitializeComponent()
         {
-            this.boardImageBox = new System.Windows.Forms.PictureBox();
+            this.BoardPictureBox = new System.Windows.Forms.PictureBox();
             this.FENLabel = new System.Windows.Forms.Label();
             this.FENTextBox = new System.Windows.Forms.TextBox();
             this.FENGenerateButton = new System.Windows.Forms.Button();
@@ -37,23 +37,23 @@ namespace Chess_Engine_Project
             this.NextButton = new System.Windows.Forms.Button();
             this.BoardControlBox = new System.Windows.Forms.GroupBox();
             this.FEN_FORM_LABEL = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.boardImageBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BoardPictureBox)).BeginInit();
             this.BoardControlBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // boardImageBox
+            // BoardPictureBox
             // 
-            this.boardImageBox.BackColor = System.Drawing.Color.Transparent;
-            this.boardImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.boardImageBox.ImageLocation = "";
-            this.boardImageBox.Location = new System.Drawing.Point(13, 14);
-            this.boardImageBox.Margin = new System.Windows.Forms.Padding(0);
-            this.boardImageBox.Name = "boardImageBox";
-            this.boardImageBox.Size = new System.Drawing.Size(825, 825);
-            this.boardImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.boardImageBox.TabIndex = 0;
-            this.boardImageBox.TabStop = false;
-            this.boardImageBox.Click += new System.EventHandler(this.boardImageBox_Click);
+            this.BoardPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.BoardPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BoardPictureBox.ImageLocation = "";
+            this.BoardPictureBox.Location = new System.Drawing.Point(13, 14);
+            this.BoardPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.BoardPictureBox.Name = "BoardPictureBox";
+            this.BoardPictureBox.Size = new System.Drawing.Size(825, 825);
+            this.BoardPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.BoardPictureBox.TabIndex = 0;
+            this.BoardPictureBox.TabStop = false;
+            this.BoardPictureBox.Click += new System.EventHandler(this.BoardPictureBox_Click);
             // 
             // FENLabel
             // 
@@ -152,14 +152,14 @@ namespace Chess_Engine_Project
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1924, 1055);
             this.Controls.Add(this.BoardControlBox);
-            this.Controls.Add(this.boardImageBox);
+            this.Controls.Add(this.BoardPictureBox);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "BoardUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "Chess Engine";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.BoardUI_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.boardImageBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BoardPictureBox)).EndInit();
             this.BoardControlBox.ResumeLayout(false);
             this.BoardControlBox.PerformLayout();
             this.ResumeLayout(false);
@@ -168,7 +168,7 @@ namespace Chess_Engine_Project
 
         #endregion
 
-        private System.Windows.Forms.PictureBox boardImageBox;
+        private System.Windows.Forms.PictureBox BoardPictureBox;
         private System.Windows.Forms.Label FENLabel;
         private System.Windows.Forms.TextBox FENTextBox;
         private System.Windows.Forms.Button FENGenerateButton;
