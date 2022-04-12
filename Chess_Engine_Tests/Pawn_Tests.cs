@@ -60,7 +60,7 @@ namespace Chess_Engine_Tests
                 test3 = true;
                 Assert.IsTrue(test3, message);
                 Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'w'
-                    && b.half_ply == 1 && b.full_ply == 2 && b.en_passant_target == 91, "Board game attributes correctly left alone.");
+                    && b.half_ply == 1 && b.full_ply == 2 && b.en_passant_target == 91, "Board game attributes unchanged.");
             }
         }
 

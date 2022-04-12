@@ -101,11 +101,14 @@ namespace Chess_Engine_Project
 				try
 				{
 					FEN_Handler handler = new FEN_Handler(FENTextBox.Text, b);
+					MessageBox.Show(handler.Convert_To_ASCII());
 				}
 				catch (Exception ex) 
 				{
-					MessageBox.Show("Error creating board from FEN, please check FEN format and try again\nError code: " + ex);
-					FENTextBox.Text = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq 1 0"; // resetting fen to correct format for user to copy
+					MessageBox.Show("Error creating board from FEN, please check FEN format matches below example and try again\n\n" +
+						"\"{POSITION} {SIDE TO MOVE} {CASTLE AVAILABILITY} {EN-PASSANT TARGET} {HALF-PLY} {FULL-PLY}\"" +
+						"\n\nError code: " + ex);
+					FENTextBox.Text = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 1 0"; // resetting fen to correct format for user to copy
 				}
 			}
         }

@@ -8,17 +8,19 @@ namespace Chess_Engine_v2
     /// Reads string from GUI FEN string input text box and generates the board it represents.
     /// <para>Paramaters: Takes in string as a paramater.</para>
     /// <para>Outputs: pieces to GUI board, creates internal board representation of position</para>
+    /// <para>Also homes the Convert_To_ASCII Method which reads board state and outputs in human readable ASCII
+    /// characters for use in testing</para>
     /// </summary>
     public class FEN_Handler
     {
         // Public vars
-        string[] FEN_Seg;
-        string[] FEN_Pos;
-        Board b;
+        readonly string[] FEN_Seg;
+        readonly string[] FEN_Pos;
+        readonly Board b;
 
         /*
           FEN FIELDS:
-        > Piece placement. Either upper or lower case char to represent each piece, or a number to represent empty squares
+        > Piece placement. FROM WHITES PERSPECTIVE Either upper or lower case char to represent each piece, or a number to represent empty squares
         > Active color. "w" means White moves next, "b" means Black moves next.
         > Castling availability. - means neither side can castle, KQ means white can castle king and queen side, k means black can only castle king side
         > En passant target square in algebraic notation. If there's no en passant target square, this is "-". If a pawn has just made a two-square move,
@@ -43,11 +45,24 @@ namespace Chess_Engine_v2
             b.board = Create_Board(FEN_Pos);                // Calling the creation of the board
             b.side_to_move = char.Parse(FEN_Seg[1]);
             Can_Castle(FEN_Seg[2]);
-            b.en_passant_target = FEN_Seg[3];
+            try
+            {
+                b.en_passant_target = (int)Enum.Parse(typeof(Board.Square), FEN_Seg[3]);
+            }
+            catch
+            {
+                b.en_passant_target = 0;        // un-clickable square on UI, cannot be null
+            }
             b.half_ply = int.Parse(FEN_Seg[4]);
             b.full_ply = int.Parse(FEN_Seg[5]);
             Console.WriteLine("Board Ready...");
         }
+
+        public FEN_Handler(Board board)
+        {
+            b = board;
+        }
+
 
         /// <summary>
         /// Takes in FEN representation of board position and returns integer array representation
@@ -215,6 +230,68 @@ namespace Chess_Engine_v2
                         break;
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Function to convert current board state to human-readable ASCII string
+        /// </summary>
+        /// <returns>ASCII string chess board</returns>
+        public string Convert_To_ASCII()
+        {
+            string board_ASCII = "|-----------------------|\n";
+            int file_count = 0;
+            for(int x = 21; x < 99; x++)
+            {
+                file_count++;
+                if (file_count % 8 == 0)
+                { 
+                    board_ASCII += "\n|-----------------------|\n";
+                }
+                switch (b.board[x])
+                {
+                    case 0:
+                        board_ASCII += "| |";
+                        break;
+                    case 1:
+                        board_ASCII += "|♙|";
+                        break;
+                    case 2:
+                        board_ASCII += "|♟|";
+                        break;
+                    case 3:
+                        board_ASCII += "|♘|";
+                        break;
+                    case 4:
+                        board_ASCII += "|♞|";
+                        break;
+                    case 5:
+                        board_ASCII += "|♗|";
+                        break;
+                    case 6:
+                        board_ASCII += "|♝|";
+                        break;
+                    case 7:
+                        board_ASCII += "|♖|";
+                        break;
+                    case 8:
+                        board_ASCII += "|♜|";
+                        break;
+                    case 9:
+                        board_ASCII += "|♕|";
+                        break;
+                    case 10:
+                        board_ASCII += "|♛|";
+                        break;
+                    case 11:
+                        board_ASCII += "|♔|";
+                        break;
+                    case 12:
+                        board_ASCII += "|♚|";
+                        break;
+                }
+            }
+            return board_ASCII;
         }
     }
 }
