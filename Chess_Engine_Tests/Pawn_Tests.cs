@@ -26,7 +26,7 @@ namespace Chess_Engine_Tests
             // Normal 2 square move from starting pos
             try
             {
-                b.Make_Move(21, 41, 'w');      
+                b.Make_Move("a2", "a4", 'w');      
                 Assert.IsTrue(b.board[21] == (int)Piece.Type.empty && b.board[41] == (int)Piece.Type.w_pawn, "Piece Successfully moved.");
                 Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'b'
                     && b.half_ply == 1 && b.full_ply == 0 && b.en_passant_target == 31, "Board game attributes correctly changed.");
@@ -38,7 +38,7 @@ namespace Chess_Engine_Tests
             // Normal 1 square response from black
             try
             {
-                b.Make_Move(91, 81, 'b');
+                b.Make_Move("a7", "a6", 'b');
                 Assert.IsTrue(b.board[91] == (int)Piece.Type.empty && b.board[81] == (int)Piece.Type.b_pawn);
                 Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'w'
                     && b.half_ply == 2 && b.full_ply == 1 && b.en_passant_target == 91, "Board game attributes correctly changed.");
@@ -50,7 +50,7 @@ namespace Chess_Engine_Tests
             // Illegal 3 square move
             try
             {
-                b.Make_Move(22, 52, 'w');           // should throw an error
+                b.Make_Move("b2", "b5", 'w');           // should throw an error
                 Assert.Fail("Illegal move accepted by engine, please review Make_Move function");
             }
             catch (Exception e)
@@ -71,10 +71,11 @@ namespace Chess_Engine_Tests
             b = new Board();
 
             //  act
-            //b.Make_Move("a7", "a6");      // Setting up en-passant
-            //b.Make_Move("a4", "a5");      //
-            //b.Make_Move("b7", "b5");      //
-            //b.Make_Move("a5", "b6");      // Taking en-passant
+            b.Make_Move("a2", "a4", 'w');
+            b.Make_Move("a7", "a6", 'b');
+            b.Make_Move("a4", "a5", 'w');
+            b.Make_Move("b7", "b5", 'b');
+            b.Make_Move("a5", "b6", 'w');
 
             //  assert
             Assert.IsTrue(b.board[71] == (int)Piece.Type.empty);           // Checking piece has moved
@@ -89,8 +90,15 @@ namespace Chess_Engine_Tests
             b = new Board();
 
             //  act
+            b.Make_Move("d2", "d3", 'w');
+            b.Make_Move("e7", "e6", 'b');
+            b.Make_Move("d3", "d4", 'w');
+            b.Make_Move("f8", "b4", 'b');           // in-check
+            // try moves which shouldnt work before valid move??
+            b.Make_Move("c2", "c3", 'w');           // blocking check
 
             //  assert
+
         }
 
         [TestMethod]
@@ -100,8 +108,21 @@ namespace Chess_Engine_Tests
             b = new Board();
 
             //  act
+            b.Make_Move("e2", "e4", 'w');
+            b.Make_Move("e7", "e5", 'b');
+            b.Make_Move("g8", "f3", 'w');
+            b.Make_Move("f8", "b4", 'b');       // pinning pawn
 
             //  assert
+            try
+            {
+                b.Make_Move("d2", "d3", 'w');   // piece pinned should not work
+                Assert.Fail("Board accepted invalid move");
+            }
+            catch
+            {
+                Assert.IsTrue(true, "Board declined invalid move");
+            }
         }
 
 

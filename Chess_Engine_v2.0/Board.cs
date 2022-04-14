@@ -124,10 +124,25 @@ namespace Chess_Engine_v2
         /// <param name="end_pos"></param>
         /// <param name="colour"></param>
         /// <returns></returns>
-        public int[] Make_Move(int start_pos, int end_pos, char colour)
+        public int[] Make_Move(string start_pos, string end_pos, char colour)
         {
-
-            return new int[120];
+            // checking correct side is making move
+            if(side_to_move == colour)
+            {
+                try
+                {
+                    // converting string input of square to arrays location of that square
+                    Square start_square = (Square)Enum.Parse(typeof(Square), start_pos.ToLower());
+                    Square end_square = (Square)Enum.Parse(typeof(Square), end_pos.ToLower());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Make_Move method failed with error code: \n" + e);
+                }
+            }
+            
+            // return new board
+            return board;
         }
         #endregion
     }
