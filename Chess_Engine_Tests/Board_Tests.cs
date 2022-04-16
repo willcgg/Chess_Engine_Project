@@ -10,8 +10,7 @@ namespace Chess_Engine_Tests
     public class Board_Tests
     {
         public void test1()
-        {
-
+        { 
         }
     }
 }

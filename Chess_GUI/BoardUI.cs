@@ -94,7 +94,7 @@ namespace Chess_Engine_Project
 			// Error checking
 			if (FENTextBox.Text == "")
 			{
-				MessageBox.Show("Please enter a valid FEN string.\n\tFormat: e.g. rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq 1 0");
+				MessageBox.Show("Please enter a valid FEN string.\n\tFormat: e.g. rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq 0 1");
 			}
 			else
             {
@@ -110,7 +110,7 @@ namespace Chess_Engine_Project
 					MessageBox.Show("Error creating board from FEN, please check FEN format matches below example and try again\n\n" +
 						"\"{POSITION} {SIDE TO MOVE} {CASTLE AVAILABILITY} {EN-PASSANT TARGET} {HALF-PLY} {FULL-PLY}\"" +
 						"\n\nError code: " + ex);
-					FENTextBox.Text = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 1 0"; // resetting fen to correct format for user to copy
+					FENTextBox.Text = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"; // resetting fen to correct format for user to copy
 				}
 			}
         }

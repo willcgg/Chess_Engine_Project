@@ -202,7 +202,12 @@ namespace Chess_Engine_v2
         /// </summary>
         /// <param name="castle_availability"></param>
         public void Can_Castle(string castle_availability)
-        { 
+        {
+            // arrange 
+            b.b_k_castle = false;
+            b.b_q_castle = false;
+            b.w_k_castle = false;
+            b.w_q_castle = false;
             // Loop through castle_availability strings char's
             foreach (char side in castle_availability)
             {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Chess_Engine_v2;
+using System.Linq;
 
 namespace Chess_Engine_Tests
 {
@@ -16,7 +17,7 @@ namespace Chess_Engine_Tests
         public void FEN_Handler_Default()
         {
             // Arrange
-            // Initialising Test Var's      Setting them to what they should be on starting board position
+            // Initialising Test Var's      
             int[] default_board = new int[120]
             {
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -34,8 +35,8 @@ namespace Chess_Engine_Tests
             };
 
             int en_passant_target = 0;
-            int half_ply = 1;
-            int full_ply = 0;
+            int half_ply = 0;
+            int full_ply = 1;
             bool w_k_castle = true;
             bool w_q_castle = true;
             bool b_k_castle = true;
@@ -47,8 +48,8 @@ namespace Chess_Engine_Tests
             Board b_test = new Board();
 
             // Assert
-            Assert.IsTrue(b_test.board == default_board);
-            Assert.IsTrue(b_test.en_passant_target == en_passant_target);
+            Assert.IsTrue(Enumerable.SequenceEqual(b_test.board, default_board), "Test Failed: board array is not as expected");
+            Assert.IsTrue(b_test.en_passant_target == en_passant_target, "Test Failed: En_Passant target not correct");
             Assert.IsTrue(b_test.half_ply == half_ply);
             Assert.IsTrue(b_test.full_ply == full_ply);
             Assert.IsTrue(b_test.w_k_castle == w_k_castle);
@@ -70,14 +71,14 @@ namespace Chess_Engine_Tests
             {
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, 8, 4, 6, 10, 12, 6, 4, 8, -1,
+                -1, 2, 2, 2, 2, 2, 2, 2, 2, -1,
                 -1, 2, 2, 2, 2, 2, 2, 2, 2, -1,
                 -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
                 -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
                 -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
                 -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
                 -1, 1, 1, 1, 1, 1, 1, 1, 1, -1,
-                -1, 7, 3, 5, 9, 11, 5, 3, 7, -1,
+                -1, 1, 1, 1, 1, 1, 1, 1, 1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
             };
@@ -97,8 +98,8 @@ namespace Chess_Engine_Tests
                                                                                                 // {Pos, side, castle, en-passant, half, full-ply}
 
             // Assert
-            Assert.IsTrue(b_test.board == default_board);
-            Assert.IsTrue(b_test.en_passant_target == en_passant_target);
+            Assert.IsTrue(Enumerable.SequenceEqual(b_test.board, default_board), "Test Failed: board array is not as expected");
+            Assert.IsTrue(b_test.en_passant_target == en_passant_target, "Test Failed: En_Passant target not correct");
             Assert.IsTrue(b_test.half_ply == half_ply);
             Assert.IsTrue(b_test.full_ply == full_ply);
             Assert.IsTrue(b_test.w_k_castle == w_k_castle);
@@ -106,6 +107,11 @@ namespace Chess_Engine_Tests
             Assert.IsTrue(b_test.b_k_castle == b_k_castle);
             Assert.IsTrue(b_test.b_q_castle == b_q_castle);
             Assert.IsTrue(b_test.side_to_move == side_to_move);
+        }
+
+        public void FEN_Handler_ASCII_Converter()
+        {
+            
         }
     }
 }
