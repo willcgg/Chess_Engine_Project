@@ -5,10 +5,12 @@ using System;
 namespace Chess_Engine_Tests
 {
     /// <summary>
-    /// Test class to thoroughly test the pawn pieces valid movement in the engines logic
+    /// <para>Checks all possible valid pawn moves</para>
+    /// <para>Individually calls all pawn movement tests. Each test is given a good board position to
+    /// check all possibilities. E.g. en passant, in-check, pinned pieces etc..</para>
     /// </summary>
     [TestClass]
-    class Pawn_Tests
+    public class Pawn_Tests
     {
 
         Board b;

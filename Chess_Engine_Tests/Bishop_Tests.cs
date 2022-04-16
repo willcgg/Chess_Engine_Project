@@ -3,8 +3,11 @@ using Chess_Engine_v2;
 
 namespace Chess_Engine_Tests
 {
+    /// <summary>
+    /// <para>Checks all possible bishop movements</para>
+    /// </summary>
     [TestClass]
-    class Bishop_Tests
+    public class Bishop_Tests
     {
         Board board;
 
@@ -16,6 +19,7 @@ namespace Chess_Engine_Tests
             board = new Board();
 
             //  act
+
 
             //  assert
         }

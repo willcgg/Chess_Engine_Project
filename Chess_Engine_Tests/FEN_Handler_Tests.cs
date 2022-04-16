@@ -3,8 +3,11 @@ using Chess_Engine_v2;
 
 namespace Chess_Engine_Tests
 {
+    /// <summary>
+    /// Class to test the FEN_Handler class and its functions create the board correctly under every given circumstance
+    /// </summary>
     [TestClass]
-    class FEN_Handler_Tests
+    public class FEN_Handler_Tests
     {
         /// <summary>
         /// Method to test the default board position along with its attributes

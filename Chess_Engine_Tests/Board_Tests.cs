@@ -3,17 +3,15 @@ using Chess_Engine_v2;
 
 namespace Chess_Engine_Tests
 {
+    /// <summary>
+    /// Tests board and its attributes behave correctly
+    /// </summary>
     [TestClass]
-    class Board_Tests
+    public class Board_Tests
     {
-        [TestMethod]
-        public void FEN_Handler_Tests()
+        public void test1()
         {
-            // Arrange
-            FEN_Handler_Tests ft = new FEN_Handler_Tests();
 
-            // Act & Assert
-            
         }
     }
 }

@@ -3,8 +3,11 @@ using Chess_Engine_v2;
 
 namespace Chess_Engine_Tests
 {
+    /// <summary>
+    /// Checks all possible queen movements
+    /// </summary>
     [TestClass]
-    class Queen_Tests
+    public class Queen_Tests
     {
         Board board;
 

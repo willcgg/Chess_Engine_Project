@@ -3,8 +3,11 @@ using Chess_Engine_v2;
 
 namespace Chess_Engine_Tests
 {
+    /// <summary>
+    /// Checks all possible knight movements
+    /// </summary>
     [TestClass]
-    class Knight_Tests
+    public class Knight_Tests
     {
         Board board;
 

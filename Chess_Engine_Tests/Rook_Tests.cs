@@ -3,8 +3,12 @@ using Chess_Engine_v2;
 
 namespace Chess_Engine_Tests
 {
+    /// <summary>
+    /// <para>Checks all possible rook movements</para>
+    /// <para>e.g. Castling, pinned, blocking pieces e.t.c.</para>
+    /// </summary>
     [TestClass]
-    class Rook_Tests
+    public class Rook_Tests
     {
         Board board;
 
