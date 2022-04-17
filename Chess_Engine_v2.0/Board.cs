@@ -127,7 +127,7 @@ namespace Chess_Engine_v2
         public int[] Make_Move(string start_pos, string end_pos, char colour)
         {
             // checking correct side is making move
-            if(side_to_move == colour)
+            if (side_to_move == colour)
             {
                 try
                 {
@@ -137,22 +137,24 @@ namespace Chess_Engine_v2
                     // incrementing half-ply if no piece taken
                     half_ply++;
                     // changing side to move and full-ply
-                    if(side_to_move == 'w')
+                    if (side_to_move == 'w')
                         side_to_move = 'b';
                     else
                     {
                         side_to_move = 'w';
                         full_ply++;
                     }
-                        
 
-                    
+
+
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("Make_Move method failed with error code: \n" + e);
                 }
             }
+            else
+                Console.WriteLine("Wrong colour attempting to move");
             
             // return new board
             return board;

@@ -10,8 +10,11 @@ namespace Chess_Engine_Tests
     public class Board_Tests
     {
         [TestMethod]
-        public void test1()
-        { 
+        public void En_Passant_Tests()
+        {
+            
         }
+
+        
     }
 }
