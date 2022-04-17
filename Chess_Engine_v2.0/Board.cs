@@ -134,6 +134,19 @@ namespace Chess_Engine_v2
                     // converting string input of square to arrays location of that square
                     Square start_square = (Square)Enum.Parse(typeof(Square), start_pos.ToLower());
                     Square end_square = (Square)Enum.Parse(typeof(Square), end_pos.ToLower());
+                    // incrementing half-ply if no piece taken
+                    half_ply++;
+                    // changing side to move and full-ply
+                    if(side_to_move == 'w')
+                        side_to_move = 'b';
+                    else
+                    {
+                        side_to_move = 'w';
+                        full_ply++;
+                    }
+                        
+
+                    
                 }
                 catch (Exception e)
                 {

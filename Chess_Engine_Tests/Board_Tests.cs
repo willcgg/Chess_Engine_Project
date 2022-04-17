@@ -9,6 +9,7 @@ namespace Chess_Engine_Tests
     [TestClass]
     public class Board_Tests
     {
+        [TestMethod]
         public void test1()
         { 
         }
