@@ -180,13 +180,11 @@ namespace Chess_Engine_Project
 
 			// setting up vars
 			MouseEventArgs click = (MouseEventArgs)e;
-			Point coordinates = click.Location;
 			var c_height = click.Y;
 			var c_width = click.X;
 			var t_height = BoardPictureBox.Height;
 			var t_width = BoardPictureBox.Width;
-
-			Console.WriteLine(coordinates);
+			var square = "";
 
 			// work out row/col
 			var row = c_height / (t_height / 8.0);
@@ -194,17 +192,31 @@ namespace Chess_Engine_Project
 			// converting to int
 			int rank = (int)(row - (row % 1.0));
 			int file = (int)(col - (col % 1.0));
+			// convert to board square
+			if (file == 0)
+				square += "a" + (rank + 1);
+			else if(file == 1)
+				square += "b" + (rank + 1);
+			else if(file == 2)
+				square += "c" + (rank + 1);
+			else if(file == 3)
+				square += "d" + (rank + 1);
+			else if(file == 4)
+				square += "e" + (rank + 1);
+			else if(file == 5)
+				square += "f" + (rank + 1);
+			else if(file == 6)
+				square += "g" + (rank + 1);
+			else if(file == 7)
+				square += "h" + (rank + 1);
 			// outputting to console for debugging purposes
-			Console.Write("Row: ");
-			Console.WriteLine(rank);
-			Console.Write("Col: ");
-			Console.WriteLine(file);
+			Console.WriteLine(square);
 			// Calling the highlight of the square clicked
-			DrawHighlights(file, rank);
+			DrawSquareHighlight(file, rank);
 		}
 
 
-		private void DrawHighlights(int file, int rank) 
+		private void DrawSquareHighlight(int file, int rank) 
 		{
 			// copying current board bitmap (should be clear)
 			Bitmap board_ps = board.Clone() as Bitmap;
