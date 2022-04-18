@@ -25,12 +25,13 @@ namespace Chess_Engine_Project
         private void BoardUI_Load(object sender, EventArgs e)
         {
 			DrawBoardToScreen();
-        }
+		}
 
 		public void DrawBoardToScreen()
 		{
 			Graphics g = Graphics.FromImage(board);
 
+			// draw board
 			for (int file = 0; file < 8; file++)
 			{
 				for (int rank = 0; rank < 8; rank++)
@@ -49,44 +50,8 @@ namespace Chess_Engine_Project
 				}
 			}
 			BoardPictureBox.Image = board;
-			DrawPiecesToBoard();
-		}
-
-		public void DrawPiecesToBoard() 
-		{
-			Graphics g = Graphics.FromImage(board);
-			Font font = new Font("UTF-8", 52);
-
-			//black pieces
-			for (int file = 0; file < 8; file++)
-			{
-				g.DrawString("♟", font, Brushes.Black, file*100, 100);
-			}
-			g.DrawString("♜", font, Brushes.Black, 0, 0);
-			g.DrawString("♞", font, Brushes.Black, 100, 0);
-			g.DrawString("♝", font, Brushes.Black, 200, 0);
-			g.DrawString("♛", font, Brushes.Black, 300, 0);
-			g.DrawString("♚", font, Brushes.Black, 400, 0);
-			g.DrawString("♝", font, Brushes.Black, 500, 0);
-			g.DrawString("♞", font, Brushes.Black, 600, 0);
-			g.DrawString("♜", font, Brushes.Black, 700,  0);
-
-			//white pieces
-			for (int file = 0; file < 8; file++)
-			{
-				g.DrawString("♙", font, Brushes.White, file*100, 600);
-			}
-			g.DrawString("♖", font, Brushes.White, 0, 700);
-			g.DrawString("♘", font, Brushes.White, 100, 700);
-			g.DrawString("♗", font, Brushes.White, 200, 700);
-			g.DrawString("♕", font, Brushes.White, 300, 700);
-			g.DrawString("♔", font, Brushes.White, 400, 700);
-			g.DrawString("♗", font, Brushes.White, 500, 700);
-			g.DrawString("♘", font, Brushes.White, 600, 700);
-			g.DrawString("♖", font, Brushes.White, 700, 700);
-
-
-
+			// draw pieces
+			DrawPiecesToBoard(b);
 		}
 
         private void FENGenerateButton_Click(object sender, EventArgs e)
@@ -101,7 +66,11 @@ namespace Chess_Engine_Project
 				// Try run it through the engine FEN_Handler, if it creates error then do not accept the FEN
 				try
 				{
+					// create board in engines memory
 					FEN_Handler handler = new FEN_Handler(FENTextBox.Text, b);
+					// draw new board to GUI
+					DrawBoardToScreen();
+					// write board to text file for use in testing
 					string ASCII_board = handler.Convert_To_ASCII();
 					File.WriteAllText("C:/Users/wc104/source/repos/Chess_Engine_Project/board.txt", ASCII_board);
 				}
@@ -115,8 +84,97 @@ namespace Chess_Engine_Project
 			}
         }
 
+		public void DrawPiecesToBoard(Board b)
+		{
+			// init vars
+			Brush brush;
+			string current_piece = "";
+			Graphics g = Graphics.FromImage(board);
+			Font font = new Font("UTF-8", 52);
+			int file = 0;
+			int rank = 0;
 
-        private void BoardPictureBox_Click(object sender, EventArgs e)
+			// loop through board array
+			for (int x = 21; x < 99; x++)
+			{
+				// selecting brush colour 
+				if (b.board[x] == 1 || b.board[x] == 3 || b.board[x] == 5 || b.board[x] == 7 ||
+					b.board[x] == 9 || b.board[x] == 11)
+				{
+					// piece is white
+					brush = Brushes.White;
+				}
+				else
+					brush = Brushes.Black;
+
+				// finding what piece it is then drawing to board
+				switch(b.board[x])
+                {
+					case -1:
+						// blocker piece
+						current_piece = "";
+						break;
+					case 0:
+						// empty square
+						current_piece = "";
+						break;
+					case 1:
+						// white pawn
+						current_piece = "♙";
+						break;
+					case 2:
+						// black pawn
+						current_piece = "♟";
+						break;
+					case 3:
+						// white knight
+						current_piece = "♘";
+						break;
+					case 4:
+						current_piece = "♞";
+						break;
+					case 5:
+						current_piece = "♗";
+						break;
+					case 6:
+						current_piece = "♝";
+						break;
+					case 7:
+						current_piece = "♖";
+						break;
+					case 8:
+						current_piece = "♜";
+						break;
+					case 9:
+						current_piece = "♕";
+						break;
+					case 10:
+						current_piece = "♛";
+						break;
+					case 11:
+						current_piece = "♔";
+						break;
+					case 12:
+						current_piece = "♚";
+						break;
+				}
+
+				g.DrawString(current_piece, font, brush, file*100, rank*100);
+
+				// incrementing vars
+				if(b.board[x] != -1)
+                {
+					file++;
+                }
+				if (file > 0 && file % 8 == 0){
+					file = 0;
+					rank++;
+				}
+			}
+		}
+
+
+		private void BoardPictureBox_Click(object sender, EventArgs e)
         {
 			// Clearing previous clicks highlight
 
