@@ -8,13 +8,27 @@ namespace Chess_Engine_Tests
     /// </summary>
     [TestClass]
     public class Board_Tests
-    {
+    { 
         [TestMethod]
-        public void En_Passant_Tests()
+        public void Make_Move_Test()
         {
-            
+            // Arrange
+
+            // Act
+
+            // Assert
+
         }
 
-        
+        [TestMethod]
+        public void Unmake_Move_Test()
+        {
+            // Arrange
+
+            // Act
+
+            // Assert
+        }
+
     }
 }
