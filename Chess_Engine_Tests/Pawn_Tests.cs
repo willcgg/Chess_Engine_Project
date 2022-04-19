@@ -183,32 +183,8 @@ namespace Chess_Engine_Tests
             b = new Board();
 
             //  act
-            b.Make_Move("d2", "d3", 'w');
-            b.Make_Move("e7", "e6", 'b');
-            b.Make_Move("d3", "d4", 'w');
-            b.Make_Move("f8", "b4", 'b');           // in-check
-            // try moves which shouldnt work before valid move??
-            try
-            {
-                b.Make_Move("a2", "a4", 'w');           // passive move ( should fail )
-                //Assert.Fail("Test Failed: Invalid passive move accepted by engine");
-            }
-            catch
-            {
-                Console.WriteLine("Passed: move rejected by engine");
-            }
-            //  assert
-            // test that castling eligibility is temporarily gone until the check is resolved
-            Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle == false && b.w_q_castle == false && b.side_to_move == 'w'
-                && b.half_ply == 4 && b.full_ply == 3 && b.en_passant_target == 0, "Test Failed: Board game attributes incorrect.");
-
-            // rearrange
-            b.Make_Move("c2", "c3", 'w');           // blocking check
-
-            //  re-assert
-            //Assert.IsTrue(Enumerable.SequenceEqual(b_test.board, correct_board), "Test Failed: board array is not as expected");
-            Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'w'
-                && b.half_ply == 5 && b.full_ply == 3 && b.en_passant_target == 0, "Test Failed: Board game attributes incorrect.");
+            
+            // assert
         }
 
         [TestMethod]
@@ -234,29 +210,9 @@ namespace Chess_Engine_Tests
             b = new Board();
 
             //  act
-            b.Make_Move("e2", "e4", 'w');
-            b.Make_Move("e7", "e5", 'b');
-            b.Make_Move("g8", "f3", 'w');
-            b.Make_Move("f8", "b4", 'b');       // pinning pawn
+           
+            // assert
 
-            //  assert
-            try
-            {
-                b.Make_Move("d2", "d3", 'w');   // piece pinned should not work
-                //Assert.Fail("Board accepted invalid move");
-            }
-            catch
-            {
-                Assert.IsTrue(true, "Passed: Board declined invalid move");
-            }
-
-            // rearrange
-            b.Make_Move("", "", 'w');
-
-            // re-assert
-            //Assert.IsTrue(Enumerable.SequenceEqual(b_test.board, correct_board), "Test Failed: board array is not as expected");
-            Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'w'
-                && b.half_ply == 5 && b.full_ply == 3 && b.en_passant_target == 0, "Test Failed: Board game attributes incorrect.");
         }
 
 
