@@ -159,6 +159,69 @@ namespace Chess_Engine_v2
             // return new board
             return board;
         }
+
+        /// <summary>
+        /// Converts ASCII board string to a board int[] array
+        /// </summary>
+        /// <param name="ASCII_Board"></param>
+        /// <returns>int[] board</returns>
+        public int[] Convert_From_ASCII(string ASCII_Board) 
+        {
+            // init vars
+            int x = 21;
+            string[] ranks = ASCII_Board.Split('\n');           // split into ranks
+            // convert to board
+            foreach (string rank in ranks)
+            {
+                foreach(char piece in rank)
+                {
+                    switch (piece)
+                    {
+                        case '^':
+                            board[x] = (int)Piece.Type.empty;
+                            break;
+                        case '♙':
+                            board[x] = (int)Piece.Type.w_pawn;
+                            break;
+                        case '♟':
+                            board[x] = (int)Piece.Type.b_pawn;
+                            break;
+                        case '♘':
+                            board[x] = (int)Piece.Type.w_knight;
+                            break;
+                        case '♞':
+                            board[x] = (int)Piece.Type.b_knight;
+                            break;
+                        case '♗':
+                            board[x] = (int)Piece.Type.w_bishop;
+                            break;
+                        case '♝':
+                            board[x] = (int)Piece.Type.b_bishop;
+                            break;
+                        case '♖':
+                            board[x] = (int)Piece.Type.w_rook;
+                            break;
+                        case '♜':
+                            board[x] = (int)Piece.Type.b_rook;
+                            break;
+                        case '♕':
+                            board[x] = (int)Piece.Type.w_queen;
+                            break;
+                        case '♛':
+                            board[x] = (int)Piece.Type.b_queen;
+                            break;
+                        case '♔':
+                            board[x] = (int)Piece.Type.w_king;
+                            break;
+                        case '♚':
+                            board[x] = (int)Piece.Type.b_king;
+                            break;
+                    }
+                }
+                x += 2;         // skip blocker pieces
+            }
+            return board;
+        }
         #endregion
     }
 
