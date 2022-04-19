@@ -16,8 +16,9 @@ namespace Chess_Engine_Tests
 
         Board b;
 
+        #region White Pawn Tests
         [TestMethod]
-        public void Pawn_Movement_Valid_Backwards_Test()
+        public void White_Movement_Invalid_Backwards_Test()
         {
             //  arrange
             //----------------------------------------
@@ -43,7 +44,7 @@ namespace Chess_Engine_Tests
         }
 
         [TestMethod]
-        public void Pawn_Movement_Valid_Diagonal_Test()
+        public void White_Movement_Invalid_Diagonal_Test()
         {
             //  arrange
             //----------------------------------------
@@ -69,7 +70,7 @@ namespace Chess_Engine_Tests
         }
 
         [TestMethod]
-        public void Pawn_Movement_Invalid_Forward_Two_Spaces()
+        public void White_Movement_Invalid_Forward_Two_Spaces()
         {
             //  arrange
             //----------------------------------------
@@ -95,7 +96,7 @@ namespace Chess_Engine_Tests
         }
 
         [TestMethod]
-        public void Pawn_Movement_Valid_Forward_Two_Spaces()
+        public void White_Movement_Valid_Forward_Two_Spaces()
         {
             //  arrange
             //----------------------------------------
@@ -129,7 +130,7 @@ namespace Chess_Engine_Tests
         }
 
         [TestMethod]
-        public void Pawn_Movement_En_Passant()
+        public void White_Movement_En_Passant()
         {
             //  arrange
             string board = @"^^^^^^^^
@@ -159,6 +160,157 @@ namespace Chess_Engine_Tests
             //  assert
             Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
         }
+        #endregion
+
+        #region Black Pawn Tests
+        [TestMethod]
+        public void Black_Movement_Invalid_Backwards_Test()
+        {
+            //  arrange
+            //----------------------------------------
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ♟^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+            b.side_to_move = 'b';
+
+            //  act 
+            //----------------------------------------
+            // Moving backwards 2 squares
+            b.Make_Move("a5", "a7", 'b');
+
+            // assert
+            //----------------------------------------
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board)), "Test Failed: board array is not as expected");
+        }
+
+        [TestMethod]
+        public void Black_Movement_Invalid_Diagonal_Test()
+        {
+            //  arrange
+            //----------------------------------------
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ♟^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+            b.side_to_move = 'b';
+
+            //  act 
+            //----------------------------------------
+            // Moving diagonal
+            b.Make_Move("a5", "d8", 'b');
+
+            // assert
+            //----------------------------------------
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board)), "Test Failed: board array is not as expected");
+        }
+
+        [TestMethod]
+        public void Black_Movement_Invalid_Forward_Two_Spaces()
+        {
+            //  arrange
+            //----------------------------------------
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ♟^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+            b.side_to_move = 'b';
+
+            //  act 
+            //----------------------------------------
+            // Moving backwards 2 squares
+            b.Make_Move("a5", "a3", 'b');
+
+            // assert
+            //----------------------------------------
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board)), "Test Failed: board array is not as expected");
+        }
+
+        [TestMethod]
+        public void Black_Movement_Valid_Forward_Two_Spaces()
+        {
+            //  arrange
+            //----------------------------------------
+            string board = @"^^^^^^^^
+                            ♟^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            string board_final = @"^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ♟^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+            b.side_to_move = 'b';
+
+            //  act 
+            //----------------------------------------
+            // Moving backwards 2 squares
+            b.Make_Move("a7", "a5", 'b');
+
+            // assert
+            //----------------------------------------
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
+        }
+
+        [TestMethod]
+        public void Black_Movement_En_Passant()
+        {
+            //  arrange
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ♟^^^^^^^
+                            ^^^^^^^^
+                            ^♙^^^^^^
+                            ^^^^^^^^";
+            string board_final = @"^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^♟^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+            b.side_to_move = 'w';
+
+            //  act
+            b.Make_Move("b2", "b4", 'w');
+            b.Make_Move("a4", "b3", 'b');
+
+            //  assert
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
+        }
+        #endregion
 
         [TestMethod]
         public void Pawn_Movement_in_Check()
@@ -181,9 +333,10 @@ namespace Chess_Engine_Tests
                                 ^^^^^^^^
                                 ^^^^^^^^";
             b = new Board();
+            b.board = b.Convert_From_ASCII(board);
 
             //  act
-            
+
             // assert
         }
 

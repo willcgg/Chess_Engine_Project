@@ -9,41 +9,90 @@ namespace Chess_Engine_Tests
     [TestClass]
     public class Bishop_Tests
     {
-        Board board;
+        Board b;
 
         [TestMethod]
-        public void Movement_Valid()
+        public void Movement_Valid_Forward()
         {
-
             //  arrange
-            board = new Board();
+            string board = @"^^^^^^^^
+                            ^♟^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            string board_final = @"^^^^^^^^
+                                ^^^^^^^^
+                                ^♙^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
 
             //  act
 
-
-            //  assert
+            // assert
         }
 
         [TestMethod]
         public void Movement_in_Check()
         {
             //  arrange
-            board = new Board();
+            string board = @"^^^^^^^^
+                            ^♟^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            string board_final = @"^^^^^^^^
+                                ^^^^^^^^
+                                ^♙^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
 
             //  act
 
-            //  assert
+            // assert
         }
 
         [TestMethod]
         public void Movement_Pinned()
         {
             //  arrange
-            board = new Board();
+            string board = @"^^^^^^^^
+                            ^♟^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            string board_final = @"^^^^^^^^
+                                ^^^^^^^^
+                                ^♙^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
 
             //  act
 
-            //  assert
+            // assert
         }
     }
 }
