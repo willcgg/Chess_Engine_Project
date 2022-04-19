@@ -217,6 +217,7 @@ namespace Chess_Engine_v2
                             board[x] = (int)Piece.Type.b_king;
                             break;
                     }
+                    x += 1;
                 }
                 x += 2;         // skip blocker pieces
             }

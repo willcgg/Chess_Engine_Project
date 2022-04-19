@@ -1,6 +1,7 @@
 ﻿using Chess_Engine_v2;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace Chess_Engine_Tests
 {
@@ -14,124 +15,171 @@ namespace Chess_Engine_Tests
     {
 
         Board b;
-        int[] correct_board;
 
         [TestMethod]
-        public void Pawn_Movement_Valid()
+        public void Pawn_Movement_Valid_Backwards_Test()
         {
             //  arrange
-            b = new Board();
-
-            //  act & assert
             //----------------------------------------
-            // Normal 2 square move from starting pos
-            try
-            {
-                b.Make_Move("a2", "a4", 'w');
-                try
-                {
-                    //Assert.IsTrue(b.board[21] == (int)Piece.Type.empty && b.board[41] == (int)Piece.Type.w_pawn, "Piece not moved correctly.");
-                    Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'b'
-                        && b.half_ply == 1 && b.full_ply == 1 && b.en_passant_target == 0, "Test Failed: Board game attributes incorrect.");
-                }
-                catch
-                {
-                    Console.WriteLine("Incorrect board properties."); 
-                }
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("Pawn initial 2 square move failed with error code: ", e); 
-            }
-            // Normal 1 square response from black
-            try
-            {
-                b.Make_Move("a7", "a6", 'b');
-                //Assert.IsTrue(b.board[91] == (int)Piece.Type.empty && b.board[81] == (int)Piece.Type.b_pawn);
-                Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'w'
-                    && b.half_ply == 2 && b.full_ply == 2 && b.en_passant_target == 0, "Test Failed: Board game attributes incorrect.");
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("Pawn 1 Square response move failed with error code: ", e);
-            }
-            // Illegal 3 square move
-            try
-            {
-                b.Make_Move("b2", "b5", 'w');           // should throw an error
-            }
-            catch (Exception e)
-            {
-                // Code failed as expected, Test PASSED
-                Assert.IsTrue(true, "Test Passed; Illegal move declined by engine, error thrown: " + e);
-                Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'w'
-                    && b.half_ply == 2 && b.full_ply == 2 && b.en_passant_target == 0, "Test Failed: Board game attributes incorrect.");
-            }
-            // Wrong colour to move
-            try
-            {
-                b.Make_Move("b2", "b5", 'b');           // should throw an error
-            }
-            catch
-            {
-                Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'w'
-                    && b.half_ply == 2 && b.full_ply == 2 && b.en_passant_target == 0, "Test Failed: Board game attributes incorrect.");
-            }
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+
+            //  act 
+            //----------------------------------------
+            // Moving backwards 2 squares
+            b.Make_Move("a5", "a3", 'w');
+
+            // assert
+            //----------------------------------------
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board)), "Test Failed: board array is not as expected");
+        }
+
+        [TestMethod]
+        public void Pawn_Movement_Valid_Diagonal_Test()
+        {
+            //  arrange
+            //----------------------------------------
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+
+            //  act 
+            //----------------------------------------
+            // Moving diagonal
+            b.Make_Move("a5", "d8", 'w');
+
+            // assert
+            //----------------------------------------
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board)), "Test Failed: board array is not as expected");
+        }
+
+        [TestMethod]
+        public void Pawn_Movement_Invalid_Forward_Two_Spaces()
+        {
+            //  arrange
+            //----------------------------------------
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+
+            //  act 
+            //----------------------------------------
+            // Moving backwards 2 squares
+            b.Make_Move("a5", "a7", 'w');
+
+            // assert
+            //----------------------------------------
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board)), "Test Failed: board array is not as expected");
+        }
+
+        [TestMethod]
+        public void Pawn_Movement_Valid_Forward_Two_Spaces()
+        {
+            //  arrange
+            //----------------------------------------
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^";
+            string board_final = @"^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ♙^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
+            b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+
+            //  act 
+            //----------------------------------------
+            // Moving backwards 2 squares
+            b.Make_Move("a2", "a4", 'w');
+
+            // assert
+            //----------------------------------------
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
         }
 
         [TestMethod]
         public void Pawn_Movement_En_Passant()
         {
             //  arrange
-            correct_board = new int[120]
-            {
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, 8, 4, 6, 10, 12, 6, 4, 8, -1,
-                -1, 2, 2, 2, 2, 2, 2, 2, 2, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 1, 1, 1, 1, 1, 1, 1, 1, -1,
-                -1, 7, 3, 5, 9, 11, 5, 3, 7, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-            };
+            string board = @"^^^^^^^^
+                            ^♟^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            string board_final = @"^^^^^^^^
+                                ^^^^^^^^
+                                ^♙^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
             b = new Board();
+            b.board = b.Convert_From_ASCII(board);
+            b.side_to_move = 'b';
 
             //  act
-            b.Make_Move("a2", "a4", 'w');
-            b.Make_Move("a7", "a6", 'b');
-            b.Make_Move("a4", "a5", 'w');
             b.Make_Move("b7", "b5", 'b');
             b.Make_Move("a5", "b6", 'w');
 
             //  assert
-            //Assert.IsTrue(Enumerable.SequenceEqual(b_test.board, correct_board), "Test Failed: board array is not as expected");
-            Assert.IsTrue(b.b_k_castle && b.b_q_castle && b.w_k_castle && b.w_q_castle && b.side_to_move == 'b'
-                && b.half_ply == 5 && b.full_ply == 3 && b.en_passant_target == 0, "Test Failed: Board game attributes incorrect.");
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
         }
 
         [TestMethod]
         public void Pawn_Movement_in_Check()
         {
             //  arrange
-            correct_board = new int[120]
-            {
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, 8, 4, 6, 10, 12, 6, 4, 8, -1,
-                -1, 2, 2, 2, 2, 2, 2, 2, 2, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 1, 1, 1, 1, 1, 1, 1, 1, -1,
-                -1, 7, 3, 5, 9, 11, 5, 3, 7, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-            };
+            string board = @"^^^^^^^^
+                            ^♟^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            string board_final = @"^^^^^^^^
+                                ^^^^^^^^
+                                ^♙^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
             b = new Board();
 
             //  act
@@ -167,21 +215,22 @@ namespace Chess_Engine_Tests
         public void Pawn_Movement_Pinned()
         {
             //  arrange
-            correct_board = new int[120]
-            {
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, 8, 4, 6, 10, 12, 6, 4, 8, -1,
-                -1, 2, 2, 2, 2, 2, 2, 2, 2, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 1, 1, 1, 1, 1, 1, 1, 1, -1,
-                -1, 7, 3, 5, 9, 11, 5, 3, 7, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-            };
+            string board = @"^^^^^^^^
+                            ^♟^^^^^^
+                            ^^^^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            string board_final = @"^^^^^^^^
+                                ^^^^^^^^
+                                ^♙^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
             b = new Board();
 
             //  act
