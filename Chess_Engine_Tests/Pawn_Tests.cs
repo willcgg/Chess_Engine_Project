@@ -191,28 +191,30 @@ namespace Chess_Engine_Tests
         public void Pawn_Movement_Pinned()
         {
             //  arrange
-            string board = @"^^^^^^^^
-                            ^♟^^^^^^
-                            ^^^^^^^^
-                            ♙^^^^^^^
+            string board = @"^^^^^^^♝
                             ^^^^^^^^
                             ^^^^^^^^
                             ^^^^^^^^
-                            ^^^^^^^^";
-            string board_final = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^♙^^^^^^
+                            ♔^^^^^^^";
+            string board_final = @"^^^^^^^♝
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
                                 ^^^^^^^^
                                 ^♙^^^^^^
-                                ^^^^^^^^
-                                ^^^^^^^^
-                                ^^^^^^^^
-                                ^^^^^^^^
-                                ^^^^^^^^";
+                                ♔^^^^^^^";
             b = new Board();
+            b.board = b.Convert_From_ASCII(board);
 
             //  act
-           
-            // assert
+            b.Make_Move("b2", "b4", 'w');
 
+            // assert
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
         }
 
 
