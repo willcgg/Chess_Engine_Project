@@ -3,6 +3,7 @@
 ## Will Castleman (wc104)
 
 ### Introduction and Idea
+#### Background to Problem
 This project is about creating a chess engine which by the end will be able to play a respectable game of chess. It would typically be used by chess players to analyze positions for insight. It may also be used for training players up to a certain Elo rating and finally it could also just be used for a bit of fun. It will be programmed in C# and will mainly be used on a desktop computer and if there is time at the end of the project, also available to access on the web.
 
 I chose to take on this project not only because of my interest in the game itself; but also the personal growth and development I will get out of it as a programmer. This will be one of the biggest projects I have taken on solo. I will have to deep dive into some complex search and evaluate algorithms that make up the main bulk of this project. This is not only a task well suited to computers, but these algorithms' fundamental principles could be useful in many other domains. Additionally, my time management and prioritization skills will be challenged due to the amount of different moving parts of this project.
@@ -13,6 +14,7 @@ One of the first commercially available chess engines to exist was developed by 
 
 A lot of people confuse these kinds of projects with implementing aspects of AI in them. Historically some of the most powerful have, for instance Google's AlphaZero, which introduced neural networks to the chess programming world. However, in this project I will not be implementing any AI aspects due to the complexity and the amount of time it would take to produce and train is just not feasible for the timescale available. Additionally, it did not align with my goals out of the project. For this project I will be using a series of algorithms which fundamentally: finds out how good the position is (an evaluation), and finds the best move in this position (a search). Essentially, it is a brute force algorithm which will filter through a given chess position and will search and evaluate it for the best move. I will go into further depth on how this would work in the project analysis section.
 
+#### Justification to Task
 One of the main reasons I chose this project is not only because of the advanced understanding I will develop as a result of deep diving into researching these fundamental computing algorithms and concepts; but because of the large scope of other domains which benefit from the application of these algorithms. Examples of a few sectors which benefit from these algorithms include: finance, chemical, gaming, databases and big data, and even travel. 
 
 ### Project Links
