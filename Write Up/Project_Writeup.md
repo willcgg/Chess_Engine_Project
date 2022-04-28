@@ -2,26 +2,72 @@
 # Chess Engine Project
 ## Will Castleman (wc104)
 
-### Introduction and Idea
+### Introduction and Idea (5marks)
 #### Background to Problem
 This project is about creating a chess engine which by the end will be able to play a respectable game of chess. It would typically be used by chess players to analyze positions for insight. It may also be used for training players up to a certain Elo rating and finally it could also just be used for a bit of fun. It will be programmed in C# and will mainly be used on a desktop computer and if there is time at the end of the project, also available to access on the web.
 
+#### Justification to Task
 I chose to take on this project not only because of my interest in the game itself; but also the personal growth and development I will get out of it as a programmer. This will be one of the biggest projects I have taken on solo. I will have to deep dive into some complex search and evaluate algorithms that make up the main bulk of this project. This is not only a task well suited to computers, but these algorithms' fundamental principles could be useful in many other domains. Additionally, my time management and prioritization skills will be challenged due to the amount of different moving parts of this project.
 
-One of the first commercially available chess engines to exist was developed by Dietrich Prinz (1951) on a Ferranti Mark 1 at University of Manchester. The Ferranti Mark 1 lacked power so it was limited in terms of the fact that it could only find the best move when a position was 2 moves away from checkmate. The next engine the world saw was by a gentleman named Bernstein (1957) which was the first complete chess engine to run on a computer (IBM 704) which could play a game from start to finish taking roughly 8 minutes to make a move. It was a type B implementation which at its core is a selective technique which attempts to cut processing times by examining variations out as far as possible and only evaluating when a reasonable amount of instability in the position has been established. It then pruned unnecessary pointless variations to further cut processing times. This is done by creating a function which evaluates the stability of the position (e.g. en prise). See Figure 1 for a “Crude definition” of what this algorithm would look like.
-
-![Figure 1](/Write%20Up/Images/crude_definition.PNG)
-
-A lot of people confuse these kinds of projects with implementing aspects of AI in them. Historically some of the most powerful have, for instance Google's AlphaZero, which introduced neural networks to the chess programming world. However, in this project I will not be implementing any AI aspects due to the complexity and the amount of time it would take to produce and train is just not feasible for the timescale available. Additionally, it did not align with my goals out of the project. For this project I will be using a series of algorithms which fundamentally: finds out how good the position is (an evaluation), and finds the best move in this position (a search). Essentially, it is a brute force algorithm which will filter through a given chess position and will search and evaluate it for the best move. I will go into further depth on how this would work in the project analysis section.
-
-#### Justification to Task
-One of the main reasons I chose this project is not only because of the advanced understanding I will develop as a result of deep diving into researching these fundamental computing algorithms and concepts; but because of the large scope of other domains which benefit from the application of these algorithms. Examples of a few sectors which benefit from these algorithms include: finance, chemical, gaming, databases and big data, and even travel. 
+One of the main reasons I chose this project is not only because of the advanced understanding I will develop as a result of deep diving into researching these fundamental computing algorithms and concepts; but because of the large scope of other domains which benefit from the application of these algorithms. Examples of a few sectors which benefit from these algorithms include:
+- Finance
+- Chemical
+- Gaming
+- Databases and big data
+- Travel 
 
 ### Project Links
 - [GITHUB](https://github.com/willcgg/Chess_Engine_Project)
 - [TRELLO BOARD](https://trello.com/b/KsboK28s/project-backlog)
 
 ### Project Analysis (20 Marks)
+Traditionally most chess engines follow the same blueprint of:
+- Finding all candidate moves
+- Iterating through tree of potential moves to a given depth
+- Assessing the tree to find the best move
+
+An engines quality is usually evaluated based on two criteria:
+- Speed - How fast it finds a list of potential 'good' moves
+- Accuracy - How fast it finds the best move out of these moves
+
+One of the first commercially available chess engines to exist was developed by Dietrich Prinz (1951) on a Ferranti Mark 1 at University of Manchester. The Ferranti Mark 1 lacked power so it was limited in terms of the fact that it could only find the best move when a position was 2 moves away from checkmate. The next engine the world saw was by a gentleman named Bernstein (1957) which was the first complete chess engine to run on a computer (IBM 704) which could play a game from start to finish taking roughly 8 minutes to make a move. It was a type B implementation which at its core is a selective technique which attempts to cut processing times by examining variations out as far as possible and only evaluating when a reasonable amount of instability in the position has been established. It then pruned unnecessary pointless variations to further cut processing times. This is done by creating a function which evaluates the stability of the position (e.g. en prise). See Figure 1 for a “Crude definition” of what this algorithm would look like.
+
+![Figure 1](/Write%20Up/Images/crude_definition.PNG)
+
+Figure 1: A "Crude definition" of a en prise algorithm
+
+Since then engines have developed significantly with engines such as:
+- AlphaZero
+- Stockfish
+- Leela Chess Zero
+- Komodo Chess
+
+Stockfish, one of the most powerful and well known engines available to the public, was developed over several decades with the input from several chess grandmasters and many other sources. It used to be just a brute force style algorithm analysing millions of positions per second for the optimal move; however, since the famous loss against AlphaZero spoke about below implemented aspects of AI and machine learning. 
+
+Historically some of the most powerful engines have implemented aspects of AI, for instance Google's AlphaZero, which introduced neural networks to the chess programming world. AI demonstrated its supremacy over other engines when it came out victorious in its hundred game match against the well known Stockfish 8, which at the time of playing this match could beat even the top players in the world. This match up was played with three hours play time with 15 second increment meaning there was plenty of time for both engines to evaluate positions thoroughly to the best of their abilities; and makes any arguments of time limitations playing to either of the engines disadvantage obsolete. 
+
+AlphaZero even soundly won against the traditional engine in a series of time-odds match ups with an astounding time odds of 10:1; meaning that AlphaZero even won with ten times less time than that of Stockfish (see figure 2). Furthermore, to take it further the machine-learning engine even won match ups with a version of Stockfish with a "strong opening book". It did win a substantial amount more games when AlphaZero was playing as black however not nearly enough to win the overall match (see Figure 3 for results). These victories over the strongest of traditional chess engines show just how powerful AI can be in both:
+- Evaluating moves
+- Searching for moves
+
+DeepMind released information suggesting AlphaZero uses a Monte Carlo tree search algorithm to examine around 60,000 positions per second compared to Stockfishes 60 million per second; demonstrating its much higher effeciency in deciding its move.
+
+
+![Figure 2](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/phponPJMm.png)
+
+Figure 2: AlphaZero's results in time odds matches against Stockfish engine
+
+![Figure 3](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/php3NK0bQ.png)
+
+Figure 3: AlphaZero's match up results against Stockfish with a "strong opening book". Image by DeepMind.
+
+These results safely conclude that AI and machine learning are superior over traditional engines and have solidified their place in the game and engines today. Since the results were released many developers started projects with aspects of AlphaZero 
+
+However, in this project I will not be implementing any AI aspects due to the complexity and the amount of time it would take to produce and train is just not feasible for the timescale available. Additionally, it did not align with my goals out of the project. For this project I will be using a series of algorithms which fundamentally:
+- Finds all legal moves for any given piece in any valid board position
+- Finds out how good the position is (an evaluation)
+- Finds the best move in this position (a search)
+Essentially, it is a brute force program which will filter through a given chess position and will search and evaluate it for the best move.
 
 The language I will be using to produce the engine will be C#. This is for a number of reasons such as: familiarity, portability, object-oriented nature, and finally it being a static language; this makes it easier to find errors, understand the code and also write it. C#'s main advantage is it being an object-oriented language, this makes the code highly efficient, reusable, flexible, scalable and easy to maintain. Additionally, the chess programming world is largely dominated by C and C++  languages, meaning there is a huge community of developers and resources available. Even some of the strongest engines written in other languages were eventually rewritten in C, e.g. Booot written by Alex Morozov in Delphi, it was rewritten due to running into too many 64-bit bugs. It is also commonly used for web and windows applications which fits the project's needs. 
 
