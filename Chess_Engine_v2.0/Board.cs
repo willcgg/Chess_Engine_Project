@@ -186,7 +186,8 @@ namespace Chess_Engine_v2
         }
 
         /// <summary>
-        /// Converts ASCII board string to a board int[] array
+        /// Converts ASCII board string to a board int[] array. Does not touch board properties due to it being impossible
+        /// to tell whether the king or either rooks have moved with only board position
         /// </summary>
         /// <param name="ASCII_Board"></param>
         /// <returns>int[] board</returns>
