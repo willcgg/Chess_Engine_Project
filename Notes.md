@@ -84,24 +84,24 @@ Supervisor spoke and explained more in depth what each section of the report nee
 - Spoke about setting up unit tests first to get started on code
 
 ### Notes from meeting:
-3ghz processor, how many operations can this perform? Given this many positions how long will it take… ball park estimate, different search depth
+3ghz processor, how many operations can this perform? Given this many positions how long will it takeï¿½ ball park estimate, different search depth
 Spoke about getting on with code, trying to do some testing, think about class structure
 Write tests until your happy with how they look and how the code you write will function well. 
 
 ## SUPERVISOR MEETING 07/03/2022 @3-3:45pm
 
-## Action Points
+### Action Points
 - Merge branches back to master and use better branch technique
 - Focus on VisualBoardClickFeedback feature so users can interact with the GUI
 - Next, ModifyBoardState method to represent these changes in the engines memory
 - Look into some sort of new easier human readable board representation for use in testing
 - Write about data structures used inside the document for the project
 
-## Notes:
-Adopt feature branch strategy, ticket no and keywords
-Merge all branches so there is only one and branches for features
-Focus on VisualBoardClickFeedback feature:
-When click on a piece get some feedback for the user to see that something has happened, for example highlight valid squares to move to
+### Notes:
+<p>Adopt feature branch strategy, ticket no and keywords
+Merge all branches so there is only one and branches for features</p>
+<p>Focus on VisualBoardClickFeedback feature:
+When click on a piece get some feedback for the user to see that something has happened, for example highlight valid squares to move to</p>
 Next, ModifyBoardState
 ASCI board representation from board state to make tests more readable, diff way of representing boards from FEN
 BoardtoFENstring update FEN in GUI when user makes move
@@ -109,21 +109,45 @@ Doc - talk about data structures
 
 ## SUPERVISOR MEETING 21/03/2022 @3-3:45pm
 
-## Action Points
+### Action Points
 - Implement clickable GUI; approach with image box layers for different needs, and some kind of coordinate converter to get what piece was clicked
 - Implement error catcher for gui in FEN string validation; try catch
 
-## Notes:
+### Notes:
 FEN validation: regex checks? TRY CATCH good enough
 Look into how to get clickable pieces on the gui, need some human interaction in the program. COORDINATES CONVERTER Return square on
 
 
 ## SUPERVISOSR MEETING 07/04/2022 @4-5pm
 
-## Action Points
+### Action Points
 - Solve project dependency issues from tutorial on teams.
 - Write some unit tests and write about it in documentation.
 - Work on document alongside hitting key criteria from marking scheme.
 
-## Notes
+### Notes
 Create new projects with correct frameworks to try solve issues with linking them together.
+
+## SUPERVISOR MEETING 28/04/2022 @2-3:15pm
+
+### Action Points
+- Focus on write-up for next couple weeks
+- Implement valid move function to return valid moves for main different vector pieces: knight and bishop
+  
+### Notes
+<p>Into Section: 
+Talk about how the project is split with: automated testing, GUI, and engine </p>
+
+<p>Problem analysis
+- Talk about use of ai helping to find good moves over thousands of iterations
+- Heuristics of game whats a good move? look at past games add into program
+- Different ways of doing it: dictionary for starting moves to avoid computation and raw brute forcing it, ie Key:Value  FEN:Move to make there be less processing in the early game </p>
+<p> Design
+Diagrams:
+> Class Diagram 
+> Sequence Diagram: for functions etc
+> Flow charts
+> Project Planning: Gantt Chart aware of project planning techniques.
+Used MVC in project, how structured architecture of system, ie how the project was split into 3, segmented classes reduce coupling etc just talk about why structured project like i did
+</p>
+Code quality: talk about branches ticket numbers. commits, why branched off at certain points

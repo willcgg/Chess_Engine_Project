@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Chess_Engine_v2;
+using System.Linq;
+using System;
 
 namespace Chess_Engine_Tests
 {
@@ -32,7 +34,7 @@ namespace Chess_Engine_Tests
                                  ^^^^^^^^
                                  ^^^^^^^^";
             b = new Board();
-            b.board = b.ConvertFromASCII(board);
+            b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
 
             // Act
@@ -71,10 +73,10 @@ namespace Chess_Engine_Tests
                             ^^^^^^^^
                             ^^^^^^^^";
             b = new Board();
-            b.board = b.ConvertFromASCII(board);
+            b.board = b.Convert_From_ASCII(board);
 
             // Act
-            b.Unmake_Move();
+            //b.Unmake_Move();
 
             // Assert
             Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: Board array is not as expected");
