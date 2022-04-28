@@ -131,38 +131,56 @@ namespace Chess_Engine_v2
         /// <returns></returns>
         public int[] Make_Move(string start_pos, string end_pos, char colour)
         {
+            // init
+            Piece.Type selected_piece;
+            Piece.Type target_piece;
+            int[] piece_offsets;
+            int start_square;
+            int end_square;
+            bool valid_move;
+
             // checking correct side is making move
             if (side_to_move == colour)
             {
-                try
+                // converting string input of square to arrays location of that square
+                start_square = (int)Enum.Parse(typeof(Square), start_pos);
+                end_square = (int)Enum.Parse(typeof(Square), end_pos);
+                // work out what piece is in the selected square
+                selected_piece = (Piece.Type)start_square;
+                target_piece = (Piece.Type)end_square;
+                // selecting vector offset
+                if (selected_piece == Piece.Type.w_pawn)
+                    piece_offsets = W_Pawn_Offsets;
+                else if (selected_piece == Piece.Type.b_pawn)
+                    piece_offsets = B_Pawn_Offsets;
+                else if (selected_piece == Piece.Type.b_knight || selected_piece == Piece.Type.b_knight)
+                    piece_offsets = Knight_Offsets;
+                else if (selected_piece == Piece.Type.b_queen || selected_piece == Piece.Type.w_queen || selected_piece == Piece.Type.b_king || selected_piece == Piece.Type.w_king)
+                    piece_offsets = KQ_Offsets;
+                else if (selected_piece == Piece.Type.b_bishop || selected_piece == Piece.Type.w_bishop)
+                    piece_offsets = Bishop_Offsets;
+                else
+                    piece_offsets = Rook_Offsets;
+                // blocking pieces?
+
+                // move the piece
+
+
+                // incrementing half-ply if no piece taken
+                half_ply++;
+                // changing side to move and full-ply
+                if (side_to_move == 'w')
+                    side_to_move = 'b';
+                else
                 {
-                    // move the piece
-
-                    // converting string input of square to arrays location of that square
-                    Square start_square = (Square)Enum.Parse(typeof(Square), start_pos);
-                    Square end_square = (Square)Enum.Parse(typeof(Square), end_pos);
-                    // incrementing half-ply if no piece taken
-                    half_ply++;
-                    // changing side to move and full-ply
-                    if (side_to_move == 'w')
-                        side_to_move = 'b';
-                    else
-                    {
-                        side_to_move = 'w';
-                        full_ply++;
-                    }
-
-
-
+                    side_to_move = 'w';
+                    full_ply++;
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Make_Move method failed with error code: \n" + e);
-                }
+
             }
             else
                 Console.WriteLine("Wrong colour attempting to move");
-            
+
             // return new board
             return board;
         }
@@ -172,7 +190,7 @@ namespace Chess_Engine_v2
         /// </summary>
         /// <param name="ASCII_Board"></param>
         /// <returns>int[] board</returns>
-        public int[] Convert_From_ASCII(string ASCII_Board) 
+        public int[] Convert_From_ASCII(string ASCII_Board)
         {
             // init vars
             int x = 21;
@@ -180,7 +198,7 @@ namespace Chess_Engine_v2
             // convert to board
             foreach (string rank in ranks)
             {
-                foreach(char piece in rank)
+                foreach (char piece in rank)
                 {
                     switch (piece)
                     {

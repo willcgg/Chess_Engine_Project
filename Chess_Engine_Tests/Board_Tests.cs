@@ -8,11 +8,14 @@ namespace Chess_Engine_Tests
     /// </summary>
     [TestClass]
     public class Board_Tests
-    { 
+    {
+        Board b;
+
         [TestMethod]
         public void Make_Move_Test()
         {
             // Arrange
+            b = new Board();
 
             // Act
 
