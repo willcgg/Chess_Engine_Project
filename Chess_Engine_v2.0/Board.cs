@@ -7,11 +7,16 @@ namespace Chess_Engine_v2
     public class Board
     {
         #region Constants
+        // default board pos
         const string FEN_DEFAULT = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-        
-        /// <summary>
-        /// Defines board squares array location from Whites perspective
-        /// </summary>
+        // piece offsets in board array
+        readonly int[] W_Pawn_Offsets = new int[] { -10, -20, -9, -11 };
+        readonly int[] B_Pawn_Offsets = new int[] { 10, 20, 9, 11 };
+        readonly int[] Bishop_Offsets = new int[] { 9, 11, -9, -11 };
+        readonly int[] Knight_Offsets = new int[] { 21, 19, 12, 8, -8, -12, -19, 21 };
+        readonly int[] Rook_Offsets = new int[] { 1, -1, 10, -10 };
+        readonly int[] KQ_Offsets = new int[] { 1, 9, 10, 11, -11, -10, -9, 1 };
+        // square array positions
         public enum Square
         {
             a8 = 21,
@@ -131,9 +136,11 @@ namespace Chess_Engine_v2
             {
                 try
                 {
+                    // move the piece
+
                     // converting string input of square to arrays location of that square
-                    Square start_square = (Square)Enum.Parse(typeof(Square), start_pos.ToLower());
-                    Square end_square = (Square)Enum.Parse(typeof(Square), end_pos.ToLower());
+                    Square start_square = (Square)Enum.Parse(typeof(Square), start_pos);
+                    Square end_square = (Square)Enum.Parse(typeof(Square), end_pos);
                     // incrementing half-ply if no piece taken
                     half_ply++;
                     // changing side to move and full-ply
