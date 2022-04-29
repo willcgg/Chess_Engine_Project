@@ -42,35 +42,67 @@ Since then engines have developed significantly with engines such as:
 - Leela Chess Zero
 - Komodo Chess
 
-Stockfish, one of the most powerful and well known engines available to the public, was developed over several decades with the input from several chess grandmasters and many other sources. It used to be just a brute force style algorithm analysing millions of positions per second for the optimal move defined by countless human input; however, since the famous loss against AlphaZero spoke about below they implemented aspects of AI and machine learning to further enhance the engine. 
+Stockfish, one of the most powerful and well known engines available to the public, was developed over several decades with the input from several chess grandmasters and many other sources. It used to be just a brute force style algorithm analysing millions of positions per second for the optimal move defined by countless human input; however, since the famous loss against AlphaZero spoke about below they implemented aspects of AI and machine learning to further enhance the engine. (Champion, 2022)
 
-Stockfish works by storing the board in a bitboard fashion, the board is made up of 64 bits with 1 bit representing a square on the board (see figure 2); if the bit it is set to 1 it is occupied with a piece. This way it is easy to represent th when a piece is moved:
+Stockfish works by storing the board in a bitboard fashion, the board is made up of 64 bits with 1 bit representing a square on the board (see figure 2); if the bit it is set to 1 it is occupied with a piece. This way it is easy to represent when a piece is moved through bitwise operations:
 - One square forward: left shift of 8 bits
 - One square left: left shift of 1 bit
 - Retrieving all pieces currently on board: Logical OR of all the individual bitboards together
 - Checking if a square is occupied: Logical AND of the bitboards with the positional mask of the selected square
 - E.t.c...
 
-![Figure 2](https://www.chessprogramming.org/images/2/27/Lefr.JPG)
+![Figure 2](./images/little_endian_representation.PNG)
 
 Figure 2: Little-Endian File-Rank Mapping
 
-Historically some of the most powerful engines have implemented aspects of AI, for instance Google's AlphaZero, which introduced neural networks to the chess programming world. AI demonstrated its supremacy over other engines when it came out victorious in its hundred game match against the well known Stockfish 8, which at the time of playing this match could beat even the top players in the world. This match up was played with three hours play time with 15 second increment meaning there was plenty of time for both engines to evaluate positions thoroughly to the best of their abilities; and makes any arguments of time limitations playing to either of the engines disadvantage obsolete. 
+Now I have explained how Stockfish internally represents the chess board, next is how it finds its list of candidate moves. Some pieces, for example the knight, have fixed candidate moves due to the way they move; that being in an 'L' shape, three squares forward and one square left (see Figure 3). (Champion, 2022)
 
-AlphaZero even soundly won against the traditional engine in a series of time-odds match ups with an astounding time odds of 10:1; meaning that AlphaZero even won with ten times less time than that of Stockfish (see figure 3). Furthermore, to take it further the machine-learning engine even won match ups with a version of Stockfish with a "strong opening book". It did win a substantial amount more games when AlphaZero was playing as black however not nearly enough to win the overall match (see Figure 4 for results). These victories over the strongest of traditional chess engines show just how powerful AI can be in both:
+![Figure 3](https://miro.medium.com/max/412/1*sEZ4IjrU8g81anHKq74Clg.png)
+
+Figure 3: Knight piece movement example
+
+Bitshift operations are stored for knights movement, these contain all eight operations required to move the knight in any of its directions. This works for most knight movement except for those where it is near a side of the board in which a mask is applied to ensure that no moves where the piece ends up off the board are generated. To accomplish this a safe destination method is run after generating all psuedo legal candidate moves in order to eliminate those that are invalid off board positions. Psuedo legal move generators simply look for all empty square moves possible given a board position, it ignores most scenarios like listed below; once the moves have been generated it then runs a 'bool Position::legal(move m)' method alongside 'position.cpp' which tests whether the moves generated are indeed legal. (Champion, 2022) The method checks for scenarios such as:
+- Blocking pieces
+- Discovered checks
+- Pinned pieces
+- E.t.c..
+
+For the other sliding pieces such as: rook, bishop and the queen candidate moves are a little bit more problematic to find due to the sliding nature of the pieces movement; they can move indefinite amount of squares in their available attacking rays depending on whether a piece is blocking. To accomplish move generation of these pieces a combination of the chosen pieces attacking rays and the complete board representation need to be AND'd together to find these blocking pieces (see figure 4). Although this can be done on the fly for each piece and each attacking ray direction they can move, it is computationally expensive to do so. Therefore Stockfish uses a slightly more efficient way of doing so by using look-up method in an array containing all the candidate moves for the sliding piece. However, finding all blockers for the piece is still needed.(Champion, 2022)
+
+![Figure 4](https://miro.medium.com/max/1114/1*3pr2KR7a5ATzHT8gizWABQ.png)
+
+Figure 4: Sliding piece move generation; blocking pieces
+
+Once the blockers have been found, Stockfish uses this board combined with the existing array containing the candidate moves to generate the actual candidate moves for the piece (see figure 5 below).
+
+![Figure 5](https://miro.medium.com/max/812/1*0aczfRzfKOceRX7nlaDcoA.png)
+
+Figure 5: Finding legal candidate moves for sliding pieces
+
+However with this methods comes a problem due to the blocker piece board being a 64 bit array the array containing the candidate moves will have up to 2<sup>64</sup> elements contained; this works out at about one excabyte in size which is much larger than any modern memory can hold at once. To solve this issue Stockfish uses a hashmap to store the candidate moves more memory efficiently. This brings the candidate move array down to only a few hundred kilobytes; easily handled by most modern computer systems. For a diagramatic summary of all described above see figure 6. (Champion, 2022)
+
+![Figure 6](https://miro.medium.com/max/1400/1*FbSMy5L6nkJqATgI9bTm5g.png)
+
+Figure 6: Summary of Stockfishes process to generating a move list
+
+
+
+Historically some of the most powerful engines have implemented aspects of AI, for instance Google's AlphaZero, which introduced neural networks to the chess programming world. AI demonstrated its supremacy over other engines when it came out victorious in its hundred game match against the well known Stockfish 8, which at the time of playing this match could beat even the top players in the world. This match up was played with three hours play time with 15 second increment meaning there was plenty of time for both engines to evaluate positions thoroughly to the best of their abilities; and makes any arguments of time limitations playing to either of the engines disadvantage obsolete. (Pete, 2022)
+
+AlphaZero even soundly won against the traditional engine in a series of time-odds match ups with an astounding time odds of 10:1; meaning that AlphaZero even won with ten times less time than that of Stockfish (see figure 4). Furthermore, to take it further the machine-learning engine even won match ups with a version of Stockfish with a "strong opening book". It did win a substantial amount more games when AlphaZero was playing as black however not nearly enough to win the overall match (see Figure 5 for results). These victories over the strongest of traditional chess engines show just how powerful AI can be in both:
 - Evaluating moves
 - Searching for moves
 
 DeepMind released information suggesting AlphaZero uses a Monte Carlo tree search algorithm to examine around 60,000 positions per second compared to Stockfishes 60 million per second; demonstrating its much higher effeciency in deciding its move.
 
 
-![Figure 3](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/phponPJMm.png)
+![Figure 4](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/phponPJMm.png)
 
-Figure 3: AlphaZero's results in time odds matches against Stockfish engine
+Figure 4: AlphaZero's results in time odds matches against Stockfish engine
 
-![Figure 4](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/php3NK0bQ.png)
+![Figure 5](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/php3NK0bQ.png)
 
-Figure 4: AlphaZero's match up results against Stockfish with a "strong opening book". Image by DeepMind.
+Figure 5: AlphaZero's match up results against Stockfish with a "strong opening book". Image by DeepMind.
 
 These results safely conclude that AI and machine learning are superior over traditional engines and have solidified their place in the game and engines today. Since the results were released many developers started projects with aspects of AlphaZero 
 
@@ -131,3 +163,7 @@ Hercules, A., 2022. How Does A Chess Engine Work? A Guide To How Computers Play 
 En.wikipedia.org. 2022. Forsyth–Edwards Notation - Wikipedia. [online] Available at: <https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation> [Accessed 6 March 2022].
 
 Chessprogramming.org. 2022. 10x12 Board - Chessprogramming wiki. [online] Available at: <https://www.chessprogramming.org/10x12_Board> [Accessed 21 March 2022].
+
+Champion, A., 2022. Dissecting Stockfish Part 1: In-Depth look at a chess engine. [online] Medium. Available at: <https://towardsdatascience.com/dissecting-stockfish-part-1-in-depth-look-at-a-chess-engine-7fddd1d83579#:~:text=Stockfish%20is%20actually%20performing%20the,blocking%20pieces%20or%20discovered%20checks.> [Accessed 29 April 2022].
+
+(Pete), P., 2022. AlphaZero Crushes Stockfish In New 1,000-Game Match. [online] Chess.com. Available at: <https://www.chess.com/news/view/updated-alphazero-crushes-stockfish-in-new-1-000-game-match#games> [Accessed 29 April 2022].
