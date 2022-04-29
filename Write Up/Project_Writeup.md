@@ -30,7 +30,7 @@ An engines quality is usually evaluated based on two criteria:
 - Speed - How fast it finds a list of potential 'good' moves
 - Accuracy - How fast it finds the best move out of these moves
 
-One of the first commercially available chess engines to exist was developed by Dietrich Prinz (1951) on a Ferranti Mark 1 at University of Manchester. The Ferranti Mark 1 lacked power so it was limited in terms of the fact that it could only find the best move when a position was 2 moves away from checkmate. The next engine the world saw was by a gentleman named Bernstein (1957) which was the first complete chess engine to run on a computer (IBM 704) which could play a game from start to finish taking roughly 8 minutes to make a move. It was a type B implementation which at its core is a selective technique which attempts to cut processing times by examining variations out as far as possible and only evaluating when a reasonable amount of instability in the position has been established. It then pruned unnecessary pointless variations to further cut processing times. This is done by creating a function which evaluates the stability of the position (e.g. en prise). See Figure 1 for a “Crude definition” of what this algorithm would look like.
+One of the first commercially available chess engines to exist was developed by Dietrich Prinz (1951) on a Ferranti Mark 1 at University of Manchester. The Ferranti Mark 1 lacked power so it was limited in terms of the fact that it could only find the best move when a position was 2 moves away from checkmate. The next engine the world saw was by a gentleman named Bernstein (1957) which was the first complete chess engine to run on a computer (IBM 704) which could play a game from start to finish taking roughly 8 minutes to make a move. It was a type B implementation which at its core is a selective technique which attempts to cut processing times by examining variations out as far as possible and only evaluating when a reasonable amount of instability in the position has been established. It then pruned unnecessary redundant variations to further cut processing times. This is done by creating a function which evaluates the stability of the position (e.g. en prise). See Figure 1 for a “Crude definition” of what this algorithm would look like.
 
 ![Figure 1](/Write%20Up/Images/crude_definition.PNG)
 
@@ -42,24 +42,35 @@ Since then engines have developed significantly with engines such as:
 - Leela Chess Zero
 - Komodo Chess
 
-Stockfish, one of the most powerful and well known engines available to the public, was developed over several decades with the input from several chess grandmasters and many other sources. It used to be just a brute force style algorithm analysing millions of positions per second for the optimal move; however, since the famous loss against AlphaZero spoke about below implemented aspects of AI and machine learning. 
+Stockfish, one of the most powerful and well known engines available to the public, was developed over several decades with the input from several chess grandmasters and many other sources. It used to be just a brute force style algorithm analysing millions of positions per second for the optimal move defined by countless human input; however, since the famous loss against AlphaZero spoke about below they implemented aspects of AI and machine learning to further enhance the engine. 
+
+Stockfish works by storing the board in a bitboard fashion, the board is made up of 64 bits with 1 bit representing a square on the board (see figure 2); if the bit it is set to 1 it is occupied with a piece. This way it is easy to represent th when a piece is moved:
+- One square forward: left shift of 8 bits
+- One square left: left shift of 1 bit
+- Retrieving all pieces currently on board: Logical OR of all the individual bitboards together
+- Checking if a square is occupied: Logical AND of the bitboards with the positional mask of the selected square
+- E.t.c...
+
+![Figure 2](https://www.chessprogramming.org/images/2/27/Lefr.JPG)
+
+Figure 2: Little-Endian File-Rank Mapping
 
 Historically some of the most powerful engines have implemented aspects of AI, for instance Google's AlphaZero, which introduced neural networks to the chess programming world. AI demonstrated its supremacy over other engines when it came out victorious in its hundred game match against the well known Stockfish 8, which at the time of playing this match could beat even the top players in the world. This match up was played with three hours play time with 15 second increment meaning there was plenty of time for both engines to evaluate positions thoroughly to the best of their abilities; and makes any arguments of time limitations playing to either of the engines disadvantage obsolete. 
 
-AlphaZero even soundly won against the traditional engine in a series of time-odds match ups with an astounding time odds of 10:1; meaning that AlphaZero even won with ten times less time than that of Stockfish (see figure 2). Furthermore, to take it further the machine-learning engine even won match ups with a version of Stockfish with a "strong opening book". It did win a substantial amount more games when AlphaZero was playing as black however not nearly enough to win the overall match (see Figure 3 for results). These victories over the strongest of traditional chess engines show just how powerful AI can be in both:
+AlphaZero even soundly won against the traditional engine in a series of time-odds match ups with an astounding time odds of 10:1; meaning that AlphaZero even won with ten times less time than that of Stockfish (see figure 3). Furthermore, to take it further the machine-learning engine even won match ups with a version of Stockfish with a "strong opening book". It did win a substantial amount more games when AlphaZero was playing as black however not nearly enough to win the overall match (see Figure 4 for results). These victories over the strongest of traditional chess engines show just how powerful AI can be in both:
 - Evaluating moves
 - Searching for moves
 
 DeepMind released information suggesting AlphaZero uses a Monte Carlo tree search algorithm to examine around 60,000 positions per second compared to Stockfishes 60 million per second; demonstrating its much higher effeciency in deciding its move.
 
 
-![Figure 2](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/phponPJMm.png)
+![Figure 3](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/phponPJMm.png)
 
-Figure 2: AlphaZero's results in time odds matches against Stockfish engine
+Figure 3: AlphaZero's results in time odds matches against Stockfish engine
 
-![Figure 3](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/php3NK0bQ.png)
+![Figure 4](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/php3NK0bQ.png)
 
-Figure 3: AlphaZero's match up results against Stockfish with a "strong opening book". Image by DeepMind.
+Figure 4: AlphaZero's match up results against Stockfish with a "strong opening book". Image by DeepMind.
 
 These results safely conclude that AI and machine learning are superior over traditional engines and have solidified their place in the game and engines today. Since the results were released many developers started projects with aspects of AlphaZero 
 
