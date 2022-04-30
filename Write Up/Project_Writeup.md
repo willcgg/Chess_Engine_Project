@@ -2,11 +2,11 @@
 # Chess Engine Project
 ## Will Castleman (wc104)
 
-### Introduction and Idea (5marks)
-#### Background to Problem
+## Introduction and Idea (5marks)
+### Background to Problem
 This project is about creating a chess engine which by the end will be able to play a respectable game of chess. It would typically be used by chess players to analyze positions for insight. It may also be used for training players up to a certain Elo rating and finally it could also just be used for a bit of fun. It will be programmed in C# and will mainly be used on a desktop computer and if there is time at the end of the project, also available to access on the web.
 
-#### Justification to Task
+### Justification to Task
 I chose to take on this project not only because of my interest in the game itself; but also the personal growth and development I will get out of it as a programmer. This will be one of the biggest projects I have taken on solo. I will have to deep dive into some complex search and evaluate algorithms that make up the main bulk of this project. This is not only a task well suited to computers, but these algorithms' fundamental principles could be useful in many other domains. Additionally, my time management and prioritization skills will be challenged due to the amount of different moving parts of this project.
 
 One of the main reasons I chose this project is not only because of the advanced understanding I will develop as a result of deep diving into researching these fundamental computing algorithms and concepts; but because of the large scope of other domains which benefit from the application of these algorithms. Examples of a few sectors which benefit from these algorithms include:
@@ -20,9 +20,9 @@ One of the main reasons I chose this project is not only because of the advanced
 - [GITHUB](https://github.com/willcgg/Chess_Engine_Project)
 - [TRELLO BOARD](https://trello.com/b/KsboK28s/project-backlog)
 
-### Project Analysis (20 Marks)
+## Project Analysis (20 Marks)
 Traditionally most chess engines follow the same blueprint of:
-- Finding all candidate moves
+- Finding all legal candidate moves
 - Iterating through tree of potential moves to a given depth
 - Assessing the tree to find the best move
 
@@ -40,9 +40,12 @@ Since then engines have developed significantly with engines such as:
 - AlphaZero
 - Stockfish
 - Leela Chess Zero
-- Komodo Chess
+- Houdini
 
-Stockfish, one of the most powerful and well known engines available to the public, was developed over several decades with the input from several chess grandmasters and many other sources. It used to be just a brute force style algorithm analysing millions of positions per second for the optimal move defined by countless human input; however, since the famous loss against AlphaZero spoke about below they implemented aspects of AI and machine learning to further enhance the engine. (Champion, 2022)
+Each demonstrating a different approach to the classic problem. Three of these engines were written in C++ while AlphaZero was written in Python. Leela Chess Zero, much like AlphaZero, relies on AI and the use of a self taught neural network to evaluate and generate the best moves. The engine plays against itself millions of times to teach itself the best move generation. These kinds of engines focus much more on selection/evaluation to focus on the ‘winning routes’ rather than the more typical brute force search we see in solutions like Stockfish. This project will be looking into more of a brute-force type algorithm with additional refining algorithms to ‘trim’ the search down. (Chess Engine | Top 10 Engines In The World, 2022)
+
+### Stockfish - Basics
+Stockfish, one of the most powerful and well known engines available to the public, was developed over several decades with the input from several chess grandmasters and many other sources. It used to be a classical brute force style implementation analysing millions of positions per second for the optimal move; which was defined by countless human input. However, since the famous loss against AlphaZero spoke about below they implemented aspects of AI and machine learning to further enhance the engine and cut processing times. (Champion, 2022)
 
 Stockfish works by storing the board in a bitboard fashion, the board is made up of 64 bits with 1 bit representing a square on the board (see figure 2); if the bit it is set to 1 it is occupied with a piece. This way it is easy to represent when a piece is moved through bitwise operations:
 - One square forward: left shift of 8 bits
@@ -55,7 +58,8 @@ Stockfish works by storing the board in a bitboard fashion, the board is made up
 
 Figure 2: Little-Endian File-Rank Mapping
 
-Now I have explained how Stockfish internally represents the chess board, next is how it finds its list of candidate moves. Some pieces, for example the knight, have fixed candidate moves due to the way they move; that being in an 'L' shape, three squares forward and one square left (see Figure 3). (Champion, 2022)
+### Stockfish - Move Generation
+Next, I will go over how the engine generates its list of candidate moves. Some pieces, for example the knight, have fixed candidate moves due to the way they move; that being in an 'L' shape, three squares forward and one square left (see Figure 3). (Champion, 2022)
 
 ![Figure 3](https://miro.medium.com/max/412/1*sEZ4IjrU8g81anHKq74Clg.png)
 
@@ -67,13 +71,13 @@ Bitshift operations are stored for knights movement, these contain all eight ope
 - Pinned pieces
 - E.t.c..
 
-For the other sliding pieces such as: rook, bishop and the queen candidate moves are a little bit more problematic to find due to the sliding nature of the pieces movement; they can move indefinite amount of squares in their available attacking rays depending on whether a piece is blocking. To accomplish move generation of these pieces a combination of the chosen pieces attacking rays and the complete board representation need to be AND'd together to find these blocking pieces (see figure 4). Although this can be done on the fly for each piece and each attacking ray direction they can move, it is computationally expensive to do so. Therefore Stockfish uses a slightly more efficient way of doing so by using look-up method in an array containing all the candidate moves for the sliding piece. However, finding all blockers for the piece is still needed.(Champion, 2022)
+For the other sliding pieces such as: rook, bishop and the queen candidate moves are a little bit more problematic to find due to the sliding nature of the pieces movement; they can move indefinite amount of squares in their available attacking rays depending on whether a piece is blocking. To accomplish move generation of these pieces a combination of the chosen pieces attacking rays and the complete board representation need to be AND'd together to find these blocking pieces (see figure 4). Although this can be done on the fly for each piece and each attacking ray direction they can move, it is computationally expensive to do so. Therefore Stockfish uses a slightly more efficient way of doing so by using look-up method in an array containing all the candidate moves for the sliding piece. However, finding all blockers for the piece is still required.(Champion, 2022)
 
 ![Figure 4](https://miro.medium.com/max/1114/1*3pr2KR7a5ATzHT8gizWABQ.png)
 
 Figure 4: Sliding piece move generation; blocking pieces
 
-Once the blockers have been found, Stockfish uses this board combined with the existing array containing the candidate moves to generate the actual candidate moves for the piece (see figure 5 below).
+Once the blockers have been found, Stockfish uses this blockers board combined with the existing array containing the candidate moves to generate the actual candidate moves for the piece (see figure 5 below).
 
 ![Figure 5](https://miro.medium.com/max/812/1*0aczfRzfKOceRX7nlaDcoA.png)
 
@@ -85,47 +89,63 @@ However with this methods comes a problem due to the blocker piece board being a
 
 Figure 6: Summary of Stockfishes process to generating a move list
 
+### Stockfish - Move Evaluation
+Once Stockfish has generated its set of possible legal moves it needs to perform an evaluation to return the best possible move for this set. Until 2018 where Stockfish was drastically outperformed by AlphaZero, spoken about below, Stockfish relied solely on classical evaluation of the position to retrieve the best move. Since then, they have integrated a neural network to assist in evaluations of more balanced positions to close the gap. For this next section I will be focusing more on the classical evaluation and later look into the benefits brought by AI.
 
+Without neural networks Stockfishes classical evaluation simply relies on pro chess concepts such as:
+- Tempo
+- Material
+- Space e.t.c
 
+The evaluation function is essentially a combination of chess concepts and strategies input by chess proffessionals and Grandmasters of the period of several decades. It essentially evaluates things such as but not limited to the following parts along with examples:
+- Material:
+    - Imbalance - How many pieces left
+    - Advantage - Strength of pieces e.g. bishop pair
+- Strategy
+    - Advantage for pawns e.g. - Doubled pawns, isolated pawns, connected pawns, supported pawn structure, attacked pawns e.t.c
+    - Advantage for pieces e.g. - Blocked pieces, bishop x-ray attacks, bishops on long diagonals such as C4 for light squared bishop, trapping pieces, rook and queen battery, keeping rooks on open files, forking pieces, e.t.c
+- Space - Controlling more squares than the opponent
+- King Safety - Looking out for incoming checks, keeping king 'sheltered' e.g. castling
+
+This is the main bulk of what makes up these engines and what differenciates them from others; it essentially makes up the 'personality' of the engine and how it plays. Due to Stockfishes open source nature there have been countless pull requests with just the editing of some of the weights and scores of these functions which entails small elo rating improvements. (Champion, 2022)
+
+### Benefits of AI Neural Networks
 Historically some of the most powerful engines have implemented aspects of AI, for instance Google's AlphaZero, which introduced neural networks to the chess programming world. AI demonstrated its supremacy over other engines when it came out victorious in its hundred game match against the well known Stockfish 8, which at the time of playing this match could beat even the top players in the world. This match up was played with three hours play time with 15 second increment meaning there was plenty of time for both engines to evaluate positions thoroughly to the best of their abilities; and makes any arguments of time limitations playing to either of the engines disadvantage obsolete. (Pete, 2022)
 
 AlphaZero even soundly won against the traditional engine in a series of time-odds match ups with an astounding time odds of 10:1; meaning that AlphaZero even won with ten times less time than that of Stockfish (see figure 4). Furthermore, to take it further the machine-learning engine even won match ups with a version of Stockfish with a "strong opening book". It did win a substantial amount more games when AlphaZero was playing as black however not nearly enough to win the overall match (see Figure 5 for results). These victories over the strongest of traditional chess engines show just how powerful AI can be in both:
 - Evaluating moves
 - Searching for moves
 
-DeepMind released information suggesting AlphaZero uses a Monte Carlo tree search algorithm to examine around 60,000 positions per second compared to Stockfishes 60 million per second; demonstrating its much higher effeciency in deciding its move.
+DeepMind released information suggesting AlphaZero uses a Monte Carlo tree search algorithm to examine around 60,000 positions per second compared to Stockfishes 60 million per second; demonstrating its much higher effeciency in generating its move set. (Pete, 2022)
 
+![Figure 7](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/phponPJMm.png)
 
-![Figure 4](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/phponPJMm.png)
+Figure 7: AlphaZero's results in time odds matches against Stockfish engine
 
-Figure 4: AlphaZero's results in time odds matches against Stockfish engine
+![Figure 8](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/php3NK0bQ.png)
 
-![Figure 5](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pete/php3NK0bQ.png)
+Figure 8: AlphaZero's match up results against Stockfish with a "strong opening book". Image by DeepMind.
 
-Figure 5: AlphaZero's match up results against Stockfish with a "strong opening book". Image by DeepMind.
+These results safely conclude that AI and machine learning are superior over traditional engines and have solidified their place in the game and engines today. (Pete, 2022)
 
-These results safely conclude that AI and machine learning are superior over traditional engines and have solidified their place in the game and engines today. Since the results were released many developers started projects with aspects of AlphaZero 
+#### Implementation Anlaysis
+Typically chess engines work by analyzing chess positions and then generating a list of best moves out of the possibilities. They do this by creating a table or a tree of the different possibilities in each position and evaluate which moves leave you in the best position moving forward. Take a starting chess board for example (see figure 9), for white there are 20 total possible starting moves they can take. 2 possible moves for each of the pawns and 2 for both the knights ((8x2) + (2x2) = 20) then its blacks move which has the same amount of variations as white. This means after both players make their first move there are a total of 400 different possible positional outcomes. 
 
-However, in this project I will not be implementing any AI aspects due to the complexity and the amount of time it would take to produce and train is just not feasible for the timescale available. Additionally, it did not align with my goals out of the project. For this project I will be using a series of algorithms which fundamentally:
-- Finds all legal moves for any given piece in any valid board position
-- Finds out how good the position is (an evaluation)
-- Finds the best move in this position (a search)
-Essentially, it is a brute force program which will filter through a given chess position and will search and evaluate it for the best move.
+![Figure 9](/Write%20Up/Images/starting_pos.png)
 
-The language I will be using to produce the engine will be C#. This is for a number of reasons such as: familiarity, portability, object-oriented nature, and finally it being a static language; this makes it easier to find errors, understand the code and also write it. C#'s main advantage is it being an object-oriented language, this makes the code highly efficient, reusable, flexible, scalable and easy to maintain. Additionally, the chess programming world is largely dominated by C and C++  languages, meaning there is a huge community of developers and resources available. Even some of the strongest engines written in other languages were eventually rewritten in C, e.g. Booot written by Alex Morozov in Delphi, it was rewritten due to running into too many 64-bit bugs. It is also commonly used for web and windows applications which fits the project's needs. 
+Figure 9: Starting chess position
 
-Typically chess engines work by analyzing chess positions and then generating a list of best moves out of the possibilities. They do this by creating a table or a tree of the different possibilities in each position and evaluate which moves leave you in the best position moving forward. Take a starting chess board for example (see figure 3), for white there are 20 total possible starting moves they can take. 2 possible moves for each of the pawns and 2 for both the knights ((8x2) + (2x2) = 20) then its blacks move which has the same amount of variations as white. This means after both players make their first move there are a total of 400 different possible positional outcomes there could be. After each move there becomes more and more possibilities for where each player can move their pieces. This means the number of possible moves grows exponentially due to this, to put this into perspective see figure 4. This is why we create trees to hold all the available moves down a given path.
+After each move there becomes more and more possibilities for where each player can move their pieces. This means the number of possible positions grows exponentially due to this, to put this into perspective see figure 4. This is why we create trees to hold all the available moves down a given path.
 
-![Figure 2](/Write%20Up/Images/starting_pos.png)
-![Figure 3](/Write%20Up/Images/ply_pos_example.PNG)
+![Figure 10](/Write%20Up/Images/ply_pos_example.PNG)
 
-Some of the best well-known different working solutions in this area are: Stockfish, AlphaZero, Leela Chess Zero and Houdini. Each demonstrating a different approach to the classic problem. Three of these engines were written in C++ while AlphaZero was written in Python. Leela Chess Zero, much like AlphaZero, relies on AI and the use of a self taught neural network to evaluate and generate the best moves. The engine plays against itself millions of times to teach itself the best move generation. These kinds of engines focus much more on selection/evaluation to focus on the ‘winning routes’ rather than the more typical brute force search we see in solutions like Stockfish. This project will be looking into more of a brute-force type algorithm with additional refining algorithms to ‘trim’ the search down.
+Figure 10: Number of variations with incrementing half-ply count
 
-There are many ways to approach the board representation in this project. However,  I have chosen to represent the board in memory with the 0x12 mailbox approach. This is a 2D array of 120 length; 64 positions in the middle of the array to represent the board squares and pieces, then the remaining surrounding files and ranks represent sentinel pieces (see figure 5). I chose to do it this way rather than the traditional 8x8 approach to ensure all knight jumps, even from the very corner of the board, end in valid array positions. For example, when a knight is on square A8 it can only jump to squares B6 and B7, otherwise it would end up in positions highlighted in red squares in figure 7; and therefore off the board.  This is mainly due to the knights movement being in an L shape, see example of knights movement from a corner square in figure 7. Every move of the knight ends up with it still on a valid array index, this is useful as it will avoid errors in the engines search and evaluate algorithms where knights are positioned on bordering squares. The code will just need to check that the index the knight lands on isn’t ‘-1’ as this is a blocker piece if it is the knight cannot land there and it is not a legal move. 
+There are many ways to approach the board representation in this project. However,  I have chosen to represent the board in memory with the 0x12 mailbox approach. This is a 2D array of 120 length; 64 positions in the middle of the array to represent the board squares and pieces, then the remaining surrounding files and ranks represent sentinel pieces (see figure 11). I chose to do it this way rather than the traditional 8x8 approach to ensure all knight jumps, even from the very corner of the board, end in valid array positions. For example, when a knight is on square A8 it can only jump to squares B6 and B7, otherwise it would end up in positions highlighted in red squares in figure 12; and therefore off the board. Every move of the knight ends up with it still on a valid array index, this is useful as it will avoid errors in the engines search and evaluate algorithms where knights are positioned on bordering squares. The code will just need to check that the index the knight lands on isn’t ‘-1’ as this is a blocker piece if it is the knight cannot land there and it is not a legal move. (Chessprogramming.org. 2022)
 
-![Figure 4](/Write%20Up/Images/board_array_representation.PNG)
-![Figure 5](/Write%20Up/Images/array_movement_vector.PNG)
-![Figure 6](/Write%20Up/Images/knight_array_movement_extreme.PNG)
+![Figure 11](/Write%20Up/Images/board_array_representation.PNG)
+![Figure 12](/Write%20Up/Images/knight_array_movement_extreme.PNG)
+![Figure 13](/Write%20Up/Images/array_movement_vector.PNG)
 
 Alternatives to normal FEN include: PGN, compressed FEN, ųFEN,  AND/OR custom conversion script to convert FENs to a human readable text created chess board with ascii pieces to clearly show the state to the user. This would probably be the least efficient way to go about it however it gives the project ease of readability and therefore testing will become a lot easier.
 
@@ -137,8 +157,8 @@ https://chess.stackexchange.com/questions/8500/alternatives-to-the-fen-notation
 
 PGN will need to be stored anyway to complete next and back buttons functionality. This will be implemented through a stack of all the moves made in the game. Then when a user wishes to go back a position it will simply pop the top move off the stack which will be the last move played due to the stack's nature in storing data.
 
-
 ### Design
+The language I will be using to produce the engine will be C#. This is for a number of reasons such as: familiarity, portability, object-oriented nature, and finally it being a static language; this makes it easier to find errors, understand the code and also write it. C#'s main advantage is it being an object-oriented language, this makes the code highly efficient, reusable, flexible, scalable and easy to maintain. Additionally, the chess programming world is largely dominated by C and C++  languages, meaning there is a huge community of developers and resources available. Even some of the strongest engines written in other languages were eventually rewritten in C, e.g. Booot written by Alex Morozov in Delphi, it was rewritten due to running into too many 64-bit bugs. It is also commonly used for web and windows applications which fits the project's needs. 
 
 ### Testing
 
@@ -165,5 +185,7 @@ En.wikipedia.org. 2022. Forsyth–Edwards Notation - Wikipedia. [online] Availab
 Chessprogramming.org. 2022. 10x12 Board - Chessprogramming wiki. [online] Available at: <https://www.chessprogramming.org/10x12_Board> [Accessed 21 March 2022].
 
 Champion, A., 2022. Dissecting Stockfish Part 1: In-Depth look at a chess engine. [online] Medium. Available at: <https://towardsdatascience.com/dissecting-stockfish-part-1-in-depth-look-at-a-chess-engine-7fddd1d83579#:~:text=Stockfish%20is%20actually%20performing%20the,blocking%20pieces%20or%20discovered%20checks.> [Accessed 29 April 2022].
+
+Champion, A., 2022. Dissecting Stockfish Part 2: In-Depth look at a chess engine. [online] Medium. Available at: <https://towardsdatascience.com/dissecting-stockfish-part-2-in-depth-look-at-a-chess-engine-2643cdc35c9a> [Accessed 29 April 2022].
 
 (Pete), P., 2022. AlphaZero Crushes Stockfish In New 1,000-Game Match. [online] Chess.com. Available at: <https://www.chess.com/news/view/updated-alphazero-crushes-stockfish-in-new-1-000-game-match#games> [Accessed 29 April 2022].
