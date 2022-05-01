@@ -10,12 +10,12 @@ namespace Chess_Engine_v2
         // default board pos
         const string FEN_DEFAULT = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
         // piece offsets in board array
-        readonly int[] W_Pawn_Offsets = new int[] { -10, -20, -9, -11 };
-        readonly int[] B_Pawn_Offsets = new int[] { 10, 20, 9, 11 };
-        readonly int[] Bishop_Offsets = new int[] { 9, 11, -9, -11 };
-        readonly int[] Knight_Offsets = new int[] { 21, 19, 12, 8, -8, -12, -19, 21 };
-        readonly int[] Rook_Offsets = new int[] { 1, -1, 10, -10 };
-        readonly int[] KQ_Offsets = new int[] { 1, 9, 10, 11, -11, -10, -9, 1 };
+        public readonly int[] W_Pawn_Offsets = new int[] { -10, -20, -9, -11 };
+        public readonly int[] B_Pawn_Offsets = new int[] { 10, 20, 9, 11 };
+        public readonly int[] Bishop_Offsets = new int[] { 9, 11, -9, -11 };
+        public readonly int[] Knight_Offsets = new int[] { 21, 19, 12, 8, -8, -12, -19, 21 };
+        public readonly int[] Rook_Offsets = new int[] { 1, -1, 10, -10 };
+        public readonly int[] KQ_Offsets = new int[] { 1, 9, 10, 11, -11, -10, -9, 1 };
         // square array positions
         public enum Square
         {
