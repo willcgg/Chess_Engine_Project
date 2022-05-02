@@ -57,7 +57,7 @@ An engines quality is usually evaluated based on two criteria:
 
 One of the first commercially available chess engines to exist was developed by Dietrich Prinz (1951) on a Ferranti Mark 1 at the University of Manchester. The Ferranti Mark 1 lacked power so it was limited in terms of the fact that it could only find the best move when a position was 2 moves away from checkmate. The next engine the world saw was by a gentleman named Bernstein (1957) which was the first complete chess engine to run on a computer (IBM 704) which could play a game from start to finish taking roughly 8 minutes to make a move. It was a type B implementation which at its core is a selective technique that attempts to cut processing times by examining variations out as far as possible and only evaluating when a reasonable amount of instability in the position has been established. It then pruned unnecessary redundant variations to further cut processing times. This is done by creating a function that evaluates the stability of the position (e.g. en prise). See Figure 1 for a “Crude definition” of what this algorithm would look like. (Bernstein, 2022)(Chessprogramming.org. 2022)
 
-![Figure 1](/Write%20Up/Images/crude_definition.PNG)
+![Figure 1](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/crude_definition.PNG?raw=true)
 
 Figure 1: A "Crude definition" of an en prise algorithm
 
@@ -79,7 +79,7 @@ Stockfish works by storing the board in a bitboard fashion, the board is made up
 - Checking if a square is occupied: Logical AND of the bitboards with the positional mask of the selected square
 - E.t.c...
 
-![Figure 2](./images/little_endian_representation.PNG)
+![Figure 2](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/little_endian_representation.PNG?raw=true)
 
 Figure 2: Little-Endian File-Rank Mapping
 
@@ -158,13 +158,13 @@ These results safely conclude that AI and machine learning are superior to tradi
 #### Resource Estimation
 Take a starting chess board for example (see figure 9), for white there are 20 total possible starting moves they can take. 2 possible moves for each of the pawns and 2 for both the knights ((8x2) + (2x2) = 20) then its blacks move which has the same amount of variations as white. This means after both players make their first move there are a total of 400 different possible positional outcomes. 
 
-![Figure 9](/Write%20Up/Images/starting_pos.png)
+![Figure 9](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/starting_pos.PNG?raw=true)
 
 Figure 9: Starting chess position
 
 After each move there becomes more and more possibilities for where each player can move their pieces. This means the number of possible positions grows exponentially due to this, to put this into perspective see figure 10. This is why we create trees to hold all the available moves down a given path.( Hercules, A., 2022)
 
-![Figure 10](/Write%20Up/Images/ply_pos_example.PNG)
+![Figure 10](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/ply_pos_example.PNG?raw=true)
 
 Figure 10: Number of variations with incrementing the half-ply count
 
@@ -187,16 +187,27 @@ These types of implementations typically hold the opposite of piece-centric appr
 
 - Hybrid Solutions
 
- As spoken briefly about above, some of these types of implementations may also use elements of both of these types of implementation hence the 'hybrid'. Different search and evaluate functions tend to favor a specific representation; however, it is still quite common to see both in solutions produced today. 
+As spoken briefly about above, some of these types of implementations may also use elements of both of these types of implementation hence the 'hybrid'. Different search and evaluate functions tend to favor a specific representation; however, it is still quite common to see both in solutions produced today. 
 
-However,  I have chosen to represent the board in memory with the 0x12 mailbox approach. This is a 2D array of 120 slots in size; 64 positions in the middle of the array represent the board squares and pieces, then the remaining surrounding files and ranks represent sentinel pieces (see figure 11). I chose to do it this way rather than the traditional 8x8 approach to ensure all knight jumps, even from the very corner of the board, end up on valid array positions. For example, when a knight is on square A8 it can only jump to squares B6 and B7, otherwise, it would end up in positions highlighted in red squares in figure 12; and therefore not on the board. Every move of the knight ends up with it still on a valid array index, this is useful as it will avoid errors in the engine's search and evaluate algorithms where knights are positioned on bordering squares. The code will just need to check that the index the knight lands on isn’t ‘-1’ as this is a blocker piece if it is the knight cannot land there and it is not a legal move. (Chessprogramming.org. 2022)
+I have chosen to represent the board in memory with the 0x12 mailbox approach. This is a 2D array of 120 slots in size; 64 positions in the middle of the array represent the board squares and pieces, then the remaining surrounding files and ranks represent sentinel pieces (see figure 11).
 
-![Figure 11](/Write%20Up/Images/board_array_representation.PNG)
-![Figure 12](/Write%20Up/Images/knight_array_movement_extreme.PNG)
-![Figure 13](/Write%20Up/Images/array_movement_vector.PNG)
+![Figure 11](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/board_array_representation.PNG?raw=true)
+
+Figure 11: 10x12 Mailbox approach example
+
+I chose to do it this way rather than the traditional 8x8 approach to ensure all knight jumps, even from the very corner of the board, end up on valid array positions. For example, when a knight is on square A8 it can only jump to squares B6 and B7, otherwise, it would end up in positions highlighted in red squares in figure 12; and therefore not on the board. Every move of the knight ends up with it still on a valid array index, this is useful as it will avoid errors in the engine's search and evaluate algorithms where knights are positioned on bordering squares. The code will just need to check that the index the knight lands on isn’t ‘-1’ as this is a blocker piece if it is the knight cannot land there and it is not a legal move. (Chessprogramming.org. 2022)
+
+
+![Figure 12](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/knight_array_movement_extreme.PNG?raw=true)
+
+Figure 12: Extreme knight movement example: Red squares represent invalid psuedo legal moves, blue represents legal moves, and green represents knights current square position.
+
+![Figure 13](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/array_movement_vector.PNG?raw=true)
+
+Figure 13: Movement vectors for 10x12 array representations example
 
 #### Board Notation
-Alternatives to normal FEN include PGN, compressed FEN, ųFEN,  AND/OR custom conversion script to convert FENs to a human-readable text created chessboard with ASCII pieces to clearly show the state to the user. This would probably be the least efficient way to go about it however it gives the project ease of readability and therefore testing will become a lot easier.
+Alternatives to normal FEN include PGN, compressed FEN, ųFEN,  AND/OR custom conversion script to convert FENs to a human-readable text created chessboard with ASCII pieces to clearly show the state to the user. This would probably be the least efficient way to go about it however it gives the project ease of readability and therefore testing will become a lot easier. 
 
 Compressed FEN could be good to save bytes and be more memory efficient in the system. However, it doesn't meet project goals and arguably is worse for humans to read than normal FEN which is the purpose of this alternate board state storage.
 
@@ -224,6 +235,7 @@ classDiagram
     Board --> Move_Evaluation : Utilises
     Psuedo_Move_Generation --> Transposition_Table : Utilises
     Legal_Move_Generation --> Transposition_Table : Utilises
+    Move_Evaluation --> Transposition_Table : Evaluates
    
     class Board{
       +int[] board
