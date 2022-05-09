@@ -24,6 +24,11 @@
 - [Testing](#testing)
 - [Conclusion](#conclusion)
 - [Appendix](#appendix)
+  - [Appendix A: Engine Framework Flowchart](#appendix-a-engine-framework-flowchart)
+  - [Appendix B: Engine Search Algorithm Flowchart](#appendix-b-engine-search-algorithm-flowchart)
+  - [Appendix C: Engine Evaluate Algorithm Flowchart](#appendix-c-engine-evaluate-algorithm-flowchart)
+  - [Appendix D: Graphical User Interface Project Flowchart](#appendix-d-graphical-user-interface-project-flowchart)
+  - [Appendix X: Engine Class Diagram](#appendix-x-engine-class-diagram)
 - [Glossary](#glossary)
 - [References](#references)
 
@@ -34,7 +39,7 @@ This project is about creating a chess engine that will be able to play a decent
 ### Justification to Task
 I chose to take on this project not only because of my interest in the game itself; but also the personal growth and development I will get out of it as a programmer. It will be one of the most significant projects I have taken on solo. I will have to deep dive into some complex searches and evaluate algorithms that make up the main bulk of this project. The project is not only a task well suited to computers, but these algorithms' fundamental principles could be helpful in many other domains. Additionally, my time management and prioritisation skills will be challenged due to the different moving parts of this project.
 
-One of the main reasons I chose this project was the advanced understanding I will develop due to deep-diving into researching these fundamental computing algorithms and concepts. There is also an enormous scope of other domains that benefit from applying these algorithms.  Examples of a few sectors which benefit from these algorithms include:
+One of the main reasons I chose this project was the advanced understanding I will develop due to deep-diving into researching these fundamental computing algorithms and concepts. There is also an enormous scope of other domains that benefit from applying these algorithms.   Examples of a few sectors which benefit from these algorithms include:
 - Finance
 - Chemical
 - Gaming
@@ -55,7 +60,7 @@ An engines quality is usually evaluated based on two criteria:
 - Speed - How fast it finds a list of potential 'good' moves
 - Accuracy - How fast it finds the best move out of these moves
 
-One of the first commercially available chess engines to exist was developed by Dietrich Prinz (1951) on a Ferranti Mark 1 at the University of Manchester. The Ferranti Mark 1 lacked power, so it was limited because it could only find the best move when a position was two moves away from checkmate. The next engine the world saw was by a gentleman named Bernstein (1957). It was the first complete chess engine to run on a computer (IBM 704), which could play a game from start to finish, taking roughly 8 minutes to make a move. It was a type B implementation, a selective technique that attempts to cut processing times by examining variations out as far as possible and only evaluating when a reasonable amount of instability in the position has been established. It then pruned unnecessary, redundant variations to cut processing times further. This was done by creating a function that evaluates the stability of the position (e.g. en prise). See Figure 1 for a "Crude definition" of this type of algorithm. (Bernstein, 2022; Chessprogramming.org, 2022)
+One of the first commercially available chess engines to exist by Dietrich Prinz (1951) on a Ferranti Mark 1 at the University of Manchester. The Ferranti Mark 1 lacked power, so it was limited because it could only find the best move when a position was two moves away from checkmate. The next engine the world saw was by a gentleman named Bernstein (1957). It was the first complete chess engine to run on a computer (IBM 704), which could play a game from start to finish, taking roughly 8 minutes to make a move. It was a type B implementation, a selective technique that attempts to cut processing times by examining variations as far as possible. Then only evaluating when a reasonable amount of instability in the position is detected. It then prunes unnecessary, redundant variations to cut processing times further. It is then run through a function to evaluate the position's stability (e.g. en prise). See Figure 1 for a "Crude definition" of this type of algorithm. (Bernstein, 2022; Chessprogramming.org, 2022)
 
 ![Figure 1](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/crude_definition.PNG?raw=true)
 
@@ -72,7 +77,7 @@ Each demonstrates a different approach to the classic problem. Three of these en
 ### Stockfish - Basics
 Stockfish, one of the most potent and well-known engines available to the public, was developed over several decades with the input from several chess grandmasters and many other sources. It used to be a classical brute force implementation that analysed millions of positions per second for optimal moves, defined by countless human input. However, since the famous loss against AlphaZero spoke about below, they implemented AI and machine learning aspects to enhance the engine further and cut processing times. (Champion, 2022)
 
-Stockfish stores the board in a bitboard fashion with an array of 64 bits, with each representing a square on the board (see figure 2). If the bit representing a square has a value of one, there is a piece occupying it. This way, it is easy to represent when a piece is moved through bitwise operations: 
+Stockfish stores the board in a bitboard fashion with an array of 64 bits, with each representing a square on the board (see figure 2). If the bit representing a square has a value of one, there is a piece occupying it. This way, it is easy to represent a moved piece through bitwise operations: 
 - One square forward: left shift of 8 bits
 - One square left: left shift of 1 bit
 - Retrieving all pieces currently on board: Logical OR of all the individual bitboards together
@@ -234,18 +239,135 @@ The language I will be using to produce the engine will be C#. This is for sever
 
 ### Flow Charts
 
+
 ### Class Diagram
 
+### Sequence Diagram
+
+### Project Planning
+
+[![](https://mermaid.ink/img/pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)](https://mermaid.live/edit#pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)
+
+## Testing
+
+## Conclusion 
+
+## Appendix
+
+### Appendix A: Engine Framework Flowchart
+
+Figure X: Chess Engine Program Flowchart
+[![](https://mermaid.ink/img/pako:eNplksFuwjAMhl_FisRO4wU4bBptgaKxwxjskKLhUQPR2gQlLtPU8u5L06Ihrae2_-ff9p_UYmdyEiMxGNTbRB-UJpgU5huiI1reXgaDTB8sno7wFmca_PMkl-wl6OANDIcPTaoVKyyUowbGckkMMe2xKhjWaBV-FuQ2XfW45SGSkSVkgrFBm8OTtfjTA1EAYuld0O6OHbHpxTh0m5Im66sdLMyZ4Fk5bmAuZXLGompd98bCmBwH3V2L58E5qd9RcUBS7dhWO1ZGXzokCf4rR614qthBVDk2JUySlwYm8m_P9s_HDHVeeDYq0F0XnIQuUxkZfSYf058BLNkqfei5aWjVRnUHr8SV1X0YPjHXQPxvoAV-9Rs3MKvXfoocSv_12M8-60_iHJSOS26l9Y2QSrk65W1W01V6DSjtohf3oiRbosr9tahbKRN8pJIyMfKveXeymcj0xaNVsElyxcaK0R4LR_cCKzbLH70TIx8wXaFYob9KZU9dfgERZM2k)](https://mermaid.live/edit#pako:eNplksFuwjAMhl_FisRO4wU4bBptgaKxwxjskKLhUQPR2gQlLtPU8u5L06Ihrae2_-ff9p_UYmdyEiMxGNTbRB-UJpgU5huiI1reXgaDTB8sno7wFmca_PMkl-wl6OANDIcPTaoVKyyUowbGckkMMe2xKhjWaBV-FuQ2XfW45SGSkSVkgrFBm8OTtfjTA1EAYuld0O6OHbHpxTh0m5Im66sdLMyZ4Fk5bmAuZXLGompd98bCmBwH3V2L58E5qd9RcUBS7dhWO1ZGXzokCf4rR614qthBVDk2JUySlwYm8m_P9s_HDHVeeDYq0F0XnIQuUxkZfSYf058BLNkqfei5aWjVRnUHr8SV1X0YPjHXQPxvoAV-9Rs3MKvXfoocSv_12M8-60_iHJSOS26l9Y2QSrk65W1W01V6DSjtohf3oiRbosr9tahbKRN8pJIyMfKveXeymcj0xaNVsElyxcaK0R4LR_cCKzbLH70TIx8wXaFYob9KZU9dfgERZM2k)
+
+Mermaid Code in case edits required:
+```mermaid
+%%{`Engine Flow Chart`}%%
+graph TD
+    A[Start Engine] -->|Initialise| B[Set Default Variables]
+    B --> C[Create Board Array]
+    C --> D[[Search Board]]
+    D -->|Generates Move List| J[[Evaluate for Best Moves]]
+    J --> E{Wait for Instruction}
+    E -->|User Inputs Custom FEN| F[Initialise FEN_Handler Class]
+    F --> G[Convert Custom FEN String]
+    G -->|Set & Return Board Vars| D
+    E -->|User Makes Move| H{Valid move?}
+    H -->|Invalid Move| E
+    H -->|Valid Move| I[[Update GUI]]
+    I --> D
+```
+### Appendix B: Engine Search Algorithm Flowchart
+
+Figure X: Chess Engine Search Board Function Flowchart
+
+[![](https://mermaid.ink/img/pako:eNplkc1qwzAQhF9l0amBhNx9KDSxnRZaUuL0JOewtTa2QJaMfgIlybtXVtVDqU5C-83s7OrKOiOIFay3OA1wLFsN8Tw9NB6th4bQdsMiP8Jq9QgbXkstAJWCV-pRwRa1kAI9wZu5kFsfyE1GO3JwNhZ6eSENJU1-OP3YbJLNljfeWIKjRR15J72MIpAantHFIPipKAu2SVDy2R72VpCVuoc66G7WZKicodu7lcZGK0fir_MNKs6rC6oQg56ypkqaA_lgY-u5Ck0XQ92g5h9TGulfmDqF2fH1PvgpeNiQ83nwTOwS8fIQ1yTdsGBLNpIdUYq45euMtMwPNFLLingVdMagfMtafY9oSG0rIeNyWHFG5WjJMHjTfOmOFd4G-oVKifHTxkzdvwEtgJZZ)](https://mermaid.live/edit#pako:eNplkc1qwzAQhF9l0amBhNx9KDSxnRZaUuL0JOewtTa2QJaMfgIlybtXVtVDqU5C-83s7OrKOiOIFay3OA1wLFsN8Tw9NB6th4bQdsMiP8Jq9QgbXkstAJWCV-pRwRa1kAI9wZu5kFsfyE1GO3JwNhZ6eSENJU1-OP3YbJLNljfeWIKjRR15J72MIpAantHFIPipKAu2SVDy2R72VpCVuoc66G7WZKicodu7lcZGK0fir_MNKs6rC6oQg56ypkqaA_lgY-u5Ck0XQ92g5h9TGulfmDqF2fH1PvgpeNiQ83nwTOwS8fIQ1yTdsGBLNpIdUYq45euMtMwPNFLLingVdMagfMtafY9oSG0rIeNyWHFG5WjJMHjTfOmOFd4G-oVKifHTxkzdvwEtgJZZ)
+
+Mermaid Code in case edits required:
+```
+graph TD
+    A(Start Search)
+    A --> B[Find all Legal Candidate Moves/Responses for given Depth]
+    B --> C[Store Transpositions in Hash Table]
+    C --> D[Move Ordering Function]
+    D -->|Prioritised Transposition| E[[Evaluate]]
+    E -->|Returns Eval Score| F[Update Hash Table]
+    F --> G[/Output Best Moves/]
+    G --> I(Finish)
+```
+### Appendix C: Engine Evaluate Algorithm Flowchart
+
+Figure X: Evaluate function Flowchart
+[![](https://mermaid.ink/img/pako:eNp9kstuwjAQRX9l5BWVQN2zaAUhPKoWoQKLinQxTQZi1bEjP6AV8O91YlMJUdWr2D73zs2MjyxXBbE-22msS1iNMgl-DTpLi9pCukfh0HIl7-IF9HoPMNyklRNoCQZCwCuZWklD5j0ww4Y5jbk29vcOFsrwxucEySYpKf-EF6_XHEVUJa1qIPwhLHOl6QSjSK6oqlXERrdYGrFljTlFLI0ZJAruq6_rmvT9szp4VfNPF-n4mKiqRk3hAA7clrDQtOfKGVhplD5-CG7OwXncOgerILIlSsid1iQtDJWThTnBZJM4e-0Qo03aFs6OU9yH_l2XgQ8ieWk8FY9XZad8V_5fd7pZ10UzmSvXoLgMaBoShM2sNX4jr33qpLK4nXkg5qoLc_r6e6SsyyrSFfLCP6VjI8uYLamijPX9Z0FbdMJmLJNnj7o2YVpwqzTrb1EY6jJ0Vi2_Zc76Vju6QCOO_mVWkTr_AL9W5lo)](https://mermaid.live/edit#pako:eNp9kstuwjAQRX9l5BWVQN2zaAUhPKoWoQKLinQxTQZi1bEjP6AV8O91YlMJUdWr2D73zs2MjyxXBbE-22msS1iNMgl-DTpLi9pCukfh0HIl7-IF9HoPMNyklRNoCQZCwCuZWklD5j0ww4Y5jbk29vcOFsrwxucEySYpKf-EF6_XHEVUJa1qIPwhLHOl6QSjSK6oqlXERrdYGrFljTlFLI0ZJAruq6_rmvT9szp4VfNPF-n4mKiqRk3hAA7clrDQtOfKGVhplD5-CG7OwXncOgerILIlSsid1iQtDJWThTnBZJM4e-0Qo03aFs6OU9yH_l2XgQ8ieWk8FY9XZad8V_5fd7pZ10UzmSvXoLgMaBoShM2sNX4jr33qpLK4nXkg5qoLc_r6e6SsyyrSFfLCP6VjI8uYLamijPX9Z0FbdMJmLJNnj7o2YVpwqzTrb1EY6jJ0Vi2_Zc76Vju6QCOO_mVWkTr_AL9W5lo)
+
+
+Mermaid Code in case edits required:
+```
+graph TD
+    A(Start Evaluation)
+    A --> B[Emulate All Responses]
+    B -->|First Response Position| C[Check Material]
+    C -->|Alter Score| D[Check Tempo]
+    D -->|Alter Score| E[Check Space]
+    E -->|Finalise Upper/Lower Eval Score| F{Compare Score with Previous Transpositions}
+    F -->|Lower Score than current Bounds| G[Cut Transposition]
+    G --> I{Have All Transpositions been Evaluated?}
+    F -->|Higher Score than current Bounds| H[Update Transposition Scores]
+    H --> I
+    I -->|Yes| J(End Evaluation)
+    I -->|No, Next Response Position| C
+```
+### Appendix D: Graphical User Interface Project Flowchart
+
+Figure X: Project GUI Flowchart
+[![](https://mermaid.ink/img/pako:eNp9VF1vm0AQ_CsrnlopUd790KqAP2M7xNSpKjuqrtzaPgXu6N3itgL_9x4H-CtWkZCAnZ2dGRZKL1EcvZ631SzfwddwLcEeXz7ExDTBcDn-CPf3n6qxFCRYKgxCoLJcSZRkKvBXoWa_IdihMT8V0_y16ffrJgiaaiQwQdNWAlcJy29MEAyUhrEk1CwhoeShgYTtxLwgA0FhSGUw6M8r6JcvVgKvbyAmLeT2c9vSdy3f0UoarFYBS1Poy62QaGrwjxGTPEX92moYOA3Dc3VACvwzA0NHOBBSmB3yCsLzOXN1fNBodRwQY4oJIX-IRPKGHJZ5BaMyUFrbxza2VBW6GVdPm6k9dvJH17Sjk5_xaiS2u9SeBI39-FfBtJWs5IXksetZGtStEvMQapWbdqRFN40VTMpzok7E5DTzcbXMOSO84H90qU3beN0rb0OG_p6lhcV3AU8bKY6Dg4-GnF3LPOuY7Wa14NntqCe3o_ZZ8gZ-QaRkBfPVAu0e4B5hyuyQSBlRLxJstN2ZRlw7Ze66L1FuqZ7eK3q6ragRMMc_dBQQlSN2TGGrCBjIun4cEZPSyLuIo2tP0Snz55OX_9h4bqTZD8CCzusVLN4bWVwb8e68DHXGBLeffFmD1h7tMMO117OXHDesSGntreXBQgvH1-fCmvB6G5YavPNYQSr-KxOvR7rADhQKZv8gWYs6_ANejWVE)](https://mermaid.live/edit#pako:eNp9VF1vm0AQ_CsrnlopUd790KqAP2M7xNSpKjuqrtzaPgXu6N3itgL_9x4H-CtWkZCAnZ2dGRZKL1EcvZ631SzfwddwLcEeXz7ExDTBcDn-CPf3n6qxFCRYKgxCoLJcSZRkKvBXoWa_IdihMT8V0_y16ffrJgiaaiQwQdNWAlcJy29MEAyUhrEk1CwhoeShgYTtxLwgA0FhSGUw6M8r6JcvVgKvbyAmLeT2c9vSdy3f0UoarFYBS1Poy62QaGrwjxGTPEX92moYOA3Dc3VACvwzA0NHOBBSmB3yCsLzOXN1fNBodRwQY4oJIX-IRPKGHJZ5BaMyUFrbxza2VBW6GVdPm6k9dvJH17Sjk5_xaiS2u9SeBI39-FfBtJWs5IXksetZGtStEvMQapWbdqRFN40VTMpzok7E5DTzcbXMOSO84H90qU3beN0rb0OG_p6lhcV3AU8bKY6Dg4-GnF3LPOuY7Wa14NntqCe3o_ZZ8gZ-QaRkBfPVAu0e4B5hyuyQSBlRLxJstN2ZRlw7Ze66L1FuqZ7eK3q6ragRMMc_dBQQlSN2TGGrCBjIun4cEZPSyLuIo2tP0Snz55OX_9h4bqTZD8CCzusVLN4bWVwb8e68DHXGBLeffFmD1h7tMMO117OXHDesSGntreXBQgvH1-fCmvB6G5YavPNYQSr-KxOvR7rADhQKZv8gWYs6_ANejWVE)
+
+Mermaid Code in case edits required:
+```
+graph TD
+    A(Start GUI) -->|Initialise Components| B[Draw Chessboard]
+    B --> C[Draw Pieces]
+    C --> D{Wait For Interaction}
+    D -->|Inputs Custom FEN| E{Valid FEN String?}
+    E -->|Yes| F[[Call Engines FEN_Handler]]
+    F --> G[Draw Pieces to Board]
+    G -->|Finished| D
+    E -->|No| D
+    D -->|Piece Selected/Picked Up| H{Correct Colour Piece to Move?}
+    H -->|No| D
+    H -->|Yes| I[Highlight Valid Squares on Board]
+    I -->|User Selects/Drops Piece on Square| J{Valid Square?}
+    J -->|Yes| K[Update Board]
+    K --> L[[Call Chess Engine Evaluate]]
+    L -->|Updated Best Moves| M[Update GUI]
+    M -->|Finished| D
+    J -->|No| D
+    D -->|Back Button| N[Retrieve Last Position from Engine]
+    N -->|Last Position FEN| O[Update GUI]
+    O -->|Finished| D
+    D -->|Next Button| P{Has Engine got a next Position Stored?}
+    P -->|No| D
+    P -->|Yes| Q[Retrieve Position from Engine]
+    Q -->|FEN Pos from Engine| R[Update GUI]
+    R -->|Finished| D
+```
+
+### Appendix X: Engine Class Diagram
+
+Figure X: Engine's Class Diagram
+[![](https://mermaid.ink/img/pako:eNqVVslu2zAQ_RVBpxZNfsCHAqmzGUjaAHZ6aQpiLI0twhSpkFQMw8i_d0h5ESnaSX0y5s1wljeLtnmhSsxHeSHAmGsOSw31i8zo90OBLrPLy-_ZE8cCs1E2VtIClybGb29-snuQpUBNWs-WC25woPWo3vAM_IBLEMwpsTuUqMFyJT94jt28gWjTmun3nOVMgzSNMtxJ2AzmwsU1kU1rTRflAze2eyX2ctr-uSnBfuw8WYWUl5Rip-2p6iqx7SRZ9o1L--dvNnfCgwxlW2fmtQW9d0TCuVIiW1fcIltxuWQFGCswBb-2iDKJzwUUq9PmHZw0N1aTVWZ4icwqVlOSMea6yZORAq5xAa2w_bQz8tJQRUBaZkEvMUQrEIvLRmwC4aIVIhBSjW3momEV_VP6gEwk0QyOAuYr_uXrHnlQULJbrWpGgR3Fj7BCz_xR9CzrWPjep9LP1zakbbZpMCJ3TWmuJVOLhUFrYubPgtxUqjkBriRfVvYEqJVanbJjrzEyRct8MsxN0LEAd0l5UIPeDjlU4kA9eXP4FJc1yqO7GH_azeQRp431htqGDHVxejbZb9Cmj4w10hTHVPcecnxfTceTSZRFP5fk9PezOnRbPxXXlwZBFxUrsbFVD_JTxWmYKixWsbzhUmIZS-fETjd7TDt-zVBhdV5h_dEL6zMvnJnzI6qaRkkilBVKqFZHtVhojtQPm27P0L6N8IP1EPel_6VLdG5C4n19PR6s8b5Sj76xK3jQIN2a98bhCUh2dbTY-z1QYsFrEBkSykyhNCZAEE0FCfkcLfxPPXeN4ibQaiiDdvHrxtK6oWmOiQp46OxdMniKiqSKLyKbYd2oYKS8-JGqqWnBDpFpAwUOppYSj2VXrkgnODKfICmh1yfqHkxl_ZG3gaKXHfXcjjvjcR_sZ4NynbONtwOdN8u6gx5B3eEbYvs59Ja0BYcQcRsBg_vTJRfetC6b4KTlF3mNugZe0vekj_0ltxXW-JKP6G-5O935i3SqrSfppuR0bfPRAoTBixxaq6YbWeQjq1vcK-0-S3da7_8AnWxmNA)](https://mermaid.live/edit#pako:eNqVVslu2zAQ_RVBpxZNfsCHAqmzGUjaAHZ6aQpiLI0twhSpkFQMw8i_d0h5ESnaSX0y5s1wljeLtnmhSsxHeSHAmGsOSw31i8zo90OBLrPLy-_ZE8cCs1E2VtIClybGb29-snuQpUBNWs-WC25woPWo3vAM_IBLEMwpsTuUqMFyJT94jt28gWjTmun3nOVMgzSNMtxJ2AzmwsU1kU1rTRflAze2eyX2ctr-uSnBfuw8WYWUl5Rip-2p6iqx7SRZ9o1L--dvNnfCgwxlW2fmtQW9d0TCuVIiW1fcIltxuWQFGCswBb-2iDKJzwUUq9PmHZw0N1aTVWZ4icwqVlOSMea6yZORAq5xAa2w_bQz8tJQRUBaZkEvMUQrEIvLRmwC4aIVIhBSjW3momEV_VP6gEwk0QyOAuYr_uXrHnlQULJbrWpGgR3Fj7BCz_xR9CzrWPjep9LP1zakbbZpMCJ3TWmuJVOLhUFrYubPgtxUqjkBriRfVvYEqJVanbJjrzEyRct8MsxN0LEAd0l5UIPeDjlU4kA9eXP4FJc1yqO7GH_azeQRp431htqGDHVxejbZb9Cmj4w10hTHVPcecnxfTceTSZRFP5fk9PezOnRbPxXXlwZBFxUrsbFVD_JTxWmYKixWsbzhUmIZS-fETjd7TDt-zVBhdV5h_dEL6zMvnJnzI6qaRkkilBVKqFZHtVhojtQPm27P0L6N8IP1EPel_6VLdG5C4n19PR6s8b5Sj76xK3jQIN2a98bhCUh2dbTY-z1QYsFrEBkSykyhNCZAEE0FCfkcLfxPPXeN4ibQaiiDdvHrxtK6oWmOiQp46OxdMniKiqSKLyKbYd2oYKS8-JGqqWnBDpFpAwUOppYSj2VXrkgnODKfICmh1yfqHkxl_ZG3gaKXHfXcjjvjcR_sZ4NynbONtwOdN8u6gx5B3eEbYvs59Ja0BYcQcRsBg_vTJRfetC6b4KTlF3mNugZe0vekj_0ltxXW-JKP6G-5O935i3SqrSfppuR0bfPRAoTBixxaq6YbWeQjq1vcK-0-S3da7_8AnWxmNA)
+
+Mermaid Code in case edits are required:
+```mermaid
 classDiagram
     Board --> Piece : Contains
     Board --> FEN_Handler : Utilises
     Board --> Move : Utilises
-    Board --> Psuedo_Move_Generation : Utilises
     Board --> Legal_Move_Generation : Utilises
     Board --> Move_Evaluation : Utilises
-    Psuedo_Move_Generation --> Transposition_Table : Utilises
-    Legal_Move_Generation --> Transposition_Table : Utilises
-    Move_Evaluation --> Transposition_Table : Evaluates
+    Legal_Move_Generation --> Transposition_Table : Inputs Move List
+    Move_Evaluation --> Transposition_Table : Updates
+    Legal_Move_Generation --> Move : Utilises
+    Move_Evaluation --> Move : Utilises
    
     class Board{
       +int[] board
@@ -274,38 +396,21 @@ classDiagram
       +int[] knight_offsets
       +int[] rook_offsets
       +int[] k_q_offsets
+      Set_Piece_List()
+      Get_Piece_List()
     }
     class FEN_Handler{
         +string[] FEN_Segments
         +string[] FEN_Position
         Convert_FEN()
-        Set_Castle_Rights()
+        Set_Board_Vars()
         Create_Board()
         Convert_From_ASCII()
     }
-    class Psuedo_Move_Generation{
-        +list moves
-        +bool in_check
-        +bool pinned
-        +bool b_q_castle_rights
-        +bool b_k_castle_rights
-        +bool w_q_castle_rights
-        +bool w_k_castle_rights
-        +string side_to_move
-        +string opponent_colour
-        +int friendly_king_pos
-        +int opponent_king_pos
-        Generate_Moves_List()
-        Generate_Sliding_Moves()
-        Generate_King_Moves()
-        Generate_Knight_Moves()
-        Generate_Pawn_Moves()
-        In_Check()
-        Pinned()
-        Promotion_Moves()
-    }
+    
     class Legal_Move_Generation{
         +list moves
+        +int search_depth
         +bool in_check
         +bool pinned
         +bool b_q_castle_rights
@@ -316,29 +421,44 @@ classDiagram
         +string opponent_colour
         +int friendly_king_pos
         +int opponent_king_pos
-        Filter_Moves_List()
+        Move_Ordering()
+        Search_Move_Transposition()
+        Legal_Move_Checks()
+        Update_Tranposition_Table()
     }
     class Move_Evaluation{
-
+        +decimal eval_score
+        +decimal alpha
+        +decimal beta
+        +string opponent_colour
+        +bool piece_traded
+        +enum type_of_move
+        +int friendly_piece_value
+        +int opponent_piece_value
+        Check_Tempo()
+        Check_Material()
+        Check_Space()
+        Set_Beta()
+        Set_Alpha()
+        Update_Transposition_Table()
     }
     class Transposition_Table{
         +Hashtable transposition_table
+        Get_Transposition_Table()
+        Set_Transposition_Table()
     }
     class Move{
         +int start_square
         +int target_square
+        +string start_FEN
+        +string end_FEN
+        +enum Type
+        Get_Move()
+        Set_Move()
     }
-[![](https://mermaid.ink/img/pako:eNrtVk1v2zAM_SuCTxvW_oEcBmzpV7B2CJb2tAwCYzOxYFlyJblBEPS_j5JTx3LsdAN2XE7Be4-yyEea3iepzjCZJKkEa68EbAyUS8Xo91WDydjl5Wc2F5gim7CpVg6Esn3-5vo7vwOVSTSkenJCCosnqgf9gmfoua0x09yr-C0qNOCEVmcC7nED8i_0QXn9ArIeVo5cwIc-GlC20lZ4hD_CSp5mMnydP4xujggeNDfeNwhjn4RyP3-xlQdbDFVdMvtcg3l7OoErrSXb5sIhL4Ta8BSskzhEP9eIapBfSUiL8fCGHgy3zlAUsyJD7jQvqQ59zrfJTFW1GyKucA21dN20GT2looqActyB2WDM5iDXl5XcReC6ljICqcaO-dvwnP5p0zIzRX6At4CHin_4-Mbca8j4jdElp4sd4QcoMPh7hJ5U2Qdfu1aGwdnHtj3uKuyZu6U0t4rr9dqis33nz5LC5roaIQslNrkbIY3WxVgcf46ZKKfOsLeZtVZStOcXuClRHQ_u8_PDMBx5erW8oHFxxRlboOPT0Gj8h0_GdsmpQXAn7nXO8hZ-WUxns2FzBue9m1PbO91EwiAI6v8c06KPV0IpzProigrajAs3IYtTQXFesH3vhO2ZE86M5pHVVaUVecZTLXVtOoIwVkYgWb5rXg30LuvxbfQpfyhtMyWW31NNu2a19EKKzAcH2aDi2zt00-7jgrmfoxN6pvjUW9nF5sHGCKFe0uH9HR0QNdTgBvjfT_-4n26EdGgGuinyorfsyYUB0cBi7tp1BzZ3YVu7SBiwkWfue4lYWlyON6u6RzUrLeJek4ukRFOCyOiTLJy1TFyOJS6TCf3NDksyWSovrauM-vo6E7TXkskapMWLBGqnFzuVJhNnanwTHb7sDqrX31I2M6U)](https://mermaid.live/edit#pako:eNrtVk1v2zAM_SuCTxvW_oEcBmzpV7B2CJb2tAwCYzOxYFlyJblBEPS_j5JTx3LsdAN2XE7Be4-yyEea3iepzjCZJKkEa68EbAyUS8Xo91WDydjl5Wc2F5gim7CpVg6Esn3-5vo7vwOVSTSkenJCCosnqgf9gmfoua0x09yr-C0qNOCEVmcC7nED8i_0QXn9ArIeVo5cwIc-GlC20lZ4hD_CSp5mMnydP4xujggeNDfeNwhjn4RyP3-xlQdbDFVdMvtcg3l7OoErrSXb5sIhL4Ta8BSskzhEP9eIapBfSUiL8fCGHgy3zlAUsyJD7jQvqQ59zrfJTFW1GyKucA21dN20GT2looqActyB2WDM5iDXl5XcReC6ljICqcaO-dvwnP5p0zIzRX6At4CHin_4-Mbca8j4jdElp4sd4QcoMPh7hJ5U2Qdfu1aGwdnHtj3uKuyZu6U0t4rr9dqis33nz5LC5roaIQslNrkbIY3WxVgcf46ZKKfOsLeZtVZStOcXuClRHQ_u8_PDMBx5erW8oHFxxRlboOPT0Gj8h0_GdsmpQXAn7nXO8hZ-WUxns2FzBue9m1PbO91EwiAI6v8c06KPV0IpzProigrajAs3IYtTQXFesH3vhO2ZE86M5pHVVaUVecZTLXVtOoIwVkYgWb5rXg30LuvxbfQpfyhtMyWW31NNu2a19EKKzAcH2aDi2zt00-7jgrmfoxN6pvjUW9nF5sHGCKFe0uH9HR0QNdTgBvjfT_-4n26EdGgGuinyorfsyYUB0cBi7tp1BzZ3YVu7SBiwkWfue4lYWlyON6u6RzUrLeJek4ukRFOCyOiTLJy1TFyOJS6TCf3NDksyWSovrauM-vo6E7TXkskapMWLBGqnFzuVJhNnanwTHb7sDqrX31I2M6U)
+```
 
-### Sequence Diagram
 
-### Project Planning
-
-## Testing
-
-## Conclusion 
-
-## Appendix
 
 ## Glossary
 Key:
