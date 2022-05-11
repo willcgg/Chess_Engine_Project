@@ -232,8 +232,10 @@ namespace Chess_Engine_Project
 			BoardPictureBox.Image = board_ps;
 		}
 
-		private void DrawValidMoveHighlight(Piece.Type peice, int file, int rank)
+		private void DrawValidMoveHighlight(Piece.Type p, int file, int rank)
         {
+			// init
+			Piece.Type piece = p;
 			// copying current board bitmap (with piece highlighted)
 			Bitmap board_ps = (Bitmap)BoardPictureBox.Image;
 			// Drawing highlight
@@ -241,7 +243,7 @@ namespace Chess_Engine_Project
 			Graphics g = Graphics.FromImage(board_ps);
 			Pen pen = new Pen(Color.Green, 5);
 			//Find Pieces Valid Moves
-			
+			b.Get_Valid_Moves(piece);
 		}
 
 	}

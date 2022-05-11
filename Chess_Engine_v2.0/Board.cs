@@ -122,20 +122,16 @@ namespace Chess_Engine_v2
         /// <returns>Piece int</returns>
         public int Get_Piece(string sqr) {
             int piece;
+            // converting string square to actual square array location
             int square = (int)Enum.Parse(typeof(Square), sqr);
+            // getting the indentifier of the piece on that square
             piece = board[square];
             return piece;
         }
 
-        public Move[] Get_Valid_Moves()
+        public void Get_Valid_Moves(Piece.Type piece)
         {
-            // init
-            Move[] valid_moves;
-            Move move = new Move();
-
-
-
-            return valid_moves;
+            // 
         }
 
         /// <summary>
@@ -145,42 +141,37 @@ namespace Chess_Engine_v2
         /// <param name="end_pos"></param>
         /// <param name="colour"></param>
         /// <returns></returns>
-        public int[] Make_Move(string start_pos, string end_pos, char colour)
+        public int[] Make_Move(Move m)
         {
             // init
-            Piece.Type selected_piece;
-            Piece.Type target_piece;
+            Move move = new Move();
             int[] piece_offsets;
-            int start_square;
-            int end_square;
-            bool valid_move;
 
             // checking correct side is making move
-            if (side_to_move == colour)
+            if (side_to_move == move.COLOUR)
             {
                 // converting string input of square to arrays location of that square
-                start_square = (int)Enum.Parse(typeof(Square), start_pos);
-                end_square = (int)Enum.Parse(typeof(Square), end_pos);
+                move.START_SQUARE = (int)Enum.Parse(typeof(Square), start_pos);
+                move.TARGET_SQUARE = (int)Enum.Parse(typeof(Square), end_pos);
                 // work out what piece is in the selected square
-                selected_piece = (Piece.Type)start_square;
-                target_piece = (Piece.Type)end_square;
+                move.PIECE = (Piece.Type)move.START_SQUARE;
+                move.TARGET_PIECE = (Piece.Type)move.TARGET_SQUARE;
                 // selecting vector offset
-                if (selected_piece == Piece.Type.w_pawn)
-                    piece_offsets = W_Pawn_Offsets;
-                else if (selected_piece == Piece.Type.b_pawn)
-                    piece_offsets = B_Pawn_Offsets;
-                else if (selected_piece == Piece.Type.b_knight || selected_piece == Piece.Type.b_knight)
-                    piece_offsets = Knight_Offsets;
-                else if (selected_piece == Piece.Type.b_queen || selected_piece == Piece.Type.w_queen || selected_piece == Piece.Type.b_king || selected_piece == Piece.Type.w_king)
-                    piece_offsets = KQ_Offsets;
-                else if (selected_piece == Piece.Type.b_bishop || selected_piece == Piece.Type.w_bishop)
-                    piece_offsets = Bishop_Offsets;
+                if (move.PIECE == Piece.Type.w_pawn)
+                    piece_offsets = Piece.W_Pawn_Offsets;
+                else if (move.PIECE == Piece.Type.b_pawn)
+                    piece_offsets = Piece.B_Pawn_Offsets;
+                else if (move.PIECE == Piece.Type.b_knight || move.PIECE == Piece.Type.b_knight)
+                    piece_offsets = Piece.Knight_Offsets;
+                else if (move.PIECE == Piece.Type.b_queen || move.PIECE == Piece.Type.w_queen || move.PIECE == Piece.Type.b_king || move.PIECE == Piece.Type.w_king)
+                    piece_offsets = Piece.KQ_Offsets;
+                else if (move.PIECE == Piece.Type.b_bishop || move.PIECE == Piece.Type.w_bishop)
+                    piece_offsets = Piece.Bishop_Offsets;
                 else
-                    piece_offsets = Rook_Offsets;
+                    piece_offsets = Piece.Rook_Offsets;
                 // blocking pieces?
 
                 // move the piece
-
 
                 // incrementing half-ply if no piece taken
                 half_ply++;

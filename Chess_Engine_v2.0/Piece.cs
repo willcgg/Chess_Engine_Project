@@ -7,12 +7,12 @@ namespace Chess_Engine_v2
     public class Piece
     {
         // piece offsets in board array
-        public readonly int[] W_Pawn_Offsets = new int[] { -10, -20, -9, -11 };
-        public readonly int[] B_Pawn_Offsets = new int[] { 10, 20, 9, 11 };
-        public readonly int[] Bishop_Offsets = new int[] { 9, 11, -9, -11 };
-        public readonly int[] Knight_Offsets = new int[] { 21, 19, 12, 8, -8, -12, -19, 21 };
-        public readonly int[] Rook_Offsets = new int[] { 1, -1, 10, -10 };
-        public readonly int[] KQ_Offsets = new int[] { 1, 9, 10, 11, -11, -10, -9, 1 };
+        public static int[] W_Pawn_Offsets = new int[] { -10, -20, -9, -11 };
+        public static int[] B_Pawn_Offsets = new int[] { 10, 20, 9, 11 };
+        public static int[] Bishop_Offsets = new int[] { 9, 11, -9, -11 };
+        public static int[] Knight_Offsets = new int[] { 21, 19, 12, 8, -8, -12, -19, 21 };
+        public static int[] Rook_Offsets = new int[] { 1, -1, 10, -10 };
+        public static int[] KQ_Offsets = new int[] { 1, 9, 10, 11, -11, -10, -9, 1 };
 
         public enum Type
         {
@@ -33,3 +33,4 @@ namespace Chess_Engine_v2
         }
     }
 }
+
