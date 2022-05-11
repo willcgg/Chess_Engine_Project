@@ -176,8 +176,8 @@ namespace Chess_Engine_Project
 
 		private void BoardPictureBox_Click(object sender, EventArgs e)
         {
-			// Clearing previous clicks highlight
-
+			// init 
+			Piece.Type piece;
 			// setting up vars
 			MouseEventArgs click = (MouseEventArgs)e;
 			var c_height = click.Y;
@@ -185,7 +185,6 @@ namespace Chess_Engine_Project
 			var t_height = BoardPictureBox.Height;
 			var t_width = BoardPictureBox.Width;
 			var square = "";
-
 			// work out row/col
 			var row = c_height / (t_height / 8.0);
 			var col = c_width / (t_width / 8.0);
@@ -209,10 +208,12 @@ namespace Chess_Engine_Project
 				square += "g" + (rank + 1);
 			else if(file == 7)
 				square += "h" + (rank + 1);
-			// outputting to console for debugging purposes
-			Console.WriteLine(square);
+			// Retrieving piece clicked
+			piece = (Piece.Type)b.Get_Piece(square);
 			// Calling the highlight of the square clicked
 			DrawSquareHighlight(file, rank);
+			// Calling valid move highlights for selected piece
+			DrawValidMoveHighlight(piece, file, rank);
 		}
 
 
@@ -229,6 +230,18 @@ namespace Chess_Engine_Project
 			// Draw rectangle to screen.
 			g.DrawRectangle(pen, rect);
 			BoardPictureBox.Image = board_ps;
+		}
+
+		private void DrawValidMoveHighlight(Piece.Type peice, int file, int rank)
+        {
+			// copying current board bitmap (with piece highlighted)
+			Bitmap board_ps = (Bitmap)BoardPictureBox.Image;
+			// Drawing highlight
+			//--------------------
+			Graphics g = Graphics.FromImage(board_ps);
+			Pen pen = new Pen(Color.Green, 5);
+			//Find Pieces Valid Moves
+			
 		}
 
 	}

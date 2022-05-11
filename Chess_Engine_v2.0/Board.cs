@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chess_Engine_v2._0;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,13 +10,6 @@ namespace Chess_Engine_v2
         #region Constants
         // default board pos
         const string FEN_DEFAULT = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-        // piece offsets in board array
-        public readonly int[] W_Pawn_Offsets = new int[] { -10, -20, -9, -11 };
-        public readonly int[] B_Pawn_Offsets = new int[] { 10, 20, 9, 11 };
-        public readonly int[] Bishop_Offsets = new int[] { 9, 11, -9, -11 };
-        public readonly int[] Knight_Offsets = new int[] { 21, 19, 12, 8, -8, -12, -19, 21 };
-        public readonly int[] Rook_Offsets = new int[] { 1, -1, 10, -10 };
-        public readonly int[] KQ_Offsets = new int[] { 1, 9, 10, 11, -11, -10, -9, 1 };
         // square array positions
         public enum Square
         {
@@ -120,6 +114,28 @@ namespace Chess_Engine_v2
             // init
             new FEN_Handler(FEN, this);             // setting custom fen position
             Console.WriteLine("Custom Board set in mem");
+        }
+
+        /// <summary>
+        /// Returns piece type from board poisition
+        /// </summary>
+        /// <returns>Piece int</returns>
+        public int Get_Piece(string sqr) {
+            int piece;
+            int square = (int)Enum.Parse(typeof(Square), sqr);
+            piece = board[square];
+            return piece;
+        }
+
+        public Move[] Get_Valid_Moves()
+        {
+            // init
+            Move[] valid_moves;
+            Move move = new Move();
+
+
+
+            return valid_moves;
         }
 
         /// <summary>
