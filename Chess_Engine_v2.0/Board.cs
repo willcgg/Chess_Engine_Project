@@ -129,9 +129,37 @@ namespace Chess_Engine_v2
             return piece;
         }
 
-        public void Get_Valid_Moves(Piece.Type piece)
+        /// <summary>
+        /// Function to find all valid board squares for any given piece
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <param name="square"></param>
+        /// <returns>Legal move board index's</returns>
+        public List<int> Get_Valid_Moves(Piece.Type piece, string start_square)
         {
-            // 
+            // init
+            int[] offsets;
+            List<int> valid_moves;
+            int square;
+            // converting start square to board index
+            square = (int)Enum.Parse(typeof(Square), start_square);
+            // getting piece movement offset
+            offsets = Piece.Get_Piece_Offsets(piece);
+            // blocking pieces?
+            valid_moves = new List<int>();
+            foreach(int offset in offsets)
+            {
+                // loops through each offset
+                // target square starting on first square in offset direction
+                int target_square = board[square + offset];
+                // iterating until find a blocking piece or off board pos
+                while (target_square != 0)
+                {
+                    valid_moves.Add(target_square);
+                }
+            }
+            // returning valid_moves
+            return valid_moves;
         }
 
         /// <summary>
@@ -141,34 +169,20 @@ namespace Chess_Engine_v2
         /// <param name="end_pos"></param>
         /// <param name="colour"></param>
         /// <returns></returns>
-        public int[] Make_Move(Move m)
+        public void Make_Move(Move m)
         {
             // init
-            Move move = new Move();
-            int[] piece_offsets;
-
+            Move move = m;
+            int start_square;
+            int target_square;
+            Piece.Type piece;
             // checking correct side is making move
             if (side_to_move == move.COLOUR)
             {
                 // converting string input of square to arrays location of that square
-                move.START_SQUARE = (int)Enum.Parse(typeof(Square), start_pos);
-                move.TARGET_SQUARE = (int)Enum.Parse(typeof(Square), end_pos);
-                // work out what piece is in the selected square
-                move.PIECE = (Piece.Type)move.START_SQUARE;
-                move.TARGET_PIECE = (Piece.Type)move.TARGET_SQUARE;
-                // selecting vector offset
-                if (move.PIECE == Piece.Type.w_pawn)
-                    piece_offsets = Piece.W_Pawn_Offsets;
-                else if (move.PIECE == Piece.Type.b_pawn)
-                    piece_offsets = Piece.B_Pawn_Offsets;
-                else if (move.PIECE == Piece.Type.b_knight || move.PIECE == Piece.Type.b_knight)
-                    piece_offsets = Piece.Knight_Offsets;
-                else if (move.PIECE == Piece.Type.b_queen || move.PIECE == Piece.Type.w_queen || move.PIECE == Piece.Type.b_king || move.PIECE == Piece.Type.w_king)
-                    piece_offsets = Piece.KQ_Offsets;
-                else if (move.PIECE == Piece.Type.b_bishop || move.PIECE == Piece.Type.w_bishop)
-                    piece_offsets = Piece.Bishop_Offsets;
-                else
-                    piece_offsets = Piece.Rook_Offsets;
+                start_square = (int)Enum.Parse(typeof(Square), move.START_SQUARE);
+                target_square = (int)Enum.Parse(typeof(Square), move.TARGET_SQUARE);
+                
                 // blocking pieces?
 
                 // move the piece
@@ -188,8 +202,7 @@ namespace Chess_Engine_v2
             else
                 Console.WriteLine("Wrong colour attempting to move");
 
-            // return new board
-            return board;
+            
         }
 
         /// <summary>

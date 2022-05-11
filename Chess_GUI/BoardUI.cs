@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -213,7 +214,7 @@ namespace Chess_Engine_Project
 			// Calling the highlight of the square clicked
 			DrawSquareHighlight(file, rank);
 			// Calling valid move highlights for selected piece
-			DrawValidMoveHighlight(piece, file, rank);
+			DrawValidMoveHighlight(piece, square);
 		}
 
 
@@ -232,10 +233,11 @@ namespace Chess_Engine_Project
 			BoardPictureBox.Image = board_ps;
 		}
 
-		private void DrawValidMoveHighlight(Piece.Type p, int file, int rank)
+		private void DrawValidMoveHighlight(Piece.Type p, string start_square)
         {
 			// init
 			Piece.Type piece = p;
+			List<int> valid_moves = new List<int>();
 			// copying current board bitmap (with piece highlighted)
 			Bitmap board_ps = (Bitmap)BoardPictureBox.Image;
 			// Drawing highlight
@@ -243,7 +245,7 @@ namespace Chess_Engine_Project
 			Graphics g = Graphics.FromImage(board_ps);
 			Pen pen = new Pen(Color.Green, 5);
 			//Find Pieces Valid Moves
-			b.Get_Valid_Moves(piece);
+			valid_moves = b.Get_Valid_Moves(piece, start_square);
 		}
 
 	}

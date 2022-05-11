@@ -13,6 +13,8 @@ namespace Chess_Engine_v2
         public static int[] Knight_Offsets = new int[] { 21, 19, 12, 8, -8, -12, -19, 21 };
         public static int[] Rook_Offsets = new int[] { 1, -1, 10, -10 };
         public static int[] KQ_Offsets = new int[] { 1, 9, 10, 11, -11, -10, -9, 1 };
+        public static int[] No_Offsets = new int[] { 0 };
+
 
         public enum Type
         {
@@ -30,6 +32,26 @@ namespace Chess_Engine_v2
             b_queen = 10,        //10
             w_king = 11,         //11
             b_king = 12          //12
+        }
+
+
+        public static int[] Get_Piece_Offsets(Piece.Type p)
+        {
+            // checking what piece it is then returning appropriate movement vectors
+            if (p == Piece.Type.b_pawn)
+                return B_Pawn_Offsets;
+            else if (p == Piece.Type.w_pawn)
+                return W_Pawn_Offsets;
+            else if (p == Piece.Type.w_knight || p == Piece.Type.b_knight)
+                return Knight_Offsets;
+            else if (p == Piece.Type.b_bishop || p == Piece.Type.w_bishop)
+                return Bishop_Offsets;
+            else if (p == Piece.Type.b_rook || p == Piece.Type.w_rook)
+                return Rook_Offsets;
+            else if (p == Piece.Type.b_king || p == Piece.Type.w_king || p == Piece.Type.b_queen || p == Piece.Type.w_queen)
+                return KQ_Offsets;
+            else
+                return No_Offsets;
         }
     }
 }
