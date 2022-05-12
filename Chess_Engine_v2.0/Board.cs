@@ -120,7 +120,8 @@ namespace Chess_Engine_v2
         /// Returns piece type from board poisition
         /// </summary>
         /// <returns>Piece int</returns>
-        public int Get_Piece(string sqr) {
+        public int Get_Piece(string sqr)
+        {
             int piece;
             // converting string square to actual square array location
             int square = (int)Enum.Parse(typeof(Square), sqr);
@@ -148,7 +149,7 @@ namespace Chess_Engine_v2
             offsets = Piece.Get_Piece_Offsets(piece);
             // blocking pieces?
             valid_moves = new List<int>();
-            foreach(int offset in offsets)
+            foreach (int offset in offsets)
             {
                 // loops through each offset
                 // target square starting on first square in offset direction
@@ -183,32 +184,36 @@ namespace Chess_Engine_v2
             int start_square;
             int target_square;
             Piece.Type piece;
-            // checking correct side is making move
-            if (side_to_move == Piece.Get_Piece_Colour(m.PIECE))
+            // converting string input of square to arrays location of that square
+            start_square = (int)Enum.Parse(typeof(Square), move.START_SQUARE);
+            target_square = (int)Enum.Parse(typeof(Square), move.TARGET_SQUARE);
+            // getting piece moved
+            piece = (Piece.Type)board[start_square];
+            // move type?
+            switch (move.FLAG)
             {
-                // converting string input of square to arrays location of that square
-                start_square = (int)Enum.Parse(typeof(Square), move.START_SQUARE);
-                target_square = (int)Enum.Parse(typeof(Square), move.TARGET_SQUARE);
-                // blocking pieces?
-
-                // move the piece
-
-                // incrementing half-ply if no piece taken
-                half_ply++;
-                // changing side to move and full-ply
-                if (side_to_move == 'w')
-                    side_to_move = 'b';
-                else
-                {
-                    side_to_move = 'w';
-                    full_ply++;
-                }
-
+                case Move.Flag.quiet:
+                    break;
+                case Move.Flag.capture:
+                    break;
+                case Move.Flag.double_pawn_push:
+                    break;
+                default:
+                    break;
             }
-            else
-                Console.WriteLine("Wrong colour attempting to move");
 
-            
+
+
+            // incrementing half-ply if no piece taken
+            half_ply++;
+            // changing side to move and full-ply
+            if (side_to_move == 'w')
+                side_to_move = 'b';
+            else
+            {
+                side_to_move = 'w';
+                full_ply++;
+            }
         }
 
         /// <summary>

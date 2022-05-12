@@ -58,12 +58,6 @@ namespace Chess_Engine_v2
             Console.WriteLine("Board Ready...");
         }
 
-        public FEN_Handler(Board board)
-        {
-            b = board;
-        }
-
-
         /// <summary>
         /// Takes in FEN representation of board position and returns integer array representation
         /// <para>Board Array Representation

@@ -14,9 +14,10 @@ namespace Chess_Engine_v2._0
         // basic move info
         public string START_SQUARE;
         public string TARGET_SQUARE;
+        public Flag FLAG;
         public bool CHECK_MOVE;
         // type of move
-        public enum FLAG
+        public enum Flag
         {
             quiet,
             double_pawn_push,
