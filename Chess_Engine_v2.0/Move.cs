@@ -6,13 +6,32 @@ using System.Threading.Tasks;
 
 namespace Chess_Engine_v2._0
 {
+    /// <summary>
+    /// Class to uniquely describe every possible chess move
+    /// </summary>
     public class Move
     {
+        // basic move info
         public string START_SQUARE;
         public string TARGET_SQUARE;
-        public Piece.Type PIECE;
-        public Piece.Type TARGET_PIECE;
-        public bool CAPTURE;
-        public bool PROMOTION;
+        public bool CHECK_MOVE;
+        // type of move
+        public enum FLAG
+        {
+            quiet,
+            double_pawn_push,
+            king_castle,
+            queen_castle,
+            capture,
+            en_passant_capture,
+            knight_promote,
+            bishop_promote,
+            rook_promote,
+            queen_promote,
+            knight_capture_promote,
+            bishop_capture_promote,
+            rook_capture_promote,
+            queen_capture_promote
+        }
     }    
 }
