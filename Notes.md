@@ -151,3 +151,13 @@ Diagrams:
 Used MVC in project, how structured architecture of system, ie how the project was split into 3, segmented classes reduce coupling etc just talk about why structured project like i did
 </p>
 Code quality: talk about branches ticket numbers. commits, why branched off at certain points
+
+
+## SUPERVISOR MEETING 12/05/2022 @3:15-4:30
+
+### Action Points /  Notes
+- Try get pieces valid moves displaying
+- Write tests for it alongside
+- Move choices for my implementation over to design section
+- Talk about development story; problems encountered, e.g. refactoring class structure, changes to variables
+- Conclusion, TL;DR, future development?
