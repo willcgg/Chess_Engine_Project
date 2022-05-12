@@ -8,14 +8,11 @@ namespace Chess_Engine_v2._0
 {
     public class Move
     {
-        public char COLOUR;
         public string START_SQUARE;
         public string TARGET_SQUARE;
         public Piece.Type PIECE;
         public Piece.Type TARGET_PIECE;
         public bool CAPTURE;
         public bool PROMOTION;
-
-
     }    
 }

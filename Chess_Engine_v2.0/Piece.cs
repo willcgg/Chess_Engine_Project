@@ -34,7 +34,11 @@ namespace Chess_Engine_v2
             b_king = 12          //12
         }
 
-
+        /// <summary>
+        /// Gets piece array directional offsets given a piece
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns>Returns piece's offsets</returns>
         public static int[] Get_Piece_Offsets(Piece.Type p)
         {
             // checking what piece it is then returning appropriate movement vectors
@@ -53,6 +57,27 @@ namespace Chess_Engine_v2
             else
                 return No_Offsets;
         }
+
+        /// <summary>
+        /// Gets piece colour when given a piece type
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <returns>Piece colour</returns>
+        public static char Get_Piece_Colour(Piece.Type piece) {
+            if (piece == Type.b_bishop || piece == Type.b_king || piece == Type.b_knight || piece == Type.b_pawn
+                || piece == Type.b_queen || piece == Type.b_rook)
+            {
+                return 'b';
+            }
+            else if (piece == Type.w_bishop || piece == Type.w_king || piece == Type.w_knight || piece == Type.w_pawn
+                || piece == Type.w_queen || piece == Type.w_rook)
+            {
+                return 'w';
+            }
+            else
+                return 'n';
+        }
+
     }
 }
 

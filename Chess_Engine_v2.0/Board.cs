@@ -141,6 +141,7 @@ namespace Chess_Engine_v2
             int[] offsets;
             List<int> valid_moves;
             int square;
+            int index;
             // converting start square to board index
             square = (int)Enum.Parse(typeof(Square), start_square);
             // getting piece movement offset
@@ -151,11 +152,17 @@ namespace Chess_Engine_v2
             {
                 // loops through each offset
                 // target square starting on first square in offset direction
-                int target_square = board[square + offset];
+                index = square + offset;
+                int target_square = board[index];
                 // iterating until find a blocking piece or off board pos
                 while (target_square != 0)
                 {
+                    // move valid add to list
                     valid_moves.Add(target_square);
+                    // increment index
+                    index += offset;
+                    // setting target square to new board position before next loop
+                    target_square = board[index];
                 }
             }
             // returning valid_moves
@@ -177,12 +184,11 @@ namespace Chess_Engine_v2
             int target_square;
             Piece.Type piece;
             // checking correct side is making move
-            if (side_to_move == move.COLOUR)
+            if (side_to_move == Piece.Get_Piece_Colour(m.PIECE))
             {
                 // converting string input of square to arrays location of that square
                 start_square = (int)Enum.Parse(typeof(Square), move.START_SQUARE);
                 target_square = (int)Enum.Parse(typeof(Square), move.TARGET_SQUARE);
-                
                 // blocking pieces?
 
                 // move the piece
