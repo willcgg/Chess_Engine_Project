@@ -120,7 +120,7 @@ namespace Chess_Engine_v2
         /// Returns piece type from board poisition
         /// </summary>
         /// <returns>Piece int</returns>
-        public int Get_Piece(string sqr)
+        public int Get_Piece_From_Square(string sqr)
         {
             int piece;
             // converting string square to actual square array location
@@ -156,7 +156,7 @@ namespace Chess_Engine_v2
                 index = square + offset;
                 int target_square = board[index];
                 // iterating until find a blocking piece or off board pos
-                while (target_square != 0)
+                while (target_square == 0)
                 {
                     // move valid add to list
                     valid_moves.Add(target_square);

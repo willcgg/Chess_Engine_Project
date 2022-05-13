@@ -210,7 +210,7 @@ namespace Chess_Engine_Project
 			else if(file == 7)
 				square += "h" + (rank + 1);
 			// Retrieving piece clicked
-			piece = (Piece.Type)b.Get_Piece(square);
+			piece = (Piece.Type)b.Get_Piece_From_Square(square);
 			// Calling the highlight of the square clicked
 			DrawSquareHighlight(file, rank);
 			// Calling valid move highlights for selected piece

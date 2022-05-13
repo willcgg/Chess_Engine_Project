@@ -13,6 +13,51 @@ namespace Engine_Tests
     {
         Board b;
 
+        /// <summary>
+        /// Tests that the function returns the correct piece value
+        /// </summary>
+        [TestMethod]
+        public void Get_Piece_From_Square_Test()
+        {
+            // Arrange
+            int p1, p2, p3, p4, p5, p6;
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ♟♞♝♜♛♚^^";
+            b = new Board();
+            b.Convert_From_ASCII(board);
+
+            // Act
+            p1 = b.Get_Piece_From_Square("a1");
+            p2 = b.Get_Piece_From_Square("a2");
+            p3 = b.Get_Piece_From_Square("a3");
+            p4 = b.Get_Piece_From_Square("a4");
+            p5 = b.Get_Piece_From_Square("a5");
+            p6 = b.Get_Piece_From_Square("a6");
+
+            // Assert
+            Assert.IsTrue(p1 == (int)Piece.Type.b_pawn);
+            Assert.IsTrue(p2 == (int)Piece.Type.b_knight);
+            Assert.IsTrue(p3 == (int)Piece.Type.b_bishop);
+            Assert.IsTrue(p4 == (int)Piece.Type.b_rook);
+            Assert.IsTrue(p5 == (int)Piece.Type.b_queen);
+            Assert.IsTrue(p6 == (int)Piece.Type.b_king);
+        }
+
+        /// <summary>
+        /// Tests the function returns only valid moves for any given piece
+        /// </summary>
+        [TestMethod]
+        public void Get_Valid_Moves_Test()
+        {
+
+        }
+
         [TestMethod]
         public void Make_Move_Test()
         {
