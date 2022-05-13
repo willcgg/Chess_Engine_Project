@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Chess_Engine_v2;
 
-namespace Chess_Engine_Tests
+namespace Engine_Tests
 {
     /// <summary>
     /// Checks all possible king movements

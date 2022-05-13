@@ -2,7 +2,7 @@
 using Chess_Engine_v2;
 using System.Linq;
 
-namespace Chess_Engine_Tests
+namespace Engine_Tests
 {
     /// <summary>
     /// Class to test the FEN_Handler class and its functions create the board correctly under every given circumstance

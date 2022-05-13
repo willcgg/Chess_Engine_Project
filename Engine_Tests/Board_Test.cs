@@ -3,7 +3,7 @@ using Chess_Engine_v2;
 using System.Linq;
 using System;
 
-namespace Chess_Engine_Tests
+namespace Engine_Tests
 {
     /// <summary>
     /// Tests board and its attributes behave correctly
@@ -63,7 +63,7 @@ namespace Chess_Engine_Tests
                              ^^^^^^^^
                              ^^^^^^^^
                              ^^^^^^^^
-                             ^^^^^^^^"; 
+                             ^^^^^^^^";
             string board_final = @"^^^^^^^^
                             ♟^^^^^^^
                             ^^^^^^^^

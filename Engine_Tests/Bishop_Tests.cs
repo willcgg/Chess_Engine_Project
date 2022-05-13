@@ -1,8 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Chess_Engine_v2;
 using System.Linq;
 
-namespace Chess_Engine_Tests
+namespace Engine_Tests
 {
     /// <summary>
     /// <para>Checks all possible bishop movements</para>
@@ -116,7 +117,7 @@ namespace Chess_Engine_Tests
             b.side_to_move = 'b';
 
             //  act
-            
+
 
             //  assert
             Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
@@ -264,7 +265,7 @@ namespace Chess_Engine_Tests
             b.board = b.Convert_From_ASCII(board);
 
             //  act
-            
+
 
             //  assert
             Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
@@ -330,3 +331,4 @@ namespace Chess_Engine_Tests
         }
     }
 }
+

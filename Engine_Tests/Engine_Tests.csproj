@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4CAFCD8B-D3A5-4BC2-BC58-820E065B1204}</ProjectGuid>
+    <ProjectGuid>{1ACC1857-D2DB-4FE3-95A6-2C25A0A4E107}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Chess_Engine_Tests</RootNamespace>
-    <AssemblyName>Chess_Engine_Tests</AssemblyName>
+    <RootNamespace>Engine_Tests</RootNamespace>
+    <AssemblyName>Engine_Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -50,14 +50,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bishop_Tests.cs" />
-    <Compile Include="Board_Tests.cs" />
-    <Compile Include="FEN_Handler_Tests.cs" />
     <Compile Include="King_Tests.cs" />
-    <Compile Include="Knight_Tests.cs" />
+    <Compile Include="Knight_Test.cs" />
     <Compile Include="Pawn_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Board_Test.cs" />
+    <Compile Include="FEN_Handler_Tests.cs" />
     <Compile Include="Queen_Tests.cs" />
     <Compile Include="Rook_Tests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chess_Engine_v2.0\Chess_Engine_v2.csproj">
