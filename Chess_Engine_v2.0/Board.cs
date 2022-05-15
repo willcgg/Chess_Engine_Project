@@ -180,9 +180,9 @@ namespace Chess_Engine_v2
                 index = square + offset;
                 int target_square = board[index];
                 // Sliding pieces ( Rooks / Bishops / Queens )
-                while (target_square == (int)Piece.Type.empty || opp1 == (Piece.Type)target_square || opp2 == (Piece.Type)target_square ||
+                while (piece != Piece.Type.empty && (target_square == (int)Piece.Type.empty || opp1 == (Piece.Type)target_square || opp2 == (Piece.Type)target_square ||
                     opp3 == (Piece.Type)target_square || opp4 == (Piece.Type)target_square || opp5 == (Piece.Type)target_square || 
-                    opp6 == (Piece.Type)target_square)
+                    opp6 == (Piece.Type)target_square))
                 {
                     // move valid add to list
                     valid_moves.Add(index);
