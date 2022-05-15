@@ -2,6 +2,8 @@
 using Chess_Engine_v2;
 using System.Linq;
 using System;
+using Chess_Engine_v2._0;
+using System.Collections.Generic;
 
 namespace Engine_Tests
 {
@@ -12,6 +14,7 @@ namespace Engine_Tests
     public class Board_Tests
     {
         Board b;
+        Move m;
 
         /// <summary>
         /// Tests that the function returns the correct piece value
@@ -20,7 +23,7 @@ namespace Engine_Tests
         public void Get_Piece_From_Square_Test()
         {
             // Arrange
-            int p1, p2, p3, p4, p5, p6;
+            Piece.Type p1, p2, p3, p4, p5, p6;
             string board = @"^^^^^^^^
                             ^^^^^^^^
                             ^^^^^^^^
@@ -41,21 +44,74 @@ namespace Engine_Tests
             p6 = b.Get_Piece_From_Square("a6");
 
             // Assert
-            Assert.IsTrue(p1 == (int)Piece.Type.b_pawn);
-            Assert.IsTrue(p2 == (int)Piece.Type.b_knight);
-            Assert.IsTrue(p3 == (int)Piece.Type.b_bishop);
-            Assert.IsTrue(p4 == (int)Piece.Type.b_rook);
-            Assert.IsTrue(p5 == (int)Piece.Type.b_queen);
-            Assert.IsTrue(p6 == (int)Piece.Type.b_king);
+            Assert.IsTrue(p1 == Piece.Type.b_pawn);
+            Assert.IsTrue(p2 == Piece.Type.b_knight);
+            Assert.IsTrue(p3 == Piece.Type.b_bishop);
+            Assert.IsTrue(p4 == Piece.Type.b_rook);
+            Assert.IsTrue(p5 == Piece.Type.b_queen);
+            Assert.IsTrue(p6 == Piece.Type.b_king);
         }
 
         /// <summary>
-        /// Tests the function returns only valid moves for any given piece
+        /// Tests the Get_Valid_Moves function returns ALL valid moves for the pawn piece in this position
         /// </summary>
         [TestMethod]
-        public void Get_Valid_Moves_Test()
+        public void Get_Valid_Pawn_Moves_Test()
         {
+            // Arrange
+            List<int> move_list = new List<int>();
+            Piece.Type piece;
+            string board = @"^^^^^^^^
+                            ^♟♙^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            b = new Board();
+            b.Convert_From_ASCII(board);
+            // setting up enpassant
+            b.en_passant_target = (int)Enum.Parse(typeof(Board.Square), "c6");
+            // square got when user clicks board
+            piece = b.Get_Piece_From_Square("a7");
 
+            // Act
+            move_list = b.Get_Valid_Moves(piece, "a7");
+
+            // Assert
+            Assert.IsTrue(move_list.Count == 4, "Test Failed: Returned more than the precalculated 4 valid moves for this position");
+            // loop through all returned valid moves and check they are what is expected
+            foreach (int move in move_list)
+                Assert.IsTrue(move == (int)Enum.Parse(typeof(Board.Square), "b6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "b5")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "c6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "a6"));
+        }
+
+        /// <summary>
+        /// Tests the Get_Valid_Moves function works properly for knight pieces
+        /// </summary>
+        [TestMethod]
+        public void Get_Valid_Knight_Moves()
+        {
+            // Arrange
+            List<int> move_list = new List<int>();
+            Piece.Type piece;
+            string board = @"^^^^^^^^
+                            ^^^^^♘^
+                            ^^^^^^^^
+                            ^^^♘^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^"; // d5
+            b = new Board();
+            b.Convert_From_ASCII(board);
+
+            // Act
+
+            // Assert
         }
 
         [TestMethod]
@@ -81,9 +137,15 @@ namespace Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            m = new Move();
+            m.CHECK_MOVE = false;
+            m.FLAG = Move.Flag.double_pawn_push;
+            m.START_SQUARE = "a7";
+            m.TARGET_SQUARE = "a5";
+            
 
             // Act
-            b.Make_Move("a7", "a5", 'b');
+            b.Make_Move(m);
 
             // Assert
             Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: Board array is not as expected");

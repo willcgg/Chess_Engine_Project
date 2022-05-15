@@ -120,13 +120,13 @@ namespace Chess_Engine_v2
         /// Returns piece type from board poisition
         /// </summary>
         /// <returns>Piece int</returns>
-        public int Get_Piece_From_Square(string sqr)
+        public Piece.Type Get_Piece_From_Square(string sqr)
         {
-            int piece;
+            Piece.Type piece;
             // converting string square to actual square array location
             int square = (int)Enum.Parse(typeof(Square), sqr);
             // getting the indentifier of the piece on that square
-            piece = board[square];
+            piece = (Piece.Type)board[square];
             return piece;
         }
 
@@ -143,11 +143,15 @@ namespace Chess_Engine_v2
             List<int> valid_moves;
             int square;
             int index;
+            char colour_to_move;
+            Piece.Type opp1, opp2, opp3, opp4, opp5, opp6;
             // converting start square to board index
             square = (int)Enum.Parse(typeof(Square), start_square);
             // getting piece movement offset
             offsets = Piece.Get_Piece_Offsets(piece);
-            // blocking pieces?
+            // getting piece colour
+            colour_to_move = Piece.Get_Piece_Colour(piece);
+            // init moves list
             valid_moves = new List<int>();
             foreach (int offset in offsets)
             {
@@ -155,15 +159,42 @@ namespace Chess_Engine_v2
                 // target square starting on first square in offset direction
                 index = square + offset;
                 int target_square = board[index];
-                // iterating until find a blocking piece or off board pos
-                while (target_square == 0)
+                // what colour?
+                if (colour_to_move == 'b')
+                {
+                    opp1 = Piece.Type.w_king;
+                    opp2 = Piece.Type.w_knight;
+                    opp3 = Piece.Type.w_queen;
+                    opp4 = Piece.Type.w_rook;
+                    opp5 = Piece.Type.w_bishop;
+                    opp6 = Piece.Type.w_pawn;
+
+                }
+                else
+                {
+                    opp1 = Piece.Type.b_king;
+                    opp2 = Piece.Type.b_knight;
+                    opp3 = Piece.Type.b_queen;
+                    opp4 = Piece.Type.b_rook;
+                    opp5 = Piece.Type.b_bishop;
+                    opp6 = Piece.Type.b_pawn;
+                }
+                // Sliding pieces ( Rooks / Bishops / Queens )
+                while (target_square == (int)Piece.Type.empty || opp1 == (Piece.Type)board[index] || opp2 == (Piece.Type)board[index] ||
+                    opp3 == (Piece.Type)board[index] || opp4 == (Piece.Type)board[index] || opp5 == (Piece.Type)board[index] || 
+                    opp6 == (Piece.Type)board[index])
                 {
                     // move valid add to list
-                    valid_moves.Add(target_square);
+                    valid_moves.Add(index);
                     // increment index
                     index += offset;
                     // setting target square to new board position before next loop
                     target_square = board[index];
+                }
+                // knight
+                if (target_square == 0)     // can only land on empty squares or enemy pieces
+                {
+
                 }
             }
             // returning valid_moves

@@ -235,22 +235,80 @@ https://chess.stackexchange.com/questions/8500/alternatives-to-the-fen-notation
 PGN will need to be stored regardless, mainly to complete the functionality of the 'Next' and 'Back' buttons. This will be implemented through either a stack of all the moves made in the game or a list. Then when a user wishes to go back to a position, it will simply pop the top move off of the stack/list, which will be the last move played due to the stack's nature in storing data.
 
 ## Design
-The language I will be using to produce the engine will be C#. This is for several reasons such as familiarity, portability, object-oriented nature, and finally, it is a static language. This makes it easier to find errors, understand the code, and write it. C#'s main advantage is that it is an object-oriented language; this makes the code highly efficient, reusable, flexible, scalable, and easy to maintain. Additionally, the chess programming world is primarily dominated by C and C++ languages, meaning a vast community of developers and resources are available. Even some of the most robust engines written in other languages were eventually rewritten in C. For example, Booot written by Alex Morozov in Delphi was rewritten due to running into too many 64-bit bugs. It is also commonly used for web and windows applications which fits the project's needs. 
+The language I will be using to produce the engine will be C#. This is for several reasons such as:
+- Familiarity
+- Portability
+- Object-oriented nature
+- Static language
+  
+This makes it easier to find errors, understand the code, and write it. C#'s main advantage is that it is an object-oriented language; this makes the code 
+- highly efficient
+- Reusable
+- Flexible
+- Scalable
+- Easy to maintain
+ 
+Additionally, the chess programming world is primarily dominated by C and C++ languages, meaning a vast community of developers and resources are available. Even some of the most robust engines written in other languages were eventually rewritten in C. For example, Booot written by Alex Morozov in Delphi was rewritten due to running into too many 64-bit bugs. It is also commonly used for web and windows applications which fits the project's needs. 
+
+To develop this project I chose to use the MVC Architecture this was for several reasons which provide significant advantage when developing this solution. Even though it is often reffered to as a design pattern, I have refferred to it as an architectural pattern due to the nature of how it is being used to structure my solution. It also helps:
+- Creates solid structure
+- Helps reduce repetition
+
+![Figure 14](https://miro.medium.com/max/1400/1*yrAnC64Mq_7DuhRQWkbUmQ.png)
+
+Figure 14: MVC Architecture
+
+It is composed of 3 parts: model, view, and a controller. Each with very specific purposes and responsibilities.
+- Model
+  
+  This section is responsible for handling and maintaining the data involved with the solution. It is the model that will typically be connected to any databases/sources that are needed within the solution.
+- View
+  
+  This section displays the information from the model layer to the user. This is typically done in a friendly and easy to understand way. This is the layer that also allows users to interact and change data for the controller to pass to the model to update the back and then back to the controller to update the view once more.
+- Controller
+  
+  Finally, this section is responsible for the flow of the data between the model and view components. It takes any changes from the view and passes them to the model to update and vice versa.
+
+(Svirca, 2019; TutorialsPoint, 2022)
+
+To make this project more manageable, instead of creating one titanic project, I split it up into three seperate parts:
+- Engine
+  
+  Resonsible for the 'brains' of the solution. This will be the section of the project that will make up the model/controller part of the solution and main bulk of code. It will be responsible for the handling of all the data invoved in the solution such as: moves, pieces, 50 ply count, e.t.c. It will implement the majority of the things spoke abount in the project analysis section. It will be home of the Search & Evaluate functions which are responsible for finding all moves and then filtering them down to the 'best move' in a given chess position (See appendix B & C for roughly how this will work)
+- Testing
+  
+  This is the part of the project that is responsible for ensuring the code stays bug/error free. This is extremely important as writing bug free code at the start of a project is crucial or there will more than likely be problems down the road when it comes to implementing the search and evaluate functions. It will be an automated test routine which will run every time the project is run to ensure everything is working as expected.
+- GUI
+  
+  This section of the project is self-explanatory. The 'View' section of the MVC architecture spoken about above. It is essentially just the projects graphical user interface. It is responsible for giving user control over the solution and allows them to easily interact with the engine.
+
+
 
 ### Flow Charts
-
+See Appendix A, B, C, & D...
 
 ### Class Diagram
+See Appendix X, Y, Z
 
 ### Sequence Diagram
+See Appendix X, Y, Z
 
 ### Project Planning
+
+Project Management section:
+section on project planning
+talk avbout tasks needed for program: 
+> board makes move
+> Talk about ticketing branches etc
+> Code quality: talk about branches ticket numbers. commits, why branched off at certain points
 
 [![](https://mermaid.ink/img/pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)](https://mermaid.live/edit#pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)
 
 ## Testing
+Talk about dev stories: e.g. changing code after running tests
 
 ## Conclusion 
+TL;DR
 
 ## Appendix
 
@@ -490,3 +548,7 @@ Champion, A., 2022. Dissecting Stockfish Part 1: In-Depth look at a chess engine
 Champion, A., 2022. Dissecting Stockfish Part 2: In-Depth look at a chess engine. [online] Medium. Available at: <https://towardsdatascience.com/dissecting-stockfish-part-2-in-depth-look-at-a-chess-engine-2643cdc35c9a> [Accessed 29 April 2022].
 
 (Pete), P., 2022. AlphaZero Crushes Stockfish In New 1,000-Game Match. [online] Chess.com. Available at: <https://www.chess.com/news/view/updated-alphazero-crushes-stockfish-in-new-1-000-game-match#games> [Accessed 29 April 2022].
+
+Svirca, Z., 2019. Everything you need to know about MVC architecture. [online] Medium. Available at: <https://towardsdatascience.com/everything-you-need-to-know-about-mvc-architecture-3c827930b4c1> [Accessed 15 May 2022].
+
+TutorialsPoint, 2022. MVC Framework - Introduction. [online] Tutorialspoint.com. Available at: <https://www.tutorialspoint.com/mvc_framework/mvc_framework_introduction.htm> [Accessed 15 May 2022].
