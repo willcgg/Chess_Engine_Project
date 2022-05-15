@@ -151,6 +151,26 @@ namespace Chess_Engine_v2
             offsets = Piece.Get_Piece_Offsets(piece);
             // getting piece colour
             colour_to_move = Piece.Get_Piece_Colour(piece);
+            // what colour?
+            if (colour_to_move == 'b')
+            {
+                opp1 = Piece.Type.w_king;
+                opp2 = Piece.Type.w_knight;
+                opp3 = Piece.Type.w_queen;
+                opp4 = Piece.Type.w_rook;
+                opp5 = Piece.Type.w_bishop;
+                opp6 = Piece.Type.w_pawn;
+
+            }
+            else
+            {
+                opp1 = Piece.Type.b_king;
+                opp2 = Piece.Type.b_knight;
+                opp3 = Piece.Type.b_queen;
+                opp4 = Piece.Type.b_rook;
+                opp5 = Piece.Type.b_bishop;
+                opp6 = Piece.Type.b_pawn;
+            }
             // init moves list
             valid_moves = new List<int>();
             foreach (int offset in offsets)
@@ -159,30 +179,10 @@ namespace Chess_Engine_v2
                 // target square starting on first square in offset direction
                 index = square + offset;
                 int target_square = board[index];
-                // what colour?
-                if (colour_to_move == 'b')
-                {
-                    opp1 = Piece.Type.w_king;
-                    opp2 = Piece.Type.w_knight;
-                    opp3 = Piece.Type.w_queen;
-                    opp4 = Piece.Type.w_rook;
-                    opp5 = Piece.Type.w_bishop;
-                    opp6 = Piece.Type.w_pawn;
-
-                }
-                else
-                {
-                    opp1 = Piece.Type.b_king;
-                    opp2 = Piece.Type.b_knight;
-                    opp3 = Piece.Type.b_queen;
-                    opp4 = Piece.Type.b_rook;
-                    opp5 = Piece.Type.b_bishop;
-                    opp6 = Piece.Type.b_pawn;
-                }
                 // Sliding pieces ( Rooks / Bishops / Queens )
-                while (target_square == (int)Piece.Type.empty || opp1 == (Piece.Type)board[index] || opp2 == (Piece.Type)board[index] ||
-                    opp3 == (Piece.Type)board[index] || opp4 == (Piece.Type)board[index] || opp5 == (Piece.Type)board[index] || 
-                    opp6 == (Piece.Type)board[index])
+                while (target_square == (int)Piece.Type.empty || opp1 == (Piece.Type)target_square || opp2 == (Piece.Type)target_square ||
+                    opp3 == (Piece.Type)target_square || opp4 == (Piece.Type)target_square || opp5 == (Piece.Type)target_square || 
+                    opp6 == (Piece.Type)target_square)
                 {
                     // move valid add to list
                     valid_moves.Add(index);
