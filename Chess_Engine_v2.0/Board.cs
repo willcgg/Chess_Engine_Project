@@ -180,7 +180,9 @@ namespace Chess_Engine_v2
                 index = square + offset;
                 int target_square = board[index];
                 // Sliding pieces ( Rooks / Bishops / Queens )
-                while (piece != Piece.Type.empty && (target_square == (int)Piece.Type.empty || opp1 == (Piece.Type)target_square || opp2 == (Piece.Type)target_square ||
+                while (piece != Piece.Type.empty && piece != Piece.Type.b_pawn && piece != Piece.Type.w_pawn
+                    && piece != Piece.Type.w_knight && piece != Piece.Type.b_knight &&
+                    (target_square == (int)Piece.Type.empty || opp1 == (Piece.Type)target_square || opp2 == (Piece.Type)target_square ||
                     opp3 == (Piece.Type)target_square || opp4 == (Piece.Type)target_square || opp5 == (Piece.Type)target_square || 
                     opp6 == (Piece.Type)target_square))
                 {
@@ -197,6 +199,8 @@ namespace Chess_Engine_v2
 
                 }
             }
+            foreach (int move in valid_moves)
+                Console.WriteLine(move);
             // returning valid_moves
             return valid_moves;
         }

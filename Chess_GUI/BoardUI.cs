@@ -99,63 +99,63 @@ namespace Chess_Engine_Project
 			for (int x = 21; x < 99; x++)
 			{
 				// selecting brush colour 
-				if (b.board[x] == 1 || b.board[x] == 3 || b.board[x] == 5 || b.board[x] == 7 ||
-					b.board[x] == 9 || b.board[x] == 11)
+				if (b.board[x] == (int)Piece.Type.w_bishop || b.board[x] == (int)Piece.Type.w_king || b.board[x] == (int)Piece.Type.w_knight 
+					|| b.board[x] == (int)Piece.Type.w_pawn || b.board[x] == (int)Piece.Type.w_queen || b.board[x] == (int)Piece.Type.w_rook)
 				{
 					// piece is white
-					brush = Brushes.White;
+					brush = Brushes.Black;
 				}
 				else
-					brush = Brushes.Black;
+					brush = Brushes.White;
 
 				// finding what piece it is then drawing to board
 				switch(b.board[x])
                 {
-					case -1:
+					case (int)Piece.Type.blockerPiece:
 						// blocker piece
 						current_piece = "";
 						break;
-					case 0:
+					case (int)Piece.Type.empty:
 						// empty square
 						current_piece = "";
 						break;
-					case 1:
+					case (int)Piece.Type.b_pawn:
 						// white pawn
 						current_piece = "♙";
 						break;
-					case 2:
+					case (int)Piece.Type.w_pawn:
 						// black pawn
 						current_piece = "♟";
 						break;
-					case 3:
+					case (int)Piece.Type.b_knight:
 						// white knight
 						current_piece = "♘";
 						break;
-					case 4:
+					case (int)Piece.Type.w_knight:
 						current_piece = "♞";
 						break;
-					case 5:
+					case (int)Piece.Type.b_bishop:
 						current_piece = "♗";
 						break;
-					case 6:
+					case (int)Piece.Type.w_bishop:
 						current_piece = "♝";
 						break;
-					case 7:
+					case (int)Piece.Type.b_rook:
 						current_piece = "♖";
 						break;
-					case 8:
+					case (int)Piece.Type.w_rook:
 						current_piece = "♜";
 						break;
-					case 9:
+					case (int)Piece.Type.b_queen:
 						current_piece = "♕";
 						break;
-					case 10:
+					case (int)Piece.Type.w_queen:
 						current_piece = "♛";
 						break;
-					case 11:
+					case (int)Piece.Type.b_king:
 						current_piece = "♔";
 						break;
-					case 12:
+					case (int)Piece.Type.w_king:
 						current_piece = "♚";
 						break;
 				}
@@ -211,6 +211,7 @@ namespace Chess_Engine_Project
 				square += "h" + (rank + 1);
 			// Retrieving piece clicked
 			piece = (Piece.Type)b.Get_Piece_From_Square(square);
+			Console.WriteLine(piece);
 			// Calling the highlight of the square clicked
 			DrawSquareHighlight(file, rank);
 			// Calling valid move highlights for selected piece

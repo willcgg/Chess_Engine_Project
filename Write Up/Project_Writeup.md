@@ -282,7 +282,7 @@ To make this project more manageable, instead of creating one titanic project, I
   
   This section of the project is self-explanatory. The 'View' section of the MVC architecture spoken about above. It is essentially just the projects graphical user interface. It is responsible for giving user control over the solution and allows them to easily interact with the engine.
 
-
+add use cases
 
 ### Flow Charts
 See Appendix A, B, C, & D...

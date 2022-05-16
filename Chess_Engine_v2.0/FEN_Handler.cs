@@ -123,40 +123,40 @@ namespace Chess_Engine_v2
                             pointer += 6;
                             break;
                         case 'p':
-                            b[pointer] = (int)Piece.Type.b_pawn;
-                            break;
-                        case 'b':
-                            b[pointer] = (int)Piece.Type.b_bishop;
-                            break;
-                        case 'n':
-                            b[pointer] = (int)Piece.Type.b_knight;
-                            break;
-                        case 'r':
-                            b[pointer] = (int)Piece.Type.b_rook;
-                            break;
-                        case 'q':
-                            b[pointer] = (int)Piece.Type.b_queen;
-                            break;
-                        case 'k':
-                            b[pointer] = (int)Piece.Type.b_king;
-                            break;
-                        case 'P':
                             b[pointer] = (int)Piece.Type.w_pawn;
                             break;
-                        case 'B':
+                        case 'b':
                             b[pointer] = (int)Piece.Type.w_bishop;
                             break;
-                        case 'N':
+                        case 'n':
                             b[pointer] = (int)Piece.Type.w_knight;
                             break;
-                        case 'R':
+                        case 'r':
                             b[pointer] = (int)Piece.Type.w_rook;
                             break;
-                        case 'Q':
+                        case 'q':
                             b[pointer] = (int)Piece.Type.w_queen;
                             break;
-                        case 'K':
+                        case 'k':
                             b[pointer] = (int)Piece.Type.w_king;
+                            break;
+                        case 'P':
+                            b[pointer] = (int)Piece.Type.b_pawn;
+                            break;
+                        case 'B':
+                            b[pointer] = (int)Piece.Type.b_bishop;
+                            break;
+                        case 'N':
+                            b[pointer] = (int)Piece.Type.b_knight;
+                            break;
+                        case 'R':
+                            b[pointer] = (int)Piece.Type.b_rook;
+                            break;
+                        case 'Q':
+                            b[pointer] = (int)Piece.Type.b_queen;
+                            break;
+                        case 'K':
+                            b[pointer] = (int)Piece.Type.b_king;
                             break;
                         default:
                             for (int i = pointer; i < pointer + 8; i++)
