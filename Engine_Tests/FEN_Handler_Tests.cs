@@ -108,27 +108,5 @@ namespace Engine_Tests
             Assert.IsTrue(b_test.b_q_castle == b_q_castle);
             Assert.IsTrue(b_test.side_to_move == side_to_move);
         }
-
-        [TestMethod]
-        public void FEN_Handler_ASCII_Converter()
-        {
-            // needs to test text output; test each board[x] = PIECE_INTEGER outputs correct piece in ASCII
-            // Arrange
-            string text_board = "|--------------------------------------|\n ♜ | ♞ | ♝ | ♛ | ♚ | ♝ | ♞ | ♜ |\n" +
-                "|--------------------------------------|\n| ♟ | ♟ | ♟ | ♟ | ♟ | ♟ | ♟ | ♟ |\n|--------------------------------------|\n" +
-                "|    |    |    |    |    |    |    |    |\n|--------------------------------------|\n|    |    |    |    |    |    |    |    |\n" +
-                "|--------------------------------------|\n|    |    |    |    |    |    |    |    |\n|--------------------------------------|\n" +
-                "|    |    |    |    |    |    |    |    |\n|--------------------------------------|\n| ♙ | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ |\n" +
-                "|--------------------------------------|\n| ♖ | ♘ | ♗ | ♕ | ♔ | ♗ | ♘ | ♖ |\n|--------------------------------------|\n|";
-            string test_text_board;
-            Board b = new Board();
-            FEN_Handler fh = new FEN_Handler(b);
-
-            // Act
-            test_text_board = fh.Convert_To_ASCII();
-
-            // Assert
-            Assert.IsTrue(text_board == test_text_board, "Test Failed: ASCII board did not generate properly");
-        }
     }
 }

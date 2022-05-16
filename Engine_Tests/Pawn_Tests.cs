@@ -1,9 +1,10 @@
 ﻿using Chess_Engine_v2;
+using Chess_Engine_v2._0;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace Chess_Engine_Tests
+namespace Engine_Tests
 {
     /// <summary>
     /// <para>Checks all possible valid pawn moves</para>
@@ -32,11 +33,15 @@ namespace Chess_Engine_Tests
                             ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a3";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("a5", "a3", 'w');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -58,11 +63,15 @@ namespace Chess_Engine_Tests
                             ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "d8";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving diagonal
-            b.Make_Move("a5", "d8", 'w');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -84,11 +93,15 @@ namespace Chess_Engine_Tests
                             ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a7";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("a5", "a7", 'w');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -118,11 +131,15 @@ namespace Chess_Engine_Tests
                                 ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a3";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("a2", "a4", 'w');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -134,9 +151,9 @@ namespace Chess_Engine_Tests
         {
             //  arrange
             string board = @"^^^^^^^^
-                            ^♟^^^^^^
                             ^^^^^^^^
-                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ♙♟^^^^^^
                             ^^^^^^^^
                             ^^^^^^^^
                             ^^^^^^^^
@@ -152,10 +169,14 @@ namespace Chess_Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            b.en_passant_target = 42;
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "b6";
+            move.FLAG = Move.Flag.en_passant_capture;
 
             //  act
-            b.Make_Move("b7", "b5", 'b');
-            b.Make_Move("a5", "b6", 'w');
+            b.Make_Move(move);
 
             //  assert
             Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
@@ -179,11 +200,15 @@ namespace Chess_Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a7";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("a5", "a7", 'b');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -206,11 +231,15 @@ namespace Chess_Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "d8";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving diagonal
-            b.Make_Move("a5", "d8", 'b');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -233,11 +262,15 @@ namespace Chess_Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a3";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("a5", "a3", 'b');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -268,11 +301,15 @@ namespace Chess_Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            Move move = new Move();
+            move.START_SQUARE = "a7";
+            move.TARGET_SQUARE = "a5";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("a7", "a5", 'b');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -287,9 +324,9 @@ namespace Chess_Engine_Tests
                             ^^^^^^^^
                             ^^^^^^^^
                             ^^^^^^^^
-                            ♟^^^^^^^
+                            ♟♙^^^^^^
                             ^^^^^^^^
-                            ^♙^^^^^^
+                            ^^^^^^^^
                             ^^^^^^^^";
             string board_final = @"^^^^^^^^
                                 ^^^^^^^^
@@ -302,10 +339,15 @@ namespace Chess_Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'w';
+            b.en_passant_target = (int)Enum.Parse(typeof(Board.Square), "b3");
+            Move move = new Move();
+            move.START_SQUARE = "a4";
+            move.TARGET_SQUARE = "b3";
+            move.FLAG = Move.Flag.en_passant_capture;
+
 
             //  act
-            b.Make_Move("b2", "b4", 'w');
-            b.Make_Move("a4", "b3", 'b');
+            b.Make_Move(move);
 
             //  assert
             Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");
@@ -334,6 +376,10 @@ namespace Chess_Engine_Tests
                                 ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "b6";
+            move.FLAG = Move.Flag.quiet;
 
             //  act
 
@@ -362,9 +408,13 @@ namespace Chess_Engine_Tests
                                 ♔^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "b2";
+            move.TARGET_SQUARE = "b4";
+            move.FLAG = Move.Flag.quiet;
 
             //  act
-            b.Make_Move("b2", "b4", 'w');
+            b.Make_Move(move);
 
             // assert
             Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: board array is not as expected");

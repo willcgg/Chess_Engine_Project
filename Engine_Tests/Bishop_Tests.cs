@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Chess_Engine_v2;
 using System.Linq;
+using Chess_Engine_v2._0;
 
 namespace Engine_Tests
 {
@@ -29,11 +30,15 @@ namespace Engine_Tests
                             ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "d5";
+            move.TARGET_SQUARE = "d3";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("d5", "d3", 'w');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -55,11 +60,15 @@ namespace Engine_Tests
                             ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "d5";
+            move.TARGET_SQUARE = "d7";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("d5", "d7", 'w');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -81,11 +90,15 @@ namespace Engine_Tests
                             ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "d5";
+            move.TARGET_SQUARE = "f5";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("d5", "f5", 'w');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -141,11 +154,15 @@ namespace Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a7";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("a5", "a7", 'b');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -168,11 +185,15 @@ namespace Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "d8";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving diagonal
-            b.Make_Move("a5", "d8", 'b');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -195,11 +216,15 @@ namespace Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a3";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("a5", "a3", 'b');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -230,11 +255,15 @@ namespace Engine_Tests
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
             b.side_to_move = 'b';
+            Move move = new Move();
+            move.START_SQUARE = "a7";
+            move.TARGET_SQUARE = "a5";
+            move.FLAG = Move.Flag.quiet;
 
             //  act 
             //----------------------------------------
             // Moving backwards 2 squares
-            b.Make_Move("a7", "a5", 'b');
+            b.Make_Move(move);
 
             // assert
             //----------------------------------------
@@ -263,6 +292,10 @@ namespace Engine_Tests
                                 ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a7";
+            move.FLAG = Move.Flag.quiet;
 
             //  act
 
@@ -294,6 +327,10 @@ namespace Engine_Tests
                                 ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a7";
+            move.FLAG = Move.Flag.quiet;
 
             //  act
 
@@ -323,6 +360,10 @@ namespace Engine_Tests
                                 ^^^^^^^^";
             b = new Board();
             b.board = b.Convert_From_ASCII(board);
+            Move move = new Move();
+            move.START_SQUARE = "a5";
+            move.TARGET_SQUARE = "a7";
+            move.FLAG = Move.Flag.quiet;
 
             //  act
 

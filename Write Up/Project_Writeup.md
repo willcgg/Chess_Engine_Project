@@ -22,6 +22,8 @@
   - [Sequence Diagram](#sequence-diagram)
   - [Project Planning](#project-planning)
 - [Testing](#testing)
+  - [Development Lifecycle Choice](#development-lifecycle-choice)
+  - [Development Stories](#development-stories)
 - [Conclusion](#conclusion)
 - [Appendix](#appendix)
   - [Appendix A: Engine Framework Flowchart](#appendix-a-engine-framework-flowchart)
@@ -29,6 +31,9 @@
   - [Appendix C: Engine Evaluate Algorithm Flowchart](#appendix-c-engine-evaluate-algorithm-flowchart)
   - [Appendix D: Graphical User Interface Project Flowchart](#appendix-d-graphical-user-interface-project-flowchart)
   - [Appendix X: Engine Class Diagram](#appendix-x-engine-class-diagram)
+  - [Appendix X: Custom Text to Board Converter](#appendix-x-custom-text-to-board-converter)
+  - [Appendix X: Example of a Unit test](#appendix-x-example-of-a-unit-test)
+  - [Appendix X: Knight Valid Moves Function Test](#appendix-x-knight-valid-moves-function-test)
 - [Glossary](#glossary)
 - [References](#references)
 
@@ -307,6 +312,55 @@ talk avbout tasks needed for program:
 ## Testing
 Talk about dev stories: e.g. changing code after running tests
 
+### Development Lifecycle Choice
+
+Due to the choice of development approach, being test driven development, to test this project I used a mixture of automated unit testing and manual UI acceptance testing. Unit test's were used to ensure the basic functionality of my code stays bug free throughout development, something that is extremely important with chess engines in particular. While the manual UI acceptance testing was used on the projects GUI side to ensure that it stayed as user friendly as possible throughout development.
+
+I used test driven development for a number of reasons listed below:
+- Reduces duplicated code
+- Keeps code bug free
+- Makes writing the code simpler
+
+Due to this project including a lot of seperate methods and functions it will at times become hard to manage and keep bug free. The use of this development approach will provide significant advantages managing this by forcing myself to think about each methods actual required functionality before writing it. It essentially consists of these five steps:
+- Write a test
+- Run tests
+- Write some code
+- Run tests & if code fails refactor it
+- Repeat 
+
+(See figure x)
+
+![Figure X](https://www.guru99.com/images/8-2016/081216_0811_TestDrivenD2.png)
+
+Figure X: Test diven development steps
+
+(Hamilton, 2022)
+
+### Development Stories
+
+This development lifecycle taught me a lot of lessons and the importance of writing tests first during development especially in cases where I chose to try writing what i thought would be a small feature. In most of these cases it ended up burning me due to some weird errors popping up late into production such as the occurence when the GUI and engine were confusing which colour piece was which. This ended up annoying as it brought up unexpected board array indexs as valid moves for each sides pawn pieces.
+
+Due to the way I encoded pieces and the board in general I encountered a few issues during writing the tests. Due to the each piece from each side being given a number identifier and the board array being of 120 length it proved difficult in manually populating these arrays; mainly when setting up simple custom board positions to test. To combat this I wrote a custom function within the code to take in a string representation of a chess board and convert it to a real board array in memory (See Appendix X: Figure x). This meant that I could set up simple custom board positions to test functionality of code a lot easier (See Appendix X: Figure X). 
+
+This choice of development came in handy in a few cases throughout development. One of these being during the writing of the Get_Valid_Legal_Moves function. This function was particularly difficult to write due to it needing to:
+
+1. Return valid moves
+2. Be called for any piece
+
+This meant that I had to write tests for each piece going into the function to test the valid moves returned are expected given certain positions; then write the code to return these moves. This scenario is perfect for TDD as it meant I could write the test for a specific piece, then write the code for that piece or type of piece, then write the next test. To do this I first tried to test the piece with the simplest movement e.g. the knight (See Appendix X: Figure X). 
+
+During the development process I did make a few mistakes in following this development lifecycle. These being:
+
+- Not writing any tests getting started
+
+This mistake was mainly due to inexperience, panic and desire to get too much functionality done too quickly. Getting started in the project, due to lack of research, I struggled to picture how this project was going to work. I was starting on a blank canvas, due to this I lacked the knowledge of what tests I would even need to write to get started. This ended up in sloppy initial code I had quickly try to develop due to time running out. This then ended up with me having to write a load of code to test its functionality leading to my next mistake.
+
+- Writing too many tests before developing
+
+This partly links in with my previous mistake in the way that it led onto this big mistake. This was as it ended up wasting a lot of development time having to go back and forth not only refactoring code but also the tests due to changes made in the structure of the engine. One of these being when I implemented the Move class to hold all the information of a move being made in the game. Before this, I had written the tests and method to take in all the paramaters individually but later down the line found benefits in creating one move object for this.
+
+
+
 ## Conclusion 
 TL;DR
 
@@ -415,6 +469,7 @@ Figure X: Engine's Class Diagram
 [![](https://mermaid.ink/img/pako:eNqVVslu2zAQ_RVBpxZNfsCHAqmzGUjaAHZ6aQpiLI0twhSpkFQMw8i_d0h5ESnaSX0y5s1wljeLtnmhSsxHeSHAmGsOSw31i8zo90OBLrPLy-_ZE8cCs1E2VtIClybGb29-snuQpUBNWs-WC25woPWo3vAM_IBLEMwpsTuUqMFyJT94jt28gWjTmun3nOVMgzSNMtxJ2AzmwsU1kU1rTRflAze2eyX2ctr-uSnBfuw8WYWUl5Rip-2p6iqx7SRZ9o1L--dvNnfCgwxlW2fmtQW9d0TCuVIiW1fcIltxuWQFGCswBb-2iDKJzwUUq9PmHZw0N1aTVWZ4icwqVlOSMea6yZORAq5xAa2w_bQz8tJQRUBaZkEvMUQrEIvLRmwC4aIVIhBSjW3momEV_VP6gEwk0QyOAuYr_uXrHnlQULJbrWpGgR3Fj7BCz_xR9CzrWPjep9LP1zakbbZpMCJ3TWmuJVOLhUFrYubPgtxUqjkBriRfVvYEqJVanbJjrzEyRct8MsxN0LEAd0l5UIPeDjlU4kA9eXP4FJc1yqO7GH_azeQRp431htqGDHVxejbZb9Cmj4w10hTHVPcecnxfTceTSZRFP5fk9PezOnRbPxXXlwZBFxUrsbFVD_JTxWmYKixWsbzhUmIZS-fETjd7TDt-zVBhdV5h_dEL6zMvnJnzI6qaRkkilBVKqFZHtVhojtQPm27P0L6N8IP1EPel_6VLdG5C4n19PR6s8b5Sj76xK3jQIN2a98bhCUh2dbTY-z1QYsFrEBkSykyhNCZAEE0FCfkcLfxPPXeN4ibQaiiDdvHrxtK6oWmOiQp46OxdMniKiqSKLyKbYd2oYKS8-JGqqWnBDpFpAwUOppYSj2VXrkgnODKfICmh1yfqHkxl_ZG3gaKXHfXcjjvjcR_sZ4NynbONtwOdN8u6gx5B3eEbYvs59Ja0BYcQcRsBg_vTJRfetC6b4KTlF3mNugZe0vekj_0ltxXW-JKP6G-5O935i3SqrSfppuR0bfPRAoTBixxaq6YbWeQjq1vcK-0-S3da7_8AnWxmNA)](https://mermaid.live/edit#pako:eNqVVslu2zAQ_RVBpxZNfsCHAqmzGUjaAHZ6aQpiLI0twhSpkFQMw8i_d0h5ESnaSX0y5s1wljeLtnmhSsxHeSHAmGsOSw31i8zo90OBLrPLy-_ZE8cCs1E2VtIClybGb29-snuQpUBNWs-WC25woPWo3vAM_IBLEMwpsTuUqMFyJT94jt28gWjTmun3nOVMgzSNMtxJ2AzmwsU1kU1rTRflAze2eyX2ctr-uSnBfuw8WYWUl5Rip-2p6iqx7SRZ9o1L--dvNnfCgwxlW2fmtQW9d0TCuVIiW1fcIltxuWQFGCswBb-2iDKJzwUUq9PmHZw0N1aTVWZ4icwqVlOSMea6yZORAq5xAa2w_bQz8tJQRUBaZkEvMUQrEIvLRmwC4aIVIhBSjW3momEV_VP6gEwk0QyOAuYr_uXrHnlQULJbrWpGgR3Fj7BCz_xR9CzrWPjep9LP1zakbbZpMCJ3TWmuJVOLhUFrYubPgtxUqjkBriRfVvYEqJVanbJjrzEyRct8MsxN0LEAd0l5UIPeDjlU4kA9eXP4FJc1yqO7GH_azeQRp431htqGDHVxejbZb9Cmj4w10hTHVPcecnxfTceTSZRFP5fk9PezOnRbPxXXlwZBFxUrsbFVD_JTxWmYKixWsbzhUmIZS-fETjd7TDt-zVBhdV5h_dEL6zMvnJnzI6qaRkkilBVKqFZHtVhojtQPm27P0L6N8IP1EPel_6VLdG5C4n19PR6s8b5Sj76xK3jQIN2a98bhCUh2dbTY-z1QYsFrEBkSykyhNCZAEE0FCfkcLfxPPXeN4ibQaiiDdvHrxtK6oWmOiQp46OxdMniKiqSKLyKbYd2oYKS8-JGqqWnBDpFpAwUOppYSj2VXrkgnODKfICmh1yfqHkxl_ZG3gaKXHfXcjjvjcR_sZ4NynbONtwOdN8u6gx5B3eEbYvs59Ja0BYcQcRsBg_vTJRfetC6b4KTlF3mNugZe0vekj_0ltxXW-JKP6G-5O935i3SqrSfppuR0bfPRAoTBixxaq6YbWeQjq1vcK-0-S3da7_8AnWxmNA)
 
 Mermaid Code in case edits are required:
+
 ```mermaid
 classDiagram
     Board --> Piece : Contains
@@ -516,7 +571,151 @@ classDiagram
     }
 ```
 
+### Appendix X: Custom Text to Board Converter
 
+Figure X: Code block for the function
+
+```c#
+public int[] Convert_From_ASCII(string ASCII_Board)
+        {
+            // init vars
+            int x = 21;
+            string[] ranks = ASCII_Board.Split('\n');           // split into ranks
+            // convert to board
+            foreach (string rank in ranks)
+            {
+                foreach (char piece in rank)
+                {
+                    switch (piece)
+                    {
+                        case '^':
+                            board[x] = (int)Piece.Type.empty;
+                            break;
+                        case '♙':
+                            board[x] = (int)Piece.Type.w_pawn;
+                            break;
+                        case '♟':
+                            board[x] = (int)Piece.Type.b_pawn;
+                            break;
+                        case '♘':
+                            board[x] = (int)Piece.Type.w_knight;
+                            break;
+                        case '♞':
+                            board[x] = (int)Piece.Type.b_knight;
+                            break;
+                        case '♗':
+                            board[x] = (int)Piece.Type.w_bishop;
+                            break;
+                        case '♝':
+                            board[x] = (int)Piece.Type.b_bishop;
+                            break;
+                        case '♖':
+                            board[x] = (int)Piece.Type.w_rook;
+                            break;
+                        case '♜':
+                            board[x] = (int)Piece.Type.b_rook;
+                            break;
+                        case '♕':
+                            board[x] = (int)Piece.Type.w_queen;
+                            break;
+                        case '♛':
+                            board[x] = (int)Piece.Type.b_queen;
+                            break;
+                        case '♔':
+                            board[x] = (int)Piece.Type.w_king;
+                            break;
+                        case '♚':
+                            board[x] = (int)Piece.Type.b_king;
+                            break;
+                    }
+                    x += 1;
+                }
+                x += 2;         // skip blocker pieces
+            }
+            return board;
+        }
+```
+
+### Appendix X: Example of a Unit test
+
+Figure X: Pawn Valid Moves Test
+
+```c#
+        [TestMethod]
+        public void Get_Valid_Pawn_Moves_Test()
+        {
+            // Arrange
+            List<int> move_list = new List<int>();
+            Piece.Type piece;
+            string board = @"^^^^^^^^
+                            ^♟♙^^^^^
+                            ♙^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^";
+            b = new Board();
+            b.Convert_From_ASCII(board);
+            // setting up enpassant
+            b.en_passant_target = (int)Enum.Parse(typeof(Board.Square), "c6");
+            // square got when user clicks board
+            piece = b.Get_Piece_From_Square("a7");
+
+            // Act
+            move_list = b.Get_Valid_Moves(piece, "a7");
+
+            // Assert
+            Assert.IsTrue(move_list.Count == 4, "Test Failed: Returned more than the precalculated 4 valid moves for this position");
+            // loop through all returned valid moves and check they are what is expected
+            foreach (int move in move_list)
+                Assert.IsTrue(move == (int)Enum.Parse(typeof(Board.Square), "b6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "b5")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "c6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "a6"));
+        }
+```
+
+### Appendix X: Knight Valid Moves Function Test
+
+Figure X: Unit test for Get_Valid_Moves function for knight piece
+
+```c#
+[TestMethod]
+        public void Get_Valid_Knight_Moves()
+        {
+            // Arrange
+            List<int> move_list = new List<int>();
+            Piece.Type piece;
+            string board = @"^^^^^^^^
+                            ^^^^^♘^
+                            ^^^^^^^^
+                            ^^^♘^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^"; // d5
+            b = new Board();
+            b.Convert_From_ASCII(board);
+            // square got when user clicks board
+            piece = b.Get_Piece_From_Square("a7");
+
+            // Act
+            move_list = b.Get_Valid_Moves(piece, "d5");
+
+            // Assert
+            Assert.IsTrue(move_list.Count == 7, "Test Failed: Returned more than expected move count");
+            foreach (int move in move_list)
+                Assert.IsTrue(move == (int)Enum.Parse(typeof(Board.Square), "f6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "f4")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "e3")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "c3")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "b4")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "b6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "c7")
+                    , "Test Failed: Unexpected move returned");
+        }
+```
 
 ## Glossary
 Key:
@@ -552,3 +751,5 @@ Champion, A., 2022. Dissecting Stockfish Part 2: In-Depth look at a chess engine
 Svirca, Z., 2019. Everything you need to know about MVC architecture. [online] Medium. Available at: <https://towardsdatascience.com/everything-you-need-to-know-about-mvc-architecture-3c827930b4c1> [Accessed 15 May 2022].
 
 TutorialsPoint, 2022. MVC Framework - Introduction. [online] Tutorialspoint.com. Available at: <https://www.tutorialspoint.com/mvc_framework/mvc_framework_introduction.htm> [Accessed 15 May 2022].
+
+Hamilton, T., 2022. What is Test Driven Development (TDD)? Tutorial with Example. [online] Guru99. Available at: <https://www.guru99.com/test-driven-development.html> [Accessed 16 May 2022].

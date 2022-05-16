@@ -108,6 +108,44 @@ namespace Engine_Tests
                             ^^^^^^^^"; // d5
             b = new Board();
             b.Convert_From_ASCII(board);
+            // square got when user clicks board
+            piece = b.Get_Piece_From_Square("a7");
+
+            // Act
+            move_list = b.Get_Valid_Moves(piece, "d5");
+
+            // Assert
+            Assert.IsTrue(move_list.Count == 7, "Test Failed: Returned more than expected move count");
+            foreach (int move in move_list)
+                Assert.IsTrue(move == (int)Enum.Parse(typeof(Board.Square), "f6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "f4")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "e3")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "c3")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "b4")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "b6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "c7")
+                    , "Test Failed: Unexpected move returned");
+        }
+
+        /// <summary>
+        /// Tests the Get_Valid_Moves function works properly for knight pieces
+        /// </summary>
+        [TestMethod]
+        public void Get_Valid_Bishop_Moves()
+        {
+            // Arrange
+            List<int> move_list = new List<int>();
+            Piece.Type piece;
+            string board = @"^^^^^^^^
+                            ^^^^^♘^
+                            ^^^^^^^^
+                            ^^^♘^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^"; // d5
+            b = new Board();
+            b.Convert_From_ASCII(board);
 
             // Act
 
@@ -187,6 +225,41 @@ namespace Engine_Tests
 
             // Assert
             Assert.IsTrue(Enumerable.SequenceEqual(b.board, b.Convert_From_ASCII(board_final)), "Test Failed: Board array is not as expected");
+        }
+
+        [TestMethod]
+        public void ASCII_Converter()
+        {
+            // needs to test text output; test each board[x] = PIECE_INTEGER outputs correct piece in ASCII
+            // Arrange
+            string text_board = @"^^^^^^^^
+                             ^^^^^^^^
+                             ^^^^^^^^
+                            ^^^^^^^^
+                             ^^^^^^^^
+                             ^^^^^^^^
+                             ^^^^^^^^
+                             ^^^^^^^^";
+            int[] board = new int[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                                     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                                        -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                                        -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                                        -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                                        -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                                        -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                                        -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                                        -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                                        -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                                      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                                      -1, -1, -1, -1 , -1, -1, -1, -1, -1, -1,};
+            int[] test_text_board;
+            Board b = new Board();
+
+            // Act
+            test_text_board = b.Convert_From_ASCII(text_board);
+
+            // Assert
+            Assert.IsTrue(board == test_text_board, "Test Failed: ASCII board did not generate properly");
         }
 
     }
