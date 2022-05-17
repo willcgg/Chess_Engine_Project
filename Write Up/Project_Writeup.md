@@ -17,9 +17,14 @@
     - [Board Representation](#board-representation)
     - [Board Notation](#board-notation)
 - [Design](#design)
-  - [Flow Charts](#flow-charts)
-  - [Class Diagram](#class-diagram)
-  - [Sequence Diagram](#sequence-diagram)
+  - [Language Choice](#language-choice)
+  - [Design Pattern](#design-pattern)
+  - [Board Representation](#board-representation-1)
+  - [Search Algorithm](#search-algorithm)
+  - [Evaluate Algorithm](#evaluate-algorithm)
+  - [Opening Book](#opening-book)
+  - [Endgame Book](#endgame-book)
+  - [Use Case](#use-case)
   - [Project Planning](#project-planning)
 - [Testing](#testing)
   - [Development Lifecycle Choice](#development-lifecycle-choice)
@@ -35,11 +40,20 @@
   - [Appendix X: Example of a Unit test](#appendix-x-example-of-a-unit-test)
   - [Appendix X: Knight Valid Moves Function Test](#appendix-x-knight-valid-moves-function-test)
 - [Glossary](#glossary)
+- [Acknowledgements](#acknowledgements)
 - [References](#references)
 
 ## Introduction and Idea (5marks)
 ### Background to Problem
 This project is about creating a chess engine that will be able to play a decent game of chess by the end. Chess players would typically use it to analyse positions for insight. It may also train players up to a specific Elo rating, and finally, it could also be played for a bit of fun. It will be programmed in C# and will mainly run on a desktop computer, and if there is time at the end of the project, it will also be available to access on the web.
+
+To tackle this project I will be using a test driven development approach. The project will be split into three; automated tests, the engine itself, and then the GUI. I will be using Trello to manage the project, an interactive user story board used to input important functionality the project needs to address. Although this will be a solo project, GitHub will be used to track changes to the project. This is for many reasons listed below:
+- Used in industry: Become the industry standard for tracking projects and versioning.
+- Online repository: Code is accessible and saved online meaning any locally corrupt files which without GitHub would cause catastophic delays; can easily be overwritten with a previous versions.
+- Developer documentation: Allows me to easily add a project readme beneath the project for any key information other developers would need to carry on with the project.
+- Tracks changes: Any commits that cause big breakages in other sections of code can easily be 'backtracked' on to a previous commit where the code worked.
+- Integration options: Comes with integration options for many common platforms such as: Google Cloud, Amazon, and even GitHub pages. GitHub Pages will be particularly useful if there is time at the end of the project to make the engine available to access on the web.
+- Collabaration: As stated before this will be a solo project. However, in industry it is a commonly used solution to aid in collabaritve projects due to features such as merging. (Novoseltseva, 2020)
 
 ### Justification to Task
 I chose to take on this project not only because of my interest in the game itself; but also the personal growth and development I will get out of it as a programmer. It will be one of the most significant projects I have taken on solo. I will have to deep dive into some complex searches and evaluate algorithms that make up the main bulk of this project. The project is not only a task well suited to computers, but these algorithms' fundamental principles could be helpful in many other domains. Additionally, my time management and prioritisation skills will be challenged due to the different moving parts of this project.
@@ -209,23 +223,6 @@ These types of implementations typically hold the opposite of piece-centric appr
 
 As discussed above, some of these types of implementations may also use elements of both of these types of implementation hence the 'hybrid'. Different search and evaluation functions tend to favour a specific representation; however, it is still common to see both in today's solutions.
 
-I have chosen to represent the board in memory with the 0x12 mailbox approach. This is a 2D array of 120 slots in size; 64 positions in the middle of the array represent the board squares and pieces, and the remaining surrounding files and ranks represent sentinel pieces (see figure 11).
-
-![Figure 11](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/board_array_representation.PNG?raw=true)
-
-Figure 11: 10x12 Mailbox approach example
-
-I chose to do it this way rather than the traditional 8x8 approach to ensure all knight jumps, even from the very corner of the board, end up on valid array positions. For example, when a knight is on square A8, it can only jump to squares B6 and B7. Otherwise, it would end up in positions highlighted in red squares in figure 12, not on the board. Every knight's move ends up with it still on a valid array index; this is useful as it will avoid errors in the engine's search and evaluate algorithms where knights are on bordering squares. The code will need to check that the index the knight lands on is not '-1' as this is a blocker piece. The knight cannot land there if it is, as it is not a legal move. (Chessprogramming.org. 2022)
-
-
-![Figure 12](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/knight_array_movement_extreme.PNG?raw=true)
-
-Figure 12: Extreme knight movement example: Red squares represent invalid psuedo legal moves, blue represents legal moves, and green represents knights current square position.
-
-![Figure 13](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/array_movement_vector.PNG?raw=true)
-
-Figure 13: Movement vectors for 10x12 array representations example
-
 #### Board Notation
 Alternatives to normal FEN include PGN, compressed FEN, and ųFEN. Alternatively, a custom conversion script to convert FENs to a human-readable text created a chessboard with ASCII pieces to clearly show the state to the user. This would probably be the least efficient way to go about it; however, it gives the project ease of readability. Therefore, testing will become a lot easier.
 
@@ -240,63 +237,97 @@ https://chess.stackexchange.com/questions/8500/alternatives-to-the-fen-notation
 PGN will need to be stored regardless, mainly to complete the functionality of the 'Next' and 'Back' buttons. This will be implemented through either a stack of all the moves made in the game or a list. Then when a user wishes to go back to a position, it will simply pop the top move off of the stack/list, which will be the last move played due to the stack's nature in storing data.
 
 ## Design
-The language I will be using to produce the engine will be C#. This is for several reasons such as:
+
+### Language Choice
+
+The language I will be using to produce the engine will be C#. C# has several advantages, such as:
 - Familiarity
 - Portability
 - Object-oriented nature
 - Static language
   
-This makes it easier to find errors, understand the code, and write it. C#'s main advantage is that it is an object-oriented language; this makes the code 
+Due to these, it is easier to find errors, understand the code, and write it. C#'s main advantage is that it is an object-oriented language; this makes the code 
 - highly efficient
 - Reusable
 - Flexible
 - Scalable
 - Easy to maintain
  
-Additionally, the chess programming world is primarily dominated by C and C++ languages, meaning a vast community of developers and resources are available. Even some of the most robust engines written in other languages were eventually rewritten in C. For example, Booot written by Alex Morozov in Delphi was rewritten due to running into too many 64-bit bugs. It is also commonly used for web and windows applications which fits the project's needs. 
+Additionally, the chess programming world is primarily dominated by C and C++ languages, meaning a vast community of developers and resources are available. Some of the most robust engines written in other languages were eventually revised and developed in C. For example, Booot written by Alex Morozov in Delphi was rewritten due to running into too many 64-bit bugs. It is also commonly used for web and windows applications which fits the project's needs. 
 
-To develop this project I chose to use the MVC Architecture this was for several reasons which provide significant advantage when developing this solution. Even though it is often reffered to as a design pattern, I have refferred to it as an architectural pattern due to the nature of how it is being used to structure my solution. It also helps:
-- Creates solid structure
+### Design Pattern
+
+To develop this project, I chose to use MVC Architecture, which was for several reasons which provide a significant advantage when developing this solution. It is often referred to as a design pattern; I have referred to it as an architectural pattern due to its application to structure my solution. It also helps:
+- Creates a solid structure
 - Helps reduce repetition
 
 ![Figure 14](https://miro.medium.com/max/1400/1*yrAnC64Mq_7DuhRQWkbUmQ.png)
 
 Figure 14: MVC Architecture
 
-It is composed of 3 parts: model, view, and a controller. Each with very specific purposes and responsibilities.
+It comprises three parts: model, view, and controller—each with particular purposes and responsibilities.
 - Model
   
-  This section is responsible for handling and maintaining the data involved with the solution. It is the model that will typically be connected to any databases/sources that are needed within the solution.
+  This section is responsible for handling and maintaining the data involved with the solution. In addition, it is the model that will typically connect to any databases/sources utilised within the solution.
 - View
   
-  This section displays the information from the model layer to the user. This is typically done in a friendly and easy to understand way. This is the layer that also allows users to interact and change data for the controller to pass to the model to update the back and then back to the controller to update the view once more.
+  This section displays the information from the model layer to the user. Developers often write the view in a friendly and easy to understand way. This layer also allows users to interact and change data for the controller to pass to the model to update the back and then back to the controller to update the view once more.
 - Controller
   
-  Finally, this section is responsible for the flow of the data between the model and view components. It takes any changes from the view and passes them to the model to update and vice versa.
+  Finally, this section is responsible for the data flow between the model and view components. It takes any changes from the view and passes them to the model to update and vice versa.
 
 (Svirca, 2019; TutorialsPoint, 2022)
 
-To make this project more manageable, instead of creating one titanic project, I split it up into three seperate parts:
+To make this project more manageable, instead of creating one titanic project, I split it up into three separate parts:
 - Engine
   
-  Resonsible for the 'brains' of the solution. This will be the section of the project that will make up the model/controller part of the solution and main bulk of code. It will be responsible for the handling of all the data invoved in the solution such as: moves, pieces, 50 ply count, e.t.c. It will implement the majority of the things spoke abount in the project analysis section. It will be home of the Search & Evaluate functions which are responsible for finding all moves and then filtering them down to the 'best move' in a given chess position (See appendix B & C for roughly how this will work)
+  Responsible for the 'brains' of the solution. The engine project section will make up the model/controller part of the solution and the main bulk of code. It will be responsible for handling all the data involved in the solution, such as moves, pieces, 50 ply count, e.t.c. It will implement most of the things discussed in the project analysis section. It will be home to the Search & Evaluate functions which are responsible for finding all moves and then filtering them down to the 'best move' in a given chess position (See appendix B & C for roughly how this will work)
 - Testing
   
-  This is the part of the project that is responsible for ensuring the code stays bug/error free. This is extremely important as writing bug free code at the start of a project is crucial or there will more than likely be problems down the road when it comes to implementing the search and evaluate functions. It will be an automated test routine which will run every time the project is run to ensure everything is working as expected.
+  Testing is the part of the project that is responsible for ensuring the code stays bug/error-free. It is vital to write bug-free code at the start of a project. There will more than likely be problems when implementing the search and evaluation functions. It will be an automated test routine which will run every time the project is run to ensure everything is working as expected.
 - GUI
   
-  This section of the project is self-explanatory. The 'View' section of the MVC architecture spoken about above. It is essentially just the projects graphical user interface. It is responsible for giving user control over the solution and allows them to easily interact with the engine.
+  This project section is self-explanatory, the 'View' section of the MVC architecture spoken about above. It is essentially just the project's graphical user interface. It gives the user control over the solution and allows them to interact with the engine quickly.
 
+Due to the segmentation of these projects it made me concentrate a lot more on what each section is actually supposed to achieve. Ultimately this led to:
+- Much less duplicated code
+- Highly modularized code
+- Less anti-patterns in code
+
+The use of this alongiside TDD approach, spoken about below, helped me split code up into appropriate objects avoiding the 'God object' anti pattern. 
+
+### Board Representation
+
+I have chosen to represent the board in memory with the 0x12 mailbox approach. This is a 2D array of 120 slots in size; 64 positions in the middle of the array represent the board squares and pieces, and the remaining surrounding files and ranks represent sentinel pieces (see figure 11).
+
+![Figure 11](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/board_array_representation.PNG?raw=true)
+
+Figure 11: 10x12 Mailbox approach example
+
+I chose to do it this way rather than the traditional 8x8 approach to ensure all knight jumps, even from the very corner of the board, end up on valid array positions. For example, when a knight is on square A8, it can only jump to squares B6 and B7. Otherwise, it would end up in positions highlighted in red squares in figure 12, not on the board. Every knight's move ends up with it still on a valid array index; this is useful as it will avoid errors in the engine's search and evaluate algorithms where knights are on bordering squares. The code will need to check that the index the knight lands on is not '-1' as this is a blocker piece. The knight cannot land there if it is, as it is not a legal move. (Chessprogramming.org. 2022)
+
+![Figure 12](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/knight_array_movement_extreme.PNG?raw=true)
+
+Figure 12: Extreme knight movement example: Red squares represent invalid psuedo legal moves, blue represents legal moves, and green represents knights current square position.
+
+![Figure 13](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/array_movement_vector.PNG?raw=true)
+
+Figure 13: Movement vectors for 10x12 array representations example
+
+### Search Algorithm
+
+
+### Evaluate Algorithm
+
+
+### Opening Book
+
+
+### Endgame Book
+
+
+### Use Case
 add use cases
-
-### Flow Charts
-See Appendix A, B, C, & D...
-
-### Class Diagram
-See Appendix X, Y, Z
-
-### Sequence Diagram
-See Appendix X, Y, Z
 
 ### Project Planning
 
@@ -314,55 +345,82 @@ Talk about dev stories: e.g. changing code after running tests
 
 ### Development Lifecycle Choice
 
-Due to the choice of development approach, being test driven development, to test this project I used a mixture of automated unit testing and manual UI acceptance testing. Unit test's were used to ensure the basic functionality of my code stays bug free throughout development, something that is extremely important with chess engines in particular. While the manual UI acceptance testing was used on the projects GUI side to ensure that it stayed as user friendly as possible throughout development.
+Due to the choice of development approach, being test-driven development, I used a mixture of automated unit testing and manual UI acceptance testing to test this project. Unit tests to ensure the basic functionality of my code stays bug-free throughout development, something that is extremely important with chess engines in particular. At the same time, the manual UI acceptance testing was used on the project GUI side to ensure that it stayed as user friendly as possible throughout development.
 
-I used test driven development for a number of reasons listed below:
+I used test-driven development for several reasons listed below:
 - Reduces duplicated code
 - Keeps code bug free
 - Makes writing the code simpler
 
-Due to this project including a lot of seperate methods and functions it will at times become hard to manage and keep bug free. The use of this development approach will provide significant advantages managing this by forcing myself to think about each methods actual required functionality before writing it. It essentially consists of these five steps:
+Due to this project including many different methods and functions, will sometimes become hard to manage and keep bug-free. Using this development approach will provide significant advantages in managing this by forcing myself to think about each method's actual required functionality before writing it. It essentially consists of these five steps:
 - Write a test
 - Run tests
 - Write some code
-- Run tests & if code fails refactor it
+- Run tests & if code fails, refactor it
 - Repeat 
 
 (See figure x)
 
 ![Figure X](https://www.guru99.com/images/8-2016/081216_0811_TestDrivenD2.png)
 
-Figure X: Test diven development steps
+Figure X: Test-driven development steps
 
 (Hamilton, 2022)
 
 ### Development Stories
 
-This development lifecycle taught me a lot of lessons and the importance of writing tests first during development especially in cases where I chose to try writing what i thought would be a small feature. In most of these cases it ended up burning me due to some weird errors popping up late into production such as the occurence when the GUI and engine were confusing which colour piece was which. This ended up annoying as it brought up unexpected board array indexs as valid moves for each sides pawn pieces.
+This development lifecycle taught me many lessons and the importance of writing tests first during development. This was mainly when it came to cases where I tried writing what I thought would be a minor feature. Unfortunately, it burned me in most of these cases due to some unexplained errors popping up late into production, such as when the GUI and engine were confusing piece colours. This was annoying as it brought up unexpected board array indexes as valid moves for each side's pawn piece.
 
-Due to the way I encoded pieces and the board in general I encountered a few issues during writing the tests. Due to the each piece from each side being given a number identifier and the board array being of 120 length it proved difficult in manually populating these arrays; mainly when setting up simple custom board positions to test. To combat this I wrote a custom function within the code to take in a string representation of a chess board and convert it to a real board array in memory (See Appendix X: Figure x). This meant that I could set up simple custom board positions to test functionality of code a lot easier (See Appendix X: Figure X). 
+Due to the way I encoded pieces and the board in general, I encountered a few issues while writing the tests. Each piece from each side was assigned a numeric identifier, and the board array was 120 in length. It proved challenging to populate these arrays (See Figure X below) manually, Mainly when setting up custom board positions to test. To combat this, I wrote a custom function within the code to take in a string representation of a chessboard and convert it to an actual board array in memory (See Appendix X: Figure x). This meant that I could set up simple custom board positions to test code functionality a lot easier (See Appendix X: Figure X). 
 
-This choice of development came in handy in a few cases throughout development. One of these being during the writing of the Get_Valid_Legal_Moves function. This function was particularly difficult to write due to it needing to:
+Figure X: Manually populating 120 element array
+```c#
+        [TestMethod]
+        public void FEN_Handler_Default()
+        {
+            // Arrange
+            // Initialising Test Var's      
+            int[] default_board = new int[120]
+            {
+                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                -1, 8, 4, 6, 10, 12, 6, 4, 8, -1,
+                -1, 2, 2, 2, 2, 2, 2, 2, 2, -1,
+                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
+                -1, 1, 1, 1, 1, 1, 1, 1, 1, -1,
+                -1, 7, 3, 5, 9, 11, 5, 3, 7, -1,
+                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+            };
+```
+
+This choice of development came in handy in a few cases throughout development. One of these is during the writing of the Get_Valid_Legal_Moves function. This function was complicated to write due to it needing to:
 
 1. Return valid moves
 2. Be called for any piece
 
-This meant that I had to write tests for each piece going into the function to test the valid moves returned are expected given certain positions; then write the code to return these moves. This scenario is perfect for TDD as it meant I could write the test for a specific piece, then write the code for that piece or type of piece, then write the next test. To do this I first tried to test the piece with the simplest movement e.g. the knight (See Appendix X: Figure X). 
+First, I had to write tests for each piece going into the function to check that valid moves returned are the same as expected; then write the code to return these moves. This scenario is perfect for TDD as it meant I could write the test for a specific piece, write the code for that piece or type of piece, and then write the next test. To do this, I first tried to test the piece with the most precise movement, e.g. the knight (See Appendix X: Figure X). Then once I had gotten that bit working, I would write code for sliding pieces, e.g. bishops, queens, rooks, and then finally, pawns due to their more complex movement rules. After this, it would just be 'special' moves such as promotions, castling, en-passant, checks, pins, e.t.c. As you can see from the small increments of functionality, this scenario is a perfect example of where TDD can benefit development.
 
-During the development process I did make a few mistakes in following this development lifecycle. These being:
+During the development process, I made a few mistakes following this development lifecycle. These being:
 
-- Not writing any tests getting started
+- Not writing any tests before developing
 
-This mistake was mainly due to inexperience, panic and desire to get too much functionality done too quickly. Getting started in the project, due to lack of research, I struggled to picture how this project was going to work. I was starting on a blank canvas, due to this I lacked the knowledge of what tests I would even need to write to get started. This ended up in sloppy initial code I had quickly try to develop due to time running out. This then ended up with me having to write a load of code to test its functionality leading to my next mistake.
+This mistake was mainly due to inexperience, panic and the desire to get too much functionality done too quickly. Due to a lack of research, I struggled to see the path to the end goal when starting the project. I was starting on a blank canvas; due to this, I lacked the knowledge of what tests I would even need to write to get started. This resulted in sloppy initial code I had quickly tried to develop due to time running out. I ended up having to write a load of code to test its functionality leading to my next mistake.
 
 - Writing too many tests before developing
 
-This partly links in with my previous mistake in the way that it led onto this big mistake. This was as it ended up wasting a lot of development time having to go back and forth not only refactoring code but also the tests due to changes made in the structure of the engine. One of these being when I implemented the Move class to hold all the information of a move being made in the game. Before this, I had written the tests and method to take in all the paramaters individually but later down the line found benefits in creating one move object for this.
+This partly links in with my previous mistake in how it led to this big mistake. This was as it ended up wasting a lot of development time having to go back and forth not only refactoring code but also the tests due to changes made in the engine's structure. One of these was when I implemented the Move class to hold all the information about making a move in the game. Before this, I had written the tests and method to take in all the parameters individually but later down the line found benefits in creating one move object for this.
 
 
 
 ## Conclusion 
 TL;DR
+
+In conclusion, this was a extremely worthwhile project to take on for me due to the personal growth and development gained out of taking on a project of this size. It introduced me to many a problems which can often come up in industry and issues in taking on projects such as this, e.g. importance of following a software lifecycle, analysis paralysis, magic numbers, poltergeist classes just to name a few. Overall, 
+ 
 
 ## Appendix
 
@@ -724,6 +782,9 @@ Word - Meaning
 
 Transposition - A transposition in chess is a sequence of moves that results in a position which may also be reached by another sequence of moves. For instance 1. d4 e6 2. e4 versus 1. e4 e6 2. d4, or {6. cxd4 exd4 7. exd4} versus {6. exd4 exd4 7. cxd4}. At least two moves (three plies) are necessary to transpose by exchanging moves, the more plies, the more possible sequences with transpositions are possible. https://www.chessprogramming.org/Transposition
 
+## Acknowledgements
+I am extremely grateful to Mr Allan Calaghan. This project would not have been possible without his help and guidance throughout. 
+
 ## References 
 Chess.com. 2022. Chess Engine | Top 10 Engines In The World. [online] Available at: <https://www.chess.com/terms/chess-engine> [Accessed 11 February 2022].
 (the_real_greco), A., 2022. Understanding AlphaZero: A Basic Chess Neural Network. [online] 
@@ -753,3 +814,5 @@ Svirca, Z., 2019. Everything you need to know about MVC architecture. [online] M
 TutorialsPoint, 2022. MVC Framework - Introduction. [online] Tutorialspoint.com. Available at: <https://www.tutorialspoint.com/mvc_framework/mvc_framework_introduction.htm> [Accessed 15 May 2022].
 
 Hamilton, T., 2022. What is Test Driven Development (TDD)? Tutorial with Example. [online] Guru99. Available at: <https://www.guru99.com/test-driven-development.html> [Accessed 16 May 2022].
+
+Novoseltseva, E., 2020. Top 7 benefits you get by using Github | Apiumhub. [online] Apiumhub. Available at: <https://apiumhub.com/tech-blog-barcelona/using-github/> [Accessed 17 May 2022].
