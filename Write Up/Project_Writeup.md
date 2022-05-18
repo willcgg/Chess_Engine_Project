@@ -12,19 +12,24 @@
   - [Stockfish - Move Generation](#stockfish---move-generation)
   - [Stockfish - Move Evaluation](#stockfish---move-evaluation)
   - [Benefits of AI Neural Networks](#benefits-of-ai-neural-networks)
-  - [Implementation Anlaysis](#implementation-anlaysis)
-    - [Resource Estimation](#resource-estimation)
-      - [Time Complexity](#time-complexity)
-      - [Memory Requirements](#memory-requirements)
-    - [Board Representation](#board-representation)
-    - [Search Algorithm](#search-algorithm)
-      - [Types of Search Algorithm](#types-of-search-algorithm)
-      - [Search Trees](#search-trees)
-      - [Cycles](#cycles)
-      - [Alpha-Beta Algorithm](#alpha-beta-algorithm)
-      - [Keeping a Minimal Search Tree](#keeping-a-minimal-search-tree)
-    - [Evaluate Algorithm](#evaluate-algorithm)
-    - [Board Notation](#board-notation)
+  - [Resource Estimation](#resource-estimation)
+    - [Time Complexity](#time-complexity)
+    - [Memory Requirements](#memory-requirements)
+  - [Board Representation](#board-representation)
+  - [Search Algorithm](#search-algorithm)
+    - [Types of Search Algorithm](#types-of-search-algorithm)
+    - [Search Trees](#search-trees)
+    - [Cycles](#cycles)
+    - [Transposition Table](#transposition-table)
+    - [Alpha-Beta Algorithm](#alpha-beta-algorithm)
+    - [Keeping a Minimal Search Tree](#keeping-a-minimal-search-tree)
+  - [Evaluate Algorithm](#evaluate-algorithm)
+    - [Basics](#basics)
+    - [Piece-Square Tables](#piece-square-tables)
+  - [Board Notation](#board-notation)
+    - [FEN](#fen)
+    - [PGN](#pgn)
+    - [Alternatives](#alternatives)
 - [Design](#design)
   - [Use Case](#use-case)
   - [Language Choice](#language-choice)
@@ -186,11 +191,9 @@ Figure 8: AlphaZero's match-up results against Stockfish with a "strong opening 
 
 These results safely conclude that AI and machine learning are superior to traditional engines and have solidified their place in the game and engines today. (Pete, 2022)
 
-### Implementation Anlaysis
+### Resource Estimation
 
-#### Resource Estimation
-
-##### Time Complexity
+#### Time Complexity
 
 Take a starting chessboard, for example (see figure 9); for white, there are 20 total possible starting moves they can take. 2 possible moves for each of the pawns and 2 for both the knights ((8x2) + (2x2) = 20) then same for black. This means that after both players make their first move, there are 400 different possible positional outcomes. 
 
@@ -213,11 +216,11 @@ With these figures, it is possible to estimate how long the system will be able 
 - 7 ply : ~ 7,290s / 2hrs 1m 30s
 - 8 ply : ~ 218,700s / 60hrs 45m
 
-##### Memory Requirements
+#### Memory Requirements
 
 Memory requirements are small for this project due to the algorithms used only usually keeping one branch of a search tree in memory at any one time. Most modern systems now, usually having giga bytes of RAM, will even not have any problems housing the entire transposition table aswell depending on the depth of the search used. (Search - Chessprogramming wiki, 2022)
 
-#### Board Representation
+### Board Representation
 There are many ways to approach the board representation in this project such as:
 - Piece Centric
   - Piece-Lists
@@ -238,9 +241,9 @@ These types of implementations typically hold the opposite of piece-centric appr
 
 As discussed above, some of these types of implementations may also use elements of both of these types of implementation hence the 'hybrid'. Different search and evaluation functions tend to favour a specific representation; however, it is still common to see both in today's solutions.
 
-#### Search Algorithm
+### Search Algorithm
 
-##### Types of Search Algorithm
+#### Types of Search Algorithm
 
 For search algorithms, according to Claude Shannon, there are two types:
 - Type A - More brute-force style of algorithm, looks at every possible variation to a given depth.
@@ -250,11 +253,11 @@ Up until the late 1970s most chess engines focused on type B implementations. Ho
 
 Depth-first searches are often used in searching a transposition tree/table. They work by starting at the root node (The starting position) and explores out as far as possible or to the specified depth before backtracking and exploring the next branch. Additionally, these searches are typically embedded within an iterative deepening blueprint algorithm. These essentially work by starting with a 1 ply search then incrementing the search depth until a set timer goes off. In the event of the timer finishing before the current search is finished then it reverts back to the previous depths results. (Search - Chessprogramming wiki, 2022; Iterative Deepening - Chessprogramming wiki, 2022)
 
-##### Search Trees
+#### Search Trees
 
 The search algorithm works by utilising a search tree which consists of nodes and edges representing alternating sides to moves and the connecting edges being the moves made by either side. The root of the search tree represents the current position to be searched and evaluated from to find the best move. (Search Tree - Chessprogramming wiki, 2022)
 
-##### Cycles
+#### Cycles
 
 Different transpositions often end up at the same node, even in cases where they are from differing amount of moves made aka cycles. Due to the repetition rule, cycles are usually cut from the search tree, resulting in the search tree being more of a directed acrylic graph (See Figure X below). (Search Tree - Chessprogramming wiki, 2022)
 
@@ -262,7 +265,23 @@ Different transpositions often end up at the same node, even in cases where they
 
 Figure X: Directed acrylic graph example
 
-##### Alpha-Beta Algorithm
+#### Transposition Table
+
+Transposition tables are used alongiside search functions, they are stored as hash tables which stores information on all transpositions/branches previously explored and their results. This is so these searches do not have to keep being re-done saving computation time. In cases where the depth of the information kept in the table is not enough, it provides useful insight; especially when it comes to move ordering. The main reason for implementing these is to save considerable search time.
+
+Common hashing functions used alongside these tables include:
+- Zobrist Hashing
+- BCH Hashing
+  
+After a search has been run, these hash tables store information on: 
+- Best move from position
+- Depth of search
+- Evaluation Score
+- Age
+
+All of which being potentially extremely useful when it comes to searching in the near future. (Transposition Table - Chessprogramming wiki, 2022)
+
+#### Alpha-Beta Algorithm
 
 Alpha-beta algorithms provide significant enhancements to the minmax algorithm by eliminating big sections of the game tree. It does this by maintaining two values for each branch; alpha and beta. These represent the minimum score that the current colour side can acquire and then hte maximum score. This works by take for example its whites turn to play and were using a depth of 2; 
 - Consider all possible white moves
@@ -272,10 +291,10 @@ Firstly, we pick one of whites candidate moves then we consider every possible r
 
 Alpha-beta algorithms often utilise the following things to work:
 - Iterative deepening (Discussed above)
-- Transposition Table (See Glossary)
+- Transposition Table 
 - Aspiration Windows (See Glossary)
 
-##### Keeping a Minimal Search Tree
+#### Keeping a Minimal Search Tree
 
 Minimizing a search tree is largely dependant on how good the move ordering of a search algorithm is. When best moves transpositions are searched for first there is often no need to store any other transpositions due to them usually being 'weaker' moves. Alhpa-beta pruning algorithm paired with the evaluation function attempts to solve this problem by utilising endgame tablebases. These are essentially big tables of precalculated moves generated by exhaustive **retrograde analysis** (See glossary). During an engines search & evaluation if it happens to notice certain material combinations it can effectively query this table to determine the outcomes of these positions definitively and act as a helper by providing optimal moves. (Endgame Tablebases - Chessprogramming wiki, 2022; Search Tree - Chessprogramming wiki, 2022)
 
@@ -283,7 +302,9 @@ Minimizing a search tree is largely dependant on how good the move ordering of a
 
 Figure X: Alpha-Beta Search Tree example
 
-#### Evaluate Algorithm
+### Evaluate Algorithm
+
+#### Basics
 
 Evaluation algorithms are typically heuristic functions which attempt to calculate the evaluation score of a certain position respective of the player. This score essentially represents each players chance at winning. The score generated is usually between 1 to -1, 1 being that white will certainly win the game, -1 being that black will certainly win the game, and 0 being a draw. If chess engines could 'see' a winning route from any postition this would either be a 1, -1 or a 0. This 'score' in practice is not known, therefore, we have to make a best approximation using pro chess concepts and comparing positions.
 
@@ -291,7 +312,7 @@ There are two main ways of building these algorithms:
 - Traditional Pro Chess Concept Evaluation
 - Multi-Layered Neural Network Evaluation
 
-The most significant aspect of most engines evalutaion score comes from the following:
+The most significant aspect of most traditional engines evalutaion score comes from the following:
 - Material Balance
 - Piece-Square Tables 
 - Pawn Structure
@@ -304,16 +325,137 @@ The most significant aspect of most engines evalutaion score comes from the foll
 - Space
 - Tempo
 
-#### Board Notation
-Alternatives to normal FEN include PGN, compressed FEN, and ųFEN. Alternatively, a custom conversion script to convert FENs to a human-readable text created a chessboard with ASCII pieces to clearly show the state to the user. This would probably be the least efficient way to go about it; however, it gives the project ease of readability. Therefore, testing will become a lot easier.
+The first evaluation function ever written was by a man previously mentioned Claude Shannon in 1949. It essentially provides:
+- A Symmetric evaluation from the side to moves perspective
+- Score of the resulting position, NOT the actual move
+  
+Looked something like Figure X below.
 
-Compressed FEN could be good for saving bytes and be more memory efficient in the system. However, it does not meet project goals. It arguably is worse for humans to read than normal FEN, which is the purpose of this alternate board state storage.
+```
+f(p) = 200(K-K')
+       + 9(Q-Q')
+       + 5(R-R')
+       + 3(B-B' + N-N')
+       + 1(P-P')
+       - 0.5(D-D' + S-S' + I-I')
+       + 0.1(M-M') + ...
 
-https://www.chessprogramming.org/Transposition_Table
+KQRBNP = number of kings, queens, rooks, bishops, knights and pawns
+D,S,I = doubled, blocked and isolated pawns
+M = Mobility (the number of legal moves)
+```
+Figure X: Claude Shannon Symmetric Evaluation Function
 
-ųFEN could be interesting as it considers a single square and its different states. There are 14 states with the different pieces, empty squares, and the blocker piece. This means the board could be represented in (4bits x 64 squares) 256bits. Compared with normal FEN, which has a worst-case scenario of 712 bits (r1b1k1n1/1p1p1p1p/p1p1p1p1/1n1q1b1r/R1B1P1N1/1P1P1P1P/P1P1K1P1/1N1Q1B1R w KQkq e3 999 999), almost 3 times less efficient. However, in practice, without compression techniques, which I do not wish to go into in this project, it ends up less memory efficient than compressed FEN.
+From this we can take that it essentially sums up all the pieces on the board compared with the opponent and multiplies them by their respective weighting for importance: king being most important, followed by queen, rook, bishops & knights (some engines value bishops higher), then finally pawns. After it has done this it then takes into consideration other important factors such as: doubled, blocked, and isolated pawns, and finally mobility of pieces which is measured by number of available legal moves. For an example of this see Figure X below.
 
-https://chess.stackexchange.com/questions/8500/alternatives-to-the-fen-notation
+```
+materialScore = kingWt  * (wK-bK)
+              + queenWt * (wQ-bQ)
+              + rookWt  * (wR-bR)
+              + knightWt* (wN-bN)
+              + bishopWt* (wB-bB)
+              + pawnWt  * (wP-bP)
+
+mobilityScore = mobilityWt * (wMobility-bMobility)
+```
+Figure X: Basic Complete Evaluation Function
+
+For this style of evaluation to work we need to ensure that the function looks from the correct sides perspective. For example, take the above evaluation function(Figure X), then apply a side_to_move variable (+1 for white, -1 for black) to return the correct eval score (See fugure X below).
+
+```
+Eval  = (materialScore + mobilityScore) * who2Move
+```
+Figure X: Eval Score taking into account side to move
+
+(Evaluation - Chessprogramming wiki, 2022)
+
+#### Piece-Square Tables
+
+One of the simpler implementations of the eval function is utilising piece-square tables. To implement this is essentially just creating a table for each piece and colour, with values assigned to each square to represent 'good' squares to be on. This scheme is extremely useful as it can be:
+- Incrementally updated as moves are made/unmade
+- Hold scores for early game, mid game, and late game (See figure X below)
+
+```
+// knight
+-50,-40,-30,-30,-30,-30,-40,-50,
+-40,-20,  0,  0,  0,  0,-20,-40,
+-30,  0, 10, 15, 15, 10,  0,-30,
+-30,  5, 15, 20, 20, 15,  5,-30,
+-30,  0, 15, 20, 20, 15,  0,-30,
+-30,  5, 10, 15, 15, 10,  5,-30,
+-40,-20,  0,  5,  5,  0,-20,-40,
+-50,-40,-30,-30,-30,-30,-40,-50,
+```
+Figure X: Knight Piece-Square Table. Higher value = More valuable square for piece.
+
+As you can see for the knights values, it is generally not a good idea to have knights on the edges of the board, with higher scores in the middle of the board for higher coverage. As can also be seen from the famous quote "knight on the rim is grim".
+
+This technique is especially useful due to the dynamic nature of the tables, for example a pawn can have higher value later into the game then early game. Additionally, Utilising these piece-square tables is enough in itself to play a semi-decent game of chess. (Piece-Square Tables - Chessprogramming wiki, 2022)
+
+### Board Notation
+
+Board notations attempt to represent board states, there are two main chess board notations:
+- Forsyth–Edwards Notation a.k.a. FEN
+- Portable Game Notation a.k.a. PGN
+
+Each have their own unique way of representing the board each with their own advantages and disadvantages.
+
+#### FEN
+
+Advantages:
+- Holds all information on a specific position
+- Position of pieces
+- Whose move it is
+- Castling rights
+- En-passant target
+- Half-ply count
+- Full-ply count
+- Smaller in size compared to PGN, one string of maximum 712 bits
+
+Disadvantages:
+- Only holds this information for one position, has no history of moves
+- Doesn't hold any information on threefold repetition
+
+```
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+```
+Figure X: FEN String Example
+
+#### PGN
+
+Advantages:
+- Easy to read
+- Holds information on an entire game; moves made, names of players, winner/loser, and even the date the game was played.
+
+Disadvantages:
+- Doesn't specifically hold information the same as FEN, you have to work it out from the moves played
+- File sizes are much bigger due to increase in data needed
+
+Example:
+
+```
+[Event "Chess.com Staff Tournament #2"]
+[Site "Chess.com"]
+[Date "2010.10.26"]
+[White "ACEChess"]
+[Black "piotr"]
+[Result "1-0"]
+[WhiteElo "2037"]
+[BlackElo "2125"]
+[TimeControl "1 in 3 days"]
+[Termination "ACEChess won by resignation"]
+
+1.e4 d5 2.exd5 Nf6 3.d4 Nxd5 4.c4 Nb6 5.Nc3 g6 6.Be3 Bg7 7.h3 O-O 8.Qd2 Nc6 9.Nf3 e5 10.d5 Ne7 11.g4 f5 12.O-O-O e4 13.Ng5 h6 14.Ne6 Bxe6 15.dxe6 Qxd2+ 16.Rxd2 Rad8 17.Bc5 Rxd2 18.Kxd2 Rd8+ 19.Kc2 Nc6 20.gxf5 Nd4+ 21.Bxd4 Rxd4 22.Rg1 g5 23.c5 Nc4 24.Bxc4 Rxc4 25.Rd1 Bf6 26.Kb3 Rxc5 27.Nxe4 Rxf5 28.Nxf6+ Kf8 29.Ng4 h5 30.Ne3 Rf3 31.Rd5 g4 32.hxg4 1-0
+```
+Figure X: PGN example from Chess.com archives
+
+#### Alternatives
+
+Alternatives to normal FEN include PGN, compressed FEN, and ųFEN. Alternatively, a custom conversion script to convert FENs to a human-readable text created a chessboard with ASCII pieces to clearly show the state to the user. This would probably be the least efficient way to go about it; however, it gives the project ease of readability. Therefore, testing will become a lot easier. (Keiter, 2015)
+
+Compressed FEN could be good for saving bytes and be more memory efficient in the system. However, it does not meet project goals. It arguably is worse for humans to read than normal FEN, which is the purpose of this alternate board state storage. (Keiter, 2015)
+
+ųFEN could be interesting as it considers a single square and its different states. There are 14 states with the different pieces, empty squares, and the blocker piece. This means the board could be represented in (4bits x 64 squares) 256bits. Compared with normal FEN, which has a worst-case scenario of 712 bits (r1b1k1n1/1p1p1p1p/p1p1p1p1/1n1q1b1r/R1B1P1N1/1P1P1P1P/P1P1K1P1/1N1Q1B1R w KQkq e3 999 999), almost 3 times less efficient. However, in practice, without compression techniques, which I do not wish to go into in this project, it ends up less memory efficient than compressed FEN. (Keiter, 2015)
 
 PGN will need to be stored regardless, mainly to complete the functionality of the 'Next' and 'Back' buttons. This will be implemented through either a stack of all the moves made in the game or a list. Then when a user wishes to go back to a position, it will simply pop the top move off of the stack/list, which will be the last move played due to the stack's nature in storing data.
 
@@ -477,6 +619,8 @@ This choice of development came in handy in a few cases throughout development. 
 
 First, I had to write tests for each piece going into the function to check that valid moves returned are the same as expected; then write the code to return these moves. This scenario is perfect for TDD as it meant I could write the test for a specific piece, write the code for that piece or type of piece, and then write the next test. To do this, I first tried to test the piece with the most precise movement, e.g. the knight (See Appendix X: Figure X). Then once I had gotten that bit working, I would write code for sliding pieces, e.g. bishops, queens, rooks, and then finally, pawns due to their more complex movement rules. After this, it would just be 'special' moves such as promotions, castling, en-passant, checks, pins, e.t.c. As you can see from the small increments of functionality, this scenario is a perfect example of where TDD can benefit development.
 
+HOPEFULLY INCLUDE PASSING TEST EXAMPLES
+
 {MAYBE CONCLUSION?}
 
 During the development process, I made a few mistakes following this development lifecycle. These being:
@@ -488,8 +632,6 @@ This mistake was mainly due to inexperience, panic and the desire to get too muc
 - Writing too many tests before developing
 
 This partly links in with my previous mistake in how it led to this big mistake. This was as it ended up wasting a lot of development time having to go back and forth not only refactoring code but also the tests due to changes made in the engine's structure. One of these was when I implemented the Move class to hold all the information about making a move in the game. Before this, I had written the tests and method to take in all the parameters individually but later down the line found benefits in creating one move object for this.
-
-
 
 ## Conclusion 
 TL;DR
@@ -864,7 +1006,9 @@ Word - Meaning
 Transposition - A transposition in chess is a sequence of moves that results in a position which may also be reached by another sequence of moves. For instance 1. d4 e6 2. e4 versus 1. e4 e6 2. d4, or {6. cxd4 exd4 7. exd4} versus {6. exd4 exd4 7. cxd4}. At least two moves (three plies) are necessary to transpose by exchanging moves, the more plies, the more possible sequences with transpositions are possible. https://www.chessprogramming.org/Transposition
 
 ## Acknowledgements
-I am extremely grateful to Mr Allan Calaghan. This project would not have been possible without his help and guidance throughout. 
+I am extremely grateful to Mr Allan Calaghan. This project would not have been feasible without his help and guidance throughout. 
+
+
 
 ## References 
 Chess.com. 2022. Chess Engine | Top 10 Engines In The World. [online] Available at: <https://www.chess.com/terms/chess-engine> [Accessed 11 February 2022].
@@ -907,3 +1051,11 @@ Chessprogramming.org. 2022. Alpha-Beta - Chessprogramming wiki. [online] Availab
 Chessprogramming.org. 2022. Endgame Tablebases - Chessprogramming wiki. [online] Available at: <https://www.chessprogramming.org/Endgame_Tablebases> [Accessed 17 May 2022].
 
 Chessprogramming.org. 2022. Iterative Deepening - Chessprogramming wiki. [online] Available at: <https://www.chessprogramming.org/Iterative_Deepening> [Accessed 17 May 2022].
+
+Chessprogramming.org. 2022. Evaluation - Chessprogramming wiki. [online] Available at: <https://www.chessprogramming.org/Evaluation> [Accessed 18 May 2022].
+
+Chessprogramming.org. 2022. Piece-Square Tables - Chessprogramming wiki. [online] Available at: <https://www.chessprogramming.org/Piece-Square_Tables> [Accessed 18 May 2022].
+
+Keiter, H., 2015. Alternatives to the FEN notation. [online] Chess Stack Exchange. Available at: <https://chess.stackexchange.com/questions/8500/alternatives-to-the-fen-notation> [Accessed 18 May 2022].
+
+Chessprogramming.org. 2022. Transposition Table - Chessprogramming wiki. [online] Available at: <https://www.chessprogramming.org/Transposition_Table> [Accessed 18 May 2022].
