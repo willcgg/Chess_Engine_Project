@@ -31,14 +31,15 @@
     - [PGN](#pgn)
     - [Alternatives](#alternatives)
 - [Design](#design)
-  - [Use Case](#use-case)
   - [Language Choice](#language-choice)
   - [Design Pattern](#design-pattern)
   - [Board Representation](#board-representation-1)
-  - [Project Planning](#project-planning)
+  - [Program Flow](#program-flow)
+    - [Engine](#engine)
 - [Testing](#testing)
   - [Development Lifecycle Choice](#development-lifecycle-choice)
   - [Development Stories](#development-stories)
+- [Project Management](#project-management)
 - [Conclusion](#conclusion)
   - [Critique of Work](#critique-of-work)
   - [Evaluation](#evaluation)
@@ -386,7 +387,7 @@ One of the simpler implementations of the eval function is utilising piece-squar
 -40,-20,  0,  5,  5,  0,-20,-40,
 -50,-40,-30,-30,-30,-30,-40,-50,
 ```
-Figure X: Knight Piece-Square Table. Higher value = More valuable square for piece.
+Figure X: Knight Piece-Square Table. Higher value = More valuable square for piece to occupy.
 
 As you can see for the knights values, it is generally not a good idea to have knights on the edges of the board, with higher scores in the middle of the board for higher coverage. As can also be seen from the famous quote "knight on the rim is grim".
 
@@ -461,12 +462,6 @@ PGN will need to be stored regardless, mainly to complete the functionality of t
 
 ## Design
 
-### Use Case
-
-To create a design for this project I first had to consider the different use cases for it (See below).
-
-![Figure X](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/project_use_case.PNG?raw=true)
-
 ### Language Choice
 
 The language I will be using to produce the engine will be C#. C# has several advantages, such as:
@@ -474,6 +469,10 @@ The language I will be using to produce the engine will be C#. C# has several ad
 - Portability
 - Object-oriented nature
 - Static language
+
+The main difference between static typed languages vs dynamic typed languages is variables and the way that each handles them. With static languages, all variables and their types are already known at run time as the programmer, me, will have already declared them. This is advantageous as it means a lot of more trivial hard to detect bugs are caught early on.
+
+On the other hand, dynamicly typed languages do not know the types assosciated with run time values/variables/fields e.t.c. Allowing programmers to skip the process of thinking about the type of each variable used. Although a lot of dynamicly typed languages also allow you to provide type information if required, for example to take care of a bug. Dynamic languages are mainly used as scripting languages due to their usefulness in developing solutions quickly and the much smaller nature of scripts compared to bigger projects. (Lynn, 2021)
   
 Due to these, it is easier to find errors, understand the code, and write it. C#'s main advantage is that it is an object-oriented language; this makes the code 
 - highly efficient
@@ -500,7 +499,7 @@ It comprises three parts: model, view, and controller—each with particular pur
   This section is responsible for handling and maintaining the data involved with the solution. In addition, it is the model that will typically connect to any databases/sources utilised within the solution.
 - View
   
-  This section displays the information from the model layer to the user. Developers often write the view in a friendly and easy to understand way. This layer also allows users to interact and change data for the controller to pass to the model to update the back and then back to the controller to update the view once more.
+  This section displays the information from the model layer to the user. Developers often write the view in a friendly and easy to understand way. This layer also allows users to interact and change data for the controller to pass to the model to update the backend and then back to the controller to update the view once more.
 - Controller
   
   Finally, this section is responsible for the data flow between the model and view components. It takes any changes from the view and passes them to the model to update and vice versa.
@@ -523,7 +522,12 @@ Due to the segmentation of these projects it made me concentrate a lot more on w
 - Highly modularized code
 - Less anti-patterns in code
 
-The use of this alongiside TDD approach, spoken about below, helped me split code up into appropriate objects avoiding the 'God object' anti pattern. 
+The use of this alongiside TDD approach, spoken about below, helped me split code up into appropriate objects avoiding the 'God object' anti pattern. The 'God Object' anti-pattern is essentially when a programmer puts too many functions/methods inside one class or object. IT is an object that attempts to solve every problem in the solution; hence the name 'God Object'. This is a problem as it makes it hard to:
+- Test
+- Maintain
+- Document
+
+Another anti-pattern this choice of software architecture will help tackle on the other side of the spectrum is useless/plotergeist classes. These are just classes which have no responsibility of their own, often just empty classes with a function call from another class or some other unnessacary level of abstraction. This may not sound like a huge problem, however, it adds complexity where it is not needed and makes code less readable. (Saba, 2015)
 
 ### Board Representation
 
@@ -535,6 +539,10 @@ Figure 11: 10x12 Mailbox approach example
 
 I chose to do it this way rather than the traditional 8x8 approach to ensure all knight jumps, even from the very corner of the board, end up on valid array positions. For example, when a knight is on square A8, it can only jump to squares B6 and B7. Otherwise, it would end up in positions highlighted in red squares in figure 12, not on the board. Every knight's move ends up with it still on a valid array index; this is useful as it will avoid errors in the engine's search and evaluate algorithms where knights are on bordering squares. The code will need to check that the index the knight lands on is not '-1' as this is a blocker piece. The knight cannot land there if it is, as it is not a legal move. (Chessprogramming.org. 2022)
 
+
+
+removes need to perform out of bounds checks for all moves which is computationally more expensive, therefore saves time
+
 ![Figure 12](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/knight_array_movement_extreme.PNG?raw=true)
 
 Figure 12: Extreme knight movement example: Red squares represent invalid psuedo legal moves, blue represents legal moves, and green represents knights current square position.
@@ -543,20 +551,33 @@ Figure 12: Extreme knight movement example: Red squares represent invalid psuedo
 
 Figure 13: Movement vectors for 10x12 array representations example
 
+### Program Flow
 
-### Project Planning
+Now I have worked out the language, structure, board representation, and the different use cases; I now need to work out the flow of the different solutions. 
 
-Project Management section:
-section on project planning
-talk avbout tasks needed for program: 
-> board makes move
-> Talk about ticketing branches etc
-> Code quality: talk about branches ticket numbers. commits, why branched off at certain points
+#### Engine
 
-[![](https://mermaid.ink/img/pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)](https://mermaid.live/edit#pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)
+Firstly, to think about the engine flow of things is the most difficult due to it more likely not being a continuously running solution. However, if it were it would look something like seen in Appendix A: Figure X. The main functionality of the engine needs to be:
+
+1. Take custom state input (E.g. FEN or PGN)
+2. Search for all possible moves given a position
+3. Evaluate for the best possible move
+
+Like mentioned previously PGN is less suitable for inputting custom state. Therefore, I decided to utilise the FEN's superior format for recording game details that you would otherwise have to work out from PGN notation. This meant that the program will be able to take in a FEN string and directly convert that into object variables. See Appendix X: Figure x for flowchart.
+
+Other than taking custom FEN input the engine needs to:
+- Generate valid move lists
+- Evaluate move lists for best move
+- Update GUI with info
 
 ## Testing
 Talk about dev stories: e.g. changing code after running tests
+
+what did i actually test; piece movement, board functions e.t.c.
+maybe some working tests
+1000 words on tests and what they need to test and how
+heavily linked to reflections in conclusion,  maybe move some dev stories over
+talk about building the ascii converter to assist further down development
 
 ### Development Lifecycle Choice
 
@@ -621,9 +642,27 @@ First, I had to write tests for each piece going into the function to check that
 
 HOPEFULLY INCLUDE PASSING TEST EXAMPLES
 
-{MAYBE CONCLUSION?}
 
-During the development process, I made a few mistakes following this development lifecycle. These being:
+## Project Management
+
+Project Management section:
+section on project planning
+talk avbout tasks needed for program: 
+> board makes move
+> Talk about ticketing branches etc
+> Code quality: talk about branches ticket numbers. commits, why branched off at certain points
+> Evolution of branch usage
+
+[![](https://mermaid.ink/img/pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)](https://mermaid.live/edit#pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)
+
+## Conclusion 
+TL;DR
+
+In conclusion, this was a extremely worthwhile project to take on for me due to the personal growth and development gained out of taking on a project of this size. It introduced me to many a problems which can often come up in industry and issues in taking on projects such as this, e.g. importance of following a software lifecycle, analysis paralysis, magic numbers, poltergeist classes just to name a few. 
+
+### Critique of Work
+
+During the development process, I made a few mistakes following the development lifecycle. These being:
 
 - Not writing any tests before developing
 
@@ -633,17 +672,10 @@ This mistake was mainly due to inexperience, panic and the desire to get too muc
 
 This partly links in with my previous mistake in how it led to this big mistake. This was as it ended up wasting a lot of development time having to go back and forth not only refactoring code but also the tests due to changes made in the engine's structure. One of these was when I implemented the Move class to hold all the information about making a move in the game. Before this, I had written the tests and method to take in all the parameters individually but later down the line found benefits in creating one move object for this.
 
-## Conclusion 
-TL;DR
-
-In conclusion, this was a extremely worthwhile project to take on for me due to the personal growth and development gained out of taking on a project of this size. It introduced me to many a problems which can often come up in industry and issues in taking on projects such as this, e.g. importance of following a software lifecycle, analysis paralysis, magic numbers, poltergeist classes just to name a few. 
-
-### Critique of Work
-
 ### Evaluation
 
 ### Future Work
-
+Using CI and github actions tto test automatically every commit, blame developers for breakaages
 
 ## Appendix
 
@@ -1059,3 +1091,7 @@ Chessprogramming.org. 2022. Piece-Square Tables - Chessprogramming wiki. [online
 Keiter, H., 2015. Alternatives to the FEN notation. [online] Chess Stack Exchange. Available at: <https://chess.stackexchange.com/questions/8500/alternatives-to-the-fen-notation> [Accessed 18 May 2022].
 
 Chessprogramming.org. 2022. Transposition Table - Chessprogramming wiki. [online] Available at: <https://www.chessprogramming.org/Transposition_Table> [Accessed 18 May 2022].
+
+Lynn, E., 2021. What is the difference between statically typed and dynamically typed languages?. [online] Stack Overflow. Available at: <https://stackoverflow.com/questions/1517582/what-is-the-difference-between-statically-typed-and-dynamically-typed-languages#:~:text=Statically%20typed%20languages%3A%20each%20variable,already%20known%20at%20compile%20time.&text=Dynamically%20typed%20languages%3A%20variables%20can,is%20defined%20at%20run%20time.> [Accessed 19 May 2022].
+
+Saba, S., 2015. 9 Anti-Patterns Every Programmer Should Be Aware Of. [online] Sahandsaba.com. Available at: <https://sahandsaba.com/nine-anti-patterns-every-programmer-should-be-aware-of-with-examples.html> [Accessed 19 May 2022].
