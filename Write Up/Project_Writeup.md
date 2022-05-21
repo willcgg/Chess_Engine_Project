@@ -42,8 +42,11 @@
 - [Testing (15 marks)](#testing-15-marks)
   - [Development Lifecycle Choice](#development-lifecycle-choice)
 - [Project Management(5 marks)](#project-management5-marks)
+  - [Trello](#trello)
+  - [GitHub](#github)
 - [Conclusion (10 Marks)](#conclusion-10-marks)
   - [Critique of Work](#critique-of-work)
+    - [Short Comings](#short-comings)
   - [Evaluation](#evaluation)
     - [Development Stories](#development-stories)
   - [Future Work](#future-work)
@@ -64,13 +67,7 @@
 ### Background to Problem
 This project is about creating a chess engine that will be able to play a decent game of chess by the end. Chess players would typically use it to analyse positions for insight. It may also train players up to a specific Elo rating, and finally, it could also be played for a bit of fun. It will be programmed in C# and will mainly run on a desktop computer, and if there is time at the end of the project, it will also be available to access on the web.
 
-To tackle this project I will be using a test driven development approach. The project will be split into three; automated tests, the engine itself, and then the GUI. I will be using Trello to manage the project, an interactive user story board used to input important functionality the project needs to address. Although this will be a solo project, GitHub will be used to track changes to the project. This is for many reasons listed below:
-- Used in industry: Become the industry standard for tracking projects and versioning.
-- Online repository: Code is accessible and saved online meaning any locally corrupt files which without GitHub would cause catastophic delays; can easily be overwritten with a previous versions.
-- Developer documentation: Allows me to easily add a project readme beneath the project for any key information other developers would need to carry on with the project.
-- Tracks changes: Any commits that cause big breakages in other sections of code can easily be 'backtracked' on to a previous commit where the code worked.
-- Integration options: Comes with integration options for many common platforms such as: Google Cloud, Amazon, and even GitHub pages. GitHub Pages will be particularly useful if there is time at the end of the project to make the engine available to access on the web.
-- Collabaration: As stated before this will be a solo project. However, in industry it is a commonly used solution to aid in collabaritve projects due to features such as merging. (Novoseltseva, 2020)
+To tackle this project I will be using a test driven development approach. The project will be split into three; automated tests, the engine itself, and then the GUI. I will be using Trello to manage the project, and Although this will be a solo project, GitHub will be used to track changes to the project. 
 
 ### Justification to Task
 I chose to take on this project not only because of my interest in the game itself; but also the personal growth and development I will get out of it as a programmer. It will be one of the most significant projects I have taken on solo. I will have to deep dive into some complex searches and evaluate algorithms that make up the main bulk of this project. The project is not only a task well suited to computers, but these algorithms' fundamental principles could be helpful in many other domains. Additionally, my time management and prioritisation skills will be challenged due to the different moving parts of this project.
@@ -510,12 +507,12 @@ It comprises three parts: model, view, and controller—each with particular pur
 (Svirca, 2019; TutorialsPoint, 2022)
 
 To make this project more manageable, instead of creating one titanic project, I split it up into three separate parts:
-- Engine
-  
-  Responsible for the 'brains' of the solution. The engine project section will make up the model/controller part of the solution and the main bulk of code. It will be responsible for handling all the data involved in the solution, such as moves, pieces, 50 ply count, e.t.c. It will implement most of the things discussed in the project analysis section. It will be home to the Search & Evaluate functions which are responsible for finding all moves and then filtering them down to the 'best move' in a given chess position (See appendix B & C for roughly how this will work)
 - Testing
   
   Testing is the part of the project that is responsible for ensuring the code stays bug/error-free. It is vital to write bug-free code at the start of a project. There will more than likely be problems when implementing the search and evaluation functions. It will be an automated test routine which will run every time the project is run to ensure everything is working as expected.
+- Engine
+  
+  Responsible for the 'brains' of the solution. The engine project section will make up the model/controller part of the solution and the main bulk of code. I refer to it as both the model and controller here as it will be responsible for keeping the data on the GUI accurate when the engine makes a move and vice versa for when the player makes a move from the GUI. It will be responsible for handling all the data involved in the solution, such as moves, pieces, 50 ply count, e.t.c. It will implement most of the things discussed in the project analysis section. It will be home to the Search & Evaluate functions which are responsible for finding all moves and then filtering them down to the 'best move' in a given chess position (See appendix B & C for roughly how this will work)
 - GUI
   
   This project section is self-explanatory, the 'View' section of the MVC architecture spoken about above. It is essentially just the project's graphical user interface. It gives the user control over the solution and allows them to interact with the engine quickly.
@@ -634,20 +631,45 @@ Testing piece movement was where I came into the problem of magic numbers
 
 ## Project Management(5 marks)
 
-Project Management section:
-section on project planning
-talk avbout tasks needed for program: 
-> board makes move
-> Talk about ticketing branches etc
-> Code quality: talk about branches ticket numbers. commits, why branched off at certain points
-> Evolution of branch usage
+For the project management, I chose to use GitHub to keep an online copy of and track any changes to the code. Then I chose to use Trello for the project management side of things, an interactive board used to keep a hold of and track important functionality or features the project needs to implement.
 
+### Trello
 
+I decided to use Trello for a number of reasons:
+- Familiarity
+- Ease of use
+- Free to use
+- Kanban style of structure
+- Easy to add and manage tasks to do, doing and done
+
+One slightly annoying disadvantage is Trello doesnt come with any burndown/Ghantt chart functionality. However, this was not a huge problem as it just meant I needed to add to an external mermaid ghantt chart instead which was not a huge problem.
+
+It allowed me to easily create tickets with numbers for importance/priority so once finished on a ticket, could easily see what I had next on the list of importance(See Figure X below). Slightly similar to the kanban structure, however I moved testing first due to my choice in development approach. Tickets marked with a score of 1 are most important while bigger scoring tickets come later on as they are less important to the success of the project. Tickets are also split up into different sections based on what section of the MVC architecture I was working on. For example:
+- Base - Model side of things, part of the engine part of the project and makes up the basic structure of the chess engine and its features required.
+- AI - Model section, again this will be apart of the engine section of the project. It will be responsible for generating move lists and evaluating them and if the user is playing against the engine, update the GUI with the engines reply.
+- Interactive - View side of the project, this will be the GUI users interact with the chess engine/player on.
+- State - Controller side of the project, this will be responsible for handling the state of the current chess game/position being analysed.
+
+<img src="./images/Project_Management.png" alt="drawing" width="600"/>
+Figure X: Trello Project Management Board
+
+When I was working on developing a solution for each ticket I would move it first into the 'Writing Tests' section to determine the functionality required of this section of code, then move along to the 'Doing' section. This section was for when I was actually working on implementing the feature of the code. Once that ticket was complete and fully functional, it will be moved along to the 'Done' section.
+
+### GitHub
+
+I chose GitHub to track code for many reasons such as those listed below:
+- Used in industry: Become the industry standard for tracking projects and versioning.
+- Online repository: Code is accessible and saved online meaning any locally corrupt files which without GitHub would cause catastophic delays; can easily be overwritten with a previous versions.
+- Developer documentation: Allows me to easily add a project readme beneath the project for any key information other developers would need to carry on with the project.
+- Tracks changes: Any commits that cause big breakages in other sections of code can easily be 'backtracked' on to a previous commit where the code worked.
+- Integration options: Comes with integration options for many common platforms such as: Google Cloud, Amazon, and even GitHub pages. GitHub Pages will be particularly useful if there is time at the end of the project to make the engine available to access on the web.
+- Collabaration: As stated before this will be a solo project. However, in industry it is a commonly used solution to aid in collabaritve projects due to features such as merging. (Novoseltseva, 2020)
+
+Initially in the project I had created a seperate branch called 'development' to work on any changes I was currently working on, then merged to main upon completing any features. However, this was not only redundant as it meant all changes were going onto one branch, but unneccassary and confusing due to its naming scheme. To tackle this I decided to merge all my branches together, then only branch of from main when there was a certain ticket that required some kind of experimentation with the code to complete. The ticket names would be assigned with a brief title of the feature followed by a ticket number e.g. #001, #002, e.t.c. This made it much simpler and also meant a log of the changes made to implement each feature was taken down. Useful for anytime I needed to look back at a certain code block to reuse a similar piece of functionality or syntax reminder. Also particularly useful for future use when looking to improve each part of the solution, can easily see how each feature was done. This also significantly increased the quality of my code as each branch was clear what feature/code I needed to implement on that branch by the name.
 
 [![](https://mermaid.ink/img/pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)](https://mermaid.live/edit#pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)
 
 ## Conclusion (10 Marks)
-TL;DR
 
 In conclusion, this was a extremely worthwhile project to take on for me due to the personal growth and development gained out of taking on a project of this size. It introduced me to many a problems which can often come up in industry and issues in taking on projects such as this, e.g. importance of following a software lifecycle, analysis paralysis, magic numbers, poltergeist classes just to name a few. It got me thinking about developing software from an industry perspective, developing solutions to developer problems which ultimately saved a lot of time in coding some of this solution for example the ASCII board converter.
 
@@ -665,9 +687,16 @@ This mistake was mainly due to inexperience, panic and the desire to get too muc
 
 This partly links in with my previous mistake in how it led to this big mistake. This was as it ended up wasting a lot of development time having to go back and forth not only refactoring code but also the tests due to changes made in the engine's structure. One of these was when I implemented the Move class to hold all the information about making a move in the game. Before this, I had written the tests and method to take in all the parameters individually but later down the line found benefits in creating one move object for this.
 
+Due to these reasons, not much functionality of the solution managed to get implemented. Essentially hitting very few of my project goals as can be seen from the Trello board(Figure X) for managing these goals. 
+
+#### Short Comings
+
+Overall, there are several short comings of the project that I wanted to address, these being:
+- GUI Interaction - There was very limited GUI interaction implemented into the final solution which was rather disappointing overall. I wanted to at least implement moving pieces around the board. However, due to development struggles this never got around to being implemented. The only interaction actually implemented was the change of board state with FEN strings. Would of been good to have pieces being able to be moved, and even when selected, showing legal moves.
+- Engine Search & Evaluate - This was another section of the project I never really got fully round too. Which is also a big shame as this was what was going to make up the main bulk and complexity of the project. I partly got round to coding a function to return valid moves for a piece, however, due to it being a last minute rush, didn't manage to get fully functional(Only partially works for sliding pieces).
+- Testing - Even in testing there were several shortcomings, those being very limited tests actually written passed all checks. This is mainly due to the lack of functionality implemented into the solution, as it meant none of the function calls in the tests for the pieces actually altered the board state meaning no checks were going to work as expected anyway.
+
 ### Evaluation
-
-
 
 #### Development Stories
 
@@ -708,7 +737,7 @@ First, I had to write tests for each piece going into the function to check that
 
 ### Future Work
 
-There is a lot of potential future work for this project in most aspects of it due to the lack of code I managed to get done in all areas of it. For example testing, the GUI, and also the engine itself. The main noteworthy future work that would provide significant advantages to the project would be the use of CI/CD pipelines with automated testing which I will go into below.
+There is a lot of potential future work for this project in most aspects of it due to the lack of code I managed to get done in all areas of it. For example testing, the GUI, and also the engine itself. If I had more time, I would try to get the GUI interactive as possible with the possibility of moving pieces, fix up the engines code so that it can search, evaluate and display these results of the best move to the user. The main noteworthy future work that would provide significant advantages to the project would be the use of CI/CD pipelines with automated testing which I will go into below.
 
 Testing could of been taken a lot further while also taking into account aspects of CI. For example all unit tests could of been setup on Github actions so every commit all tests are automatically run against the code. This would be tremendously valuable as it would actually allow us to see not only the commit but the developer working on that commit (Blame) that caused an error or threw up a failed test. Isolating the complete source of any faults arising making them a lot simpler to fix, creating a faster mean time to resolution of problems. Aswell as this fault isolation the use of this CI in-turn:
 - Faster Mean Time to Resolution
