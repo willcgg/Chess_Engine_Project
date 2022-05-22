@@ -141,50 +141,127 @@ namespace Chess_Engine_v2
             // init
             int[] offsets;
             List<int> valid_moves;
-            int square;
-            int index;
             char colour_to_move;
-            Piece.Type opp1, opp2, opp3, opp4, opp5, opp6;
+            int square;
+            // init moves list
+            valid_moves = new List<int>();
+            // checking piece is not empty
+            if (piece == Piece.Type.empty)
+                return valid_moves;
             // converting start square to board index
             square = (int)Enum.Parse(typeof(Square), start_square);
             // getting piece movement offset
             offsets = Piece.Get_Piece_Offsets(piece);
             // getting piece colour
             colour_to_move = Piece.Get_Piece_Colour(piece);
-            // what colour? Selecting opponent pieces
-            if (colour_to_move == 'b')
+            
+            // what piece is it
+            if(piece == Piece.Type.b_bishop || piece == Piece.Type.w_bishop || piece == Piece.Type.b_rook 
+                || piece == Piece.Type.w_rook || piece == Piece.Type.b_queen || piece == Piece.Type.w_queen)
             {
-                opp1 = Piece.Type.w_king;
-                opp2 = Piece.Type.w_knight;
-                opp3 = Piece.Type.w_queen;
-                opp4 = Piece.Type.w_rook;
-                opp5 = Piece.Type.w_bishop;
-                opp6 = Piece.Type.w_pawn;
+                // sliding pieces
+                valid_moves = Generate_Sliding_Moves(square, offsets, colour_to_move);
+            }
+            else if(piece == Piece.Type.b_knight || piece == Piece.Type.w_knight)
+            {
+                // knights
+                valid_moves = Generate_Knight_Moves(square, offsets, colour_to_move);
+            }
+            else if (piece == Piece.Type.b_pawn || piece == Piece.Type.w_pawn)
+            {
+                // pawns
+                valid_moves = Generate_Pawn_Moves(square, offsets, colour_to_move);
+            }
+            else if (piece == Piece.Type.w_king || piece == Piece.Type.b_king)
+            {
+                // kings
+                valid_moves = Generate_King_Moves(square, offsets, colour_to_move);
+            }
+            // returning valid_moves
+            return valid_moves;
+        }
 
-            }
-            else
-            {
-                opp1 = Piece.Type.b_king;
-                opp2 = Piece.Type.b_knight;
-                opp3 = Piece.Type.b_queen;
-                opp4 = Piece.Type.b_rook;
-                opp5 = Piece.Type.b_bishop;
-                opp6 = Piece.Type.b_pawn;
-            }
-            // init moves list
-            valid_moves = new List<int>();
+        /// <summary>
+        /// Gets valid moves for king piece
+        /// </summary>
+        /// <param name="square"></param>
+        /// <param name="offsets"></param>
+        /// <param name="colour_to_move"></param>
+        /// <returns></returns>
+        private List<int> Generate_King_Moves(int square, int[] offsets, char colour_to_move)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets valid moves for pawns
+        /// </summary>
+        /// <param name="square"></param>
+        /// <param name="offsets"></param>
+        /// <param name="colour_to_move"></param>
+        /// <returns></returns>
+        private List<int> Generate_Pawn_Moves(int square, int[] offsets, char colour_to_move)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets valid knight moves
+        /// </summary>
+        /// <param name="start_square"></param>
+        /// <param name="offsets"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        private List<int> Generate_Knight_Moves(int start_square, int[] offsets, char col)
+        {
+            // init
+            int index;
+            int opps;
+            List<int> moves = new List<int>();
+            // opponent piece indentifier
+            opps = Is_Opponent_Piece(col);
+
             foreach (int offset in offsets)
             {
                 // loops through each offset of selected piece
                 // target square starting on first square in offset direction
-                index = square + offset;
+                index = start_square + offset;
                 int target_square = board[index];
-                // Sliding pieces ( Rooks / Bishops / Queens )
-                while (piece != Piece.Type.empty && piece != Piece.Type.b_pawn && piece != Piece.Type.w_pawn
-                    && piece != Piece.Type.w_knight && piece != Piece.Type.b_knight &&
-                    (target_square == (int)Piece.Type.empty || opp1 == (Piece.Type)target_square || opp2 == (Piece.Type)target_square ||
-                    opp3 == (Piece.Type)target_square || opp4 == (Piece.Type)target_square || opp5 == (Piece.Type)target_square || 
-                    opp6 == (Piece.Type)target_square))
+
+                // if target square is either empty, NOT a blocker piece or an opponent pieces
+                if (target_square == 0 || target_square != -1 && target_square % 2 == opps)
+                {
+                    // move valid add to list
+                    moves.Add(index);
+                }
+            }
+            return moves;
+        }
+
+        /// <summary>
+        /// Gets valid moves for sliding pieces
+        /// </summary>
+        /// <param name="start_square"></param>
+        /// <param name="offsets"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        private List<int> Generate_Sliding_Moves(int start_square, int[] offsets, char col)
+        {
+            int index;
+            int opps;
+            List<int> valid_moves = new List<int>();
+            // opponent piece indentifier
+            opps = Is_Opponent_Piece(col);
+            foreach (int offset in offsets)
+            {
+                // loops through each offset of selected piece
+                // target square starting on first square in offset direction
+                index = 0;
+                index = start_square + offset;
+                int target_square = board[index];
+                
+                // while target square is either empty, NOT a blocker piece or equal to the opponents pieces
+                while (target_square == 0 || target_square != -1 && target_square % 2 == opps)
                 {
                     // move valid add to list
                     valid_moves.Add(index);
@@ -193,16 +270,25 @@ namespace Chess_Engine_v2
                     // setting target square to new board position before next loop
                     target_square = board[index];
                 }
-                // knight
-                if (target_square == 0)     // can only land on empty squares or enemy pieces
-                {
-
-                }
             }
-            foreach (int move in valid_moves)
-                Console.WriteLine(move);
-            // returning valid_moves
             return valid_moves;
+        }
+
+        /// <summary>
+        /// Gets opponent piece remainder used to indentify opponent pieces
+        /// </summary>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        public int Is_Opponent_Piece(char col)
+        {
+            // init
+            int opps;
+            // defining oponent pieces
+            if (col == 'b')
+                opps = 1;
+            else
+                opps = 0;
+            return opps;
         }
 
         /// <summary>
@@ -323,7 +409,7 @@ namespace Chess_Engine_v2
             // returning newBoard back to test class
             return newBoard;
         }
-        #endregion
+
         /// <summary>
         /// Populates board array with blocker pieces
         /// </summary>
@@ -347,6 +433,8 @@ namespace Chess_Engine_v2
             {
                 b[x] = (int)Piece.Type.blockerPiece;        // right column
             }
+            #endregion
+
         }
 
     }

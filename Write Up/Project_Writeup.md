@@ -2,9 +2,13 @@
 # Chess Engine Project <!-- omit in toc -->
 ## Will Castleman (wc104) <!-- omit in toc -->
 
+## Abstract
+Summarise report
+
 <div style='page-break-after: always'></div>
 
 ## Table Of Contents <!-- omit in toc -->
+- [Abstract](#abstract)
 - [Introduction and Idea](#introduction-and-idea)
   - [Background to Problem](#background-to-problem)
   - [Justification to Task](#justification-to-task)

@@ -99,7 +99,7 @@ namespace Engine_Tests
             List<int> move_list = new List<int>();
             Piece.Type piece;
             string board = @"^^^^^^^^
-                            ^^^^^♘^
+                            ^^^^♘^^^
                             ^^^^^^^^
                             ^^^♘^^^^
                             ^^^^^^^^
@@ -109,7 +109,7 @@ namespace Engine_Tests
             b = new Board();
             b.Convert_From_ASCII(board);
             // square got when user clicks board
-            piece = b.Get_Piece_From_Square("a7");
+            piece = b.Get_Piece_From_Square("d5");
 
             // Act
             move_list = b.Get_Valid_Moves(piece, "d5");
