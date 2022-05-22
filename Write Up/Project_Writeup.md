@@ -46,6 +46,9 @@ Summarise report
     - [GUI Interface](#gui-interface)
 - [Testing](#testing)
   - [Development Lifecycle Choice](#development-lifecycle-choice)
+  - [Testing Strategy](#testing-strategy)
+    - [Engine](#engine-1)
+    - [GUI](#gui)
 - [Project Management](#project-management)
   - [Project Links](#project-links)
   - [Trello](#trello)
@@ -648,20 +651,31 @@ Figure 23: Test-driven development steps
 
 (Hamilton, 2022)
 
-Talk about dev stories: e.g. changing code after running tests
-
-What did I test; piece movement, board functions, e.t.c.
-maybe some working tests
-1000 words on tests and what they need to test and how
-heavily linked to reflections; in conclusion,  maybe move some dev stories over
-talk about building the ASCII converter to assist further down the development
-HOPEFULLY INCLUDE PASSING TEST EXAMPLES
+### Testing Strategy
 
 As explained previously, testing is a vital part of this project, progressing into development and ensuring the code stays bug/error-free for the most part. The main parts of the program I needed to think about, and test were:
+- Board Representation
 - Piece Movement
 - Board Functions e.g. make_move, unmake_move, e.t.c
+- GUI
 
-Testing piece movement was where I came into the problem of magic numbers. 
+#### Engine
+
+To test the engine side of the project, I chose to use C# unit tests for several reasons, such as:
+Speed - When using unit tests, the development process becomes a lot simpler due to you, the programmer having to affectively 'define' its functionality first and what/if it needs to return anything. This makes the development process a lot faster and easier as you know the exact functionality required.
+- Quality of code - The code quality when utilising unit testing becomes a lot better; this is because you can define unit tests very specifically and test every part of the function down to tiny details.
+- Find bugs easily - This is as the unit tests allow you to run through and debug code line by line seeing the state of all objects/variables after each line.
+- Facilitates change - Due to unit tests testing each component of a solution individually. Therefore, finding and changing the defective section of code is much simpler if there are any problems.
+- Design - Forces developers to think about the design of a component before implementing it. This helps keep the focus on the functionality of that specific component and its responsibilities.
+(PerformanceLab, 2022)
+
+To test the board representation, I wrote the tests seen in Appendix G: Figure 33. These essentially passed through valid FEN strings into the FEN_Handler to convert into a board and properties. As can be seen from the appendix mentioned previously, I first create a string representation of what the board should look like and create and set all the local variables to what the board properties should be after it has passed FEN. The FEN is then passed into the functions for the solution to convert to actual board properties. Then the existing board properties are tested against the expected outputs. If they all match, the test should pass; if not, they will fail.
+
+Next, to test piece movement, I first had to test the engine's ability to generate valid legal moves. To do this, I created a string representation of the board and passed it into the function to convert. I would next manually calculate how many moves the pieces could get from the square. Once I had the squares, I would first check the count of moves returned to see if it is as expected; then, if it passes, check that the moves are precisely the anticipated moves. This was mainly fine to write; however, it was getting quite confusing to reference each square by number due to squares being indexes in the board array. To combat this, I created a Square enum in the board class to hold every square and its array index for ease in testing (See Appendix H: Figure 35). This allowed me to parse squares to their array index by simply calling an enum parser; this made testing much more straightforward to understand.
+
+#### GUI
+
+To test the GUI, I mainly just used user acceptance testing by giving random people my solution and seeing if they would be able to work out how to use my GUI solution. As a result, 9/10 of my tested users knew how to operate the program off the bat with no previous information except one, which did not understand what FEN was. Hence, they did not know much about chess and my GUI.
 
 <div style='page-break-after: always'></div>
 
@@ -718,7 +732,7 @@ Figure 25: Gantt Chart of expected project progression
 
 ## Conclusion
 
-In conclusion, this was an extremely worthwhile project for me due to the personal growth and development gained from taking on a project of this size. It introduced me to many a problem which can often come up in industry and issues in taking on projects such as this, e.g. importance of following a software lifecycle, analysis paralysis, magic numbers, and poltergeist classes, to name a few. It got me thinking about developing software from an industry perspective, developing solutions to developer problems which ultimately saved much time in coding some of these solutions, for example, the ASCII board converter gone into a bit more detail in the following development stories section.
+In conclusion, this was an extremely worthwhile project for me due to the personal growth and development gained from taking on a project of this size. It introduced me to many a problem which can often come up in industry and issues in taking on projects such as this, e.g. importance of following a software lifecycle, analysis paralysis, magic numbers, and poltergeist classes, to name a few. It got me thinking about developing software from an industry perspective, developing solutions to developer problems which ultimately saved much time in coding some of these solutions, for example, the ASCII board converter gone into a bit more detail in the following evalutation section.
 
 <div style='page-break-after: always'></div>
 
@@ -751,7 +765,7 @@ Overall, there are several shortcomings of the project that I wanted to address,
 
 This development lifecycle taught me many lessons and the importance of writing tests first during development. However, when it came to cases where the feature was what I thought would be a minor. In most of these cases, it usually burned me due to some unexplained errors popping up late into production, such as when the GUI and engine were confusing piece colours. This was annoying as it brought up unexpected board array indexes as valid moves for each side's pawn piece.
 
-Due to the way I encoded pieces and the board in general, I encountered a few issues while writing the tests. Each piece from each side was assigned a numeric identifier, and the board array was 120 in length. It proved challenging to populate these arrays (See Figure 26 below) manually, Mainly when setting up custom board positions to test. To combat this, I wrote a custom function within the code to take in a string representation of a chessboard and convert it to an actual board array in memory (See Appendix X: Figure x). This meant that I could set up simple custom board positions to test code functionality more easily (See Appendix X: Figure X). 
+Due to the way I encoded pieces and the board in general, I encountered a few issues while writing the tests. Each piece from each side was assigned a numeric identifier, and the board array was 120 in length. It proved challenging to populate these arrays (See Figure 26 below) manually, Mainly when setting up custom board positions to test. To combat this, I wrote a custom function within the code to take in a string representation of a chessboard and convert it to an actual board array in memory (See Appendix F: Figure 32). This meant that I could set up simple custom board positions to test code functionality more easily using a string representation of the board. 
 
 ```c#
         [TestMethod]
@@ -950,41 +964,50 @@ public int[] Convert_From_ASCII(string ASCII_Board)
 
 ### Appendix G: Example of a Unit test
 
-Figure 33: Pawn Valid Moves Test
+Figure 33: FEN_Handler Test
 
 ```c#
+        /// <summary>
+        /// Method to test the default board position along with its attributes
+        /// </summary>
         [TestMethod]
-        public void Get_Valid_Pawn_Moves_Test()
+        public void FEN_Handler_Default()
         {
             // Arrange
-            List<int> move_list = new List<int>();
-            Piece.Type piece;
-            string board = @"^^^^^^^^
-                            ^♟♙^^^^^
-                            ♙^^^^^^^
-                            ^^^^^^^^
-                            ^^^^^^^^
-                            ^^^^^^^^
-                            ^^^^^^^^
-                            ^^^^^^^^";
-            b = new Board();
-            b.Convert_From_ASCII(board);
-            // setting up enpassant
-            b.en_passant_target = (int)Enum.Parse(typeof(Board.Square), "c6");
-            // square got when user clicks board
-            piece = b.Get_Piece_From_Square("a7");
+            // Initialising Test Var's 
+            string board = @"♖♘♗♕♔♗♘♖
+♙♙♙♙♙♙♙♙
+^^^^^^^^
+^^^^^^^^
+^^^^^^^^
+^^^^^^^^
+♟♟♟♟♟♟♟♟
+♜♞♝♛♚♝♞♜";
+            int[] default_board = new int[120];
+            int en_passant_target = 0;
+            int half_ply = 0;
+            int full_ply = 1;
+            bool w_k_castle = true;
+            bool w_q_castle = true;
+            bool b_k_castle = true;
+            bool b_q_castle = true;
+            char side_to_move = 'w';
 
             // Act
-            move_list = b.Get_Valid_Moves(piece, "a7");
+            // Creating board object to test
+            Board b_test = new Board();
+            default_board = b_test.Convert_From_ASCII(board);
 
             // Assert
-            Assert.IsTrue(move_list.Count == 4, "Test Failed: Returned more than the precalculated 4 valid moves for this position");
-            // loop through all returned valid moves and check they are what is expected
-            foreach (int move in move_list)
-                Assert.IsTrue(move == (int)Enum.Parse(typeof(Board.Square), "b6")
-                    || move == (int)Enum.Parse(typeof(Board.Square), "b5")
-                    || move == (int)Enum.Parse(typeof(Board.Square), "c6")
-                    || move == (int)Enum.Parse(typeof(Board.Square), "a6"));
+            Assert.IsTrue(Enumerable.SequenceEqual(b_test.board, default_board), "Test Failed: board array is not as expected");
+            Assert.IsTrue(b_test.en_passant_target == en_passant_target, "Test Failed: En_Passant target not correct");
+            Assert.IsTrue(b_test.half_ply == half_ply);
+            Assert.IsTrue(b_test.full_ply == full_ply);
+            Assert.IsTrue(b_test.w_k_castle == w_k_castle);
+            Assert.IsTrue(b_test.w_q_castle == w_q_castle);
+            Assert.IsTrue(b_test.b_k_castle == b_k_castle);
+            Assert.IsTrue(b_test.b_q_castle == b_q_castle);
+            Assert.IsTrue(b_test.side_to_move == side_to_move);
         }
 ```
 
@@ -1028,6 +1051,77 @@ Figure 34: Unit test for Get_Valid_Moves function for knight piece
                     || move == (int)Enum.Parse(typeof(Board.Square), "b6")
                     || move == (int)Enum.Parse(typeof(Board.Square), "c7")
                     , "Test Failed: Unexpected move returned");
+        }
+```
+
+Figure 35: Square enum
+```c#
+public enum Square
+        {
+            a8 = 21,
+            a7 = 31,
+            a6 = 41,
+            a5 = 51,
+            a4 = 61,
+            a3 = 71,
+            a2 = 81,
+            a1 = 91,
+            b8 = 22,
+            b7 = 32,
+            b6 = 42,
+            b5 = 52,
+            b4 = 62,
+            b3 = 72,
+            b2 = 82,
+            b1 = 92,
+            c8 = 23,
+            c7 = 33,
+            c6 = 43,
+            c5 = 53,
+            c4 = 63,
+            c3 = 73,
+            c2 = 83,
+            c1 = 93,
+            d8 = 24,
+            d7 = 34,
+            d6 = 44,
+            d5 = 54,
+            d4 = 64,
+            d3 = 74,
+            d2 = 84,
+            d1 = 94,
+            e8 = 25,
+            e7 = 35,
+            e6 = 45,
+            e5 = 55,
+            e4 = 65,
+            e3 = 75,
+            e2 = 85,
+            e1 = 95,
+            f8 = 26,
+            f7 = 36,
+            f6 = 46,
+            f5 = 56,
+            f4 = 66,
+            f3 = 76,
+            f2 = 86,
+            f1 = 96,
+            g8 = 27,
+            g7 = 37,
+            g6 = 47,
+            g5 = 57,
+            g4 = 67,
+            g3 = 77,
+            g2 = 87,
+            g1 = 97,
+            h8 = 28,
+            h7 = 38,
+            h6 = 48,
+            h5 = 58,
+            h4 = 68,
+            h3 = 78,
+            h2 = 88,
+            h1 = 98
         }
 ```
 
@@ -1097,6 +1191,8 @@ Keiter, H., 2015. Alternatives to the FEN notation. [online] Chess Stack Exchang
 Lynn, E., 2021. What is the difference between statically typed and dynamically typed languages?. [online] Stack Overflow. Available at: <https://stackoverflow.com/questions/1517582/what-is-the-difference-between-statically-typed-and-dynamically-typed-languages#:~:text=Statically%20typed%20languages%3A%20each%20variable,already%20known%20at%20compile%20time.&text=Dynamically%20typed%20languages%3A%20variables%20can,is%20defined%20at%20run%20time.> [Accessed 19 May 2022].
 
 Novoseltseva, E., 2020. Top 7 benefits you get by using Github | Apiumhub. [online] Apiumhub. Available at: <https://apiumhub.com/tech-blog-barcelona/using-github/> [Accessed 17 May 2022].
+
+PerformanceLab, 2022. [online] Available at: <https://performancelabus.com/unit-testing-importance/> [Accessed 22 May 2022].
 
 (Pete), P., 2022. AlphaZero Crushes Stockfish In New 1,000-Game Match. [online] Chess.com. Available at: <https://www.chess.com/news/view/updated-alphazero-crushes-stockfish-in-new-1-000-game-match#games> [Accessed 29 April 2022].
 
