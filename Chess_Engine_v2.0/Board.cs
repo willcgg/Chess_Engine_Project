@@ -229,7 +229,7 @@ namespace Chess_Engine_v2
                 int target_square = board[index];
 
                 // if target square is either empty, NOT a blocker piece or an opponent pieces
-                if (target_square == 0 || target_square != -1 && target_square % 2 == opps)
+                if (target_square == 0 && target_square != -1 && target_square % 2 == opps)
                 {
                     // move valid add to list
                     moves.Add(index);
@@ -259,9 +259,10 @@ namespace Chess_Engine_v2
                 index = 0;
                 index = start_square + offset;
                 int target_square = board[index];
-                
+                bool is_opp_piece = target_square % 2 == opps;
+
                 // while target square is either empty, NOT a blocker piece or equal to the opponents pieces
-                while (target_square == 0 || target_square != -1 && target_square % 2 == opps)
+                while (target_square == 0 && target_square != -1 && is_opp_piece)
                 {
                     // move valid add to list
                     valid_moves.Add(index);

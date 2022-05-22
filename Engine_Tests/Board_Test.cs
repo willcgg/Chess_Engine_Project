@@ -168,6 +168,52 @@ namespace Engine_Tests
         }
 
         [TestMethod]
+        public void Get_Valid_Queen_Moves()
+        {
+            // Arrange
+            List<int> move_list = new List<int>();
+            Piece.Type piece;
+            string board = @"^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^♘^^^
+                            ^^^♕♘^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^
+                            ^^^^^^^^"; // d5
+            b = new Board();
+            b.Convert_From_ASCII(board);
+            // square got when user clicks board
+            piece = b.Get_Piece_From_Square("d5");
+            // Act
+            move_list = b.Get_Valid_Moves(piece, "d5");
+            // Assert
+            Assert.IsTrue(move_list.Count == 20, "Test Failed: Returned differnet No of moves than expected move count");
+            foreach (int move in move_list)
+                Assert.IsTrue(move == (int)Enum.Parse(typeof(Board.Square), "d6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "d7")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "d8")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "e4")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "f3")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "g2")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "h1")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "d4")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "d3")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "d2")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "d1")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "c4")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "b3")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "a2")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "c5")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "b5")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "a5")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "c6")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "b7")
+                    || move == (int)Enum.Parse(typeof(Board.Square), "a8")
+                    , "Test Failed: Unexpected move returned");
+        }
+
+        [TestMethod]
         public void Make_Move_Test()
         {
             // Arrange
