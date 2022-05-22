@@ -3,7 +3,7 @@
 ## Will Castleman (wc104) <!-- omit in toc -->
 
 ## Abstract
-Summarise report
+This paper details the analysis, design, and testing of chess engines in general; and how I implemented my particular Chess_Engine_Project. Its purpose is to be used by chess enthusiasts to assist in analysing positions and giving recommendations for the best moves. To implement this, I looked over how different styles of engines work, such as Stockfish and AlphaZero. Although AlphaZero is analysed in this paper, no AI neural networks were implemented in this project. This is a more classical style of engine focusing on implementing pro chess concepts to analyse and evaluate positions.
 
 <div style='page-break-after: always'></div>
 
@@ -669,7 +669,7 @@ Speed - When using unit tests, the development process becomes a lot simpler due
 - Design - Forces developers to think about the design of a component before implementing it. This helps keep the focus on the functionality of that specific component and its responsibilities.
 (PerformanceLab, 2022)
 
-To test the board representation, I wrote the tests seen in Appendix G: Figure 33. These essentially passed through valid FEN strings into the FEN_Handler to convert into a board and properties. As can be seen from the appendix mentioned previously, I first create a string representation of what the board should look like and create and set all the local variables to what the board properties should be after it has passed FEN. The FEN is then passed into the functions for the solution to convert to actual board properties. Then the existing board properties are tested against the expected outputs. If they all match, the test should pass; if not, they will fail.
+To test the board representation, I wrote the tests seen in Appendix G: Figure 33. These essentially passed through valid FEN strings into the FEN_Handler to convert into a board and properties. As can be seen from the appendix mentioned previously, I first create a string representation of what the board should look like and create and set all the local variables to what the board properties should be after it has been passed the FEN. The FEN is then passed into the functions for the solution to convert to actual board properties. Then the existing board properties are tested against the expected outputs. If they all match, the test should pass; if not, they will fail.
 
 Next, to test piece movement, I first had to test the engine's ability to generate valid legal moves. To do this, I created a string representation of the board and passed it into the function to convert. I would next manually calculate how many moves the pieces could get from the square. Once I had the squares, I would first check the count of moves returned to see if it is as expected; then, if it passes, check that the moves are precisely the anticipated moves. This was mainly fine to write; however, it was getting quite confusing to reference each square by number due to squares being indexes in the board array. To combat this, I created a Square enum in the board class to hold every square and its array index for ease in testing (See Appendix H: Figure 35). This allowed me to parse squares to their array index by simply calling an enum parser; this made testing much more straightforward to understand.
 

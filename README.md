@@ -5,6 +5,13 @@
 ## About
 This is a chess engine project written in C#. The purpose of this project is to analyse chess positions for insight, training for players up to a certain elo rating, and also just for a bit of fun for anyone who wants to play a bit of chess at their own pace.
 
+## Dependencies
+- GIT
+- Bash
+- Visual Studio Community 2019 or above
+- C#
+- C# Unit Test Framework
+
 ## Installation
 
 Use the bash terminal and type the following:
@@ -22,10 +29,7 @@ git clone https://github.com/willcgg/Chess_Engine_Project.git
 
 To run the project open it in visual studio code editor and run the solution.
 
-```bash
-# For development, switch to the dev branch
-git switch development
-```
+To develop the solution further do the same but edit code freely.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
