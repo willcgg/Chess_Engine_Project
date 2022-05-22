@@ -249,5 +249,5 @@ namespace Chess_Engine_Project
 			valid_moves = b.Get_Valid_Moves(piece, start_square);
 		}
 
-	}
+    }
 }
