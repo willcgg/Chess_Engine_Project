@@ -17,23 +17,16 @@ namespace Engine_Tests
         public void FEN_Handler_Default()
         {
             // Arrange
-            // Initialising Test Var's      
-            int[] default_board = new int[120]
-            {
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, 8, 4, 6, 10, 12, 6, 4, 8, -1,
-                -1, 2, 2, 2, 2, 2, 2, 2, 2, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 1, 1, 1, 1, 1, 1, 1, 1, -1,
-                -1, 7, 3, 5, 9, 11, 5, 3, 7, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-            };
-
+            // Initialising Test Var's 
+            string board = @"♖♘♗♕♔♗♘♖
+♙♙♙♙♙♙♙♙
+^^^^^^^^
+^^^^^^^^
+^^^^^^^^
+^^^^^^^^
+♟♟♟♟♟♟♟♟
+♜♞♝♛♚♝♞♜";
+            int[] default_board = new int[120];
             int en_passant_target = 0;
             int half_ply = 0;
             int full_ply = 1;
@@ -46,6 +39,7 @@ namespace Engine_Tests
             // Act
             // Creating board object to test
             Board b_test = new Board();
+            default_board = b_test.Convert_From_ASCII(board);
 
             // Assert
             Assert.IsTrue(Enumerable.SequenceEqual(b_test.board, default_board), "Test Failed: board array is not as expected");
@@ -67,21 +61,15 @@ namespace Engine_Tests
         {
             // Arrange
             // Initialising Test Var's      Setting them to what they should be on starting board position
-            int[] default_board = new int[120]
-            {
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, 2, 2, 2, 2, 2, 2, 2, 2, -1,
-                -1, 2, 2, 2, 2, 2, 2, 2, 2, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
-                -1, 1, 1, 1, 1, 1, 1, 1, 1, -1,
-                -1, 1, 1, 1, 1, 1, 1, 1, 1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-            };
+            string board = @"♙♙♙♙♙♙♙♙
+♙♙♙♙♙♙♙♙
+^^^^^^^^
+^^^^^^^^
+^^^^^^^^
+^^^^^^^^
+♟♟♟♟♟♟♟♟
+♟♟♟♟♟♟♟♟";
+            int[] default_board = new int[120];
             int en_passant_target = 35;
             int half_ply = 28;
             int full_ply = 14;
@@ -95,7 +83,7 @@ namespace Engine_Tests
             // Creating board object to test
             Board b_test = new Board();
             b_test.From_FEN("pppppppp/pppppppp/8/8/8/8/PPPPPPPP/PPPPPPPP b Qk e7 28 14");       // tests all aspects of FEN_Handler
-                                                                                                // {Pos, side, castle, en-passant, half, full-ply}
+            default_board = b_test.Convert_From_ASCII(board);
 
             // Assert
             Assert.IsTrue(Enumerable.SequenceEqual(b_test.board, default_board), "Test Failed: board array is not as expected");

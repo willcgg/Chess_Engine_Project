@@ -81,6 +81,8 @@ namespace Chess_Engine_v2
         public int[] Create_Board(string[] FEN_Pos) {
             // Init
             int[] b = new int[120];
+            // create blocker piece border
+            Board.Create_Blocker_Border(b);
             int pointer = 21;                   // real board starting pos
 
             foreach(string row in FEN_Pos)      // looping through each row in FEN_Pos
@@ -168,25 +170,6 @@ namespace Chess_Engine_v2
                 }
                 pointer += 2;   // adds 2 to the pointer to avoid sentinel columns
             }
-
-            // blocker pieces
-            for (int x = 0; x < 21; x++)        
-            {
-                b[x] = (int)Piece.Type.blockerPiece;        // first 2 rows
-            }
-            for (int x = 100; x < 120; x++)
-            {
-                b[x] = (int)Piece.Type.blockerPiece;        // final 2 rows
-            }
-            for (int x = 30; x < 91; x += 10)
-            {
-                b[x] = (int)Piece.Type.blockerPiece;        // left column
-            }
-            for (int x = 29; x < 100; x += 10)
-            {
-                b[x] = (int)Piece.Type.blockerPiece;        // right column
-            }
-
             // returning the custom board from FEN
             return b;
         }

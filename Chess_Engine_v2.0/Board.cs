@@ -151,7 +151,7 @@ namespace Chess_Engine_v2
             offsets = Piece.Get_Piece_Offsets(piece);
             // getting piece colour
             colour_to_move = Piece.Get_Piece_Colour(piece);
-            // what colour?
+            // what colour? Selecting opponent pieces
             if (colour_to_move == 'b')
             {
                 opp1 = Piece.Type.w_king;
@@ -175,7 +175,7 @@ namespace Chess_Engine_v2
             valid_moves = new List<int>();
             foreach (int offset in offsets)
             {
-                // loops through each offset
+                // loops through each offset of selected piece
                 // target square starting on first square in offset direction
                 index = square + offset;
                 int target_square = board[index];
@@ -260,8 +260,13 @@ namespace Chess_Engine_v2
         public int[] Convert_From_ASCII(string ASCII_Board)
         {
             // init vars
-            int x = 21;
+            int x = 21;                                         // starting board index
             string[] ranks = ASCII_Board.Split('\n');           // split into ranks
+            int[] newBoard = new int[120];
+            Create_Blocker_Border(newBoard);
+            // cleaning string before passing into function
+            for (int y = 0; y < 8; y++)
+                ranks[y] = ranks[y].Trim();
             // convert to board
             foreach (string rank in ranks)
             {
@@ -270,52 +275,82 @@ namespace Chess_Engine_v2
                     switch (piece)
                     {
                         case '^':
-                            board[x] = (int)Piece.Type.empty;
+                            newBoard[x] = (int)Piece.Type.empty;
                             break;
                         case '♙':
-                            board[x] = (int)Piece.Type.w_pawn;
+                            newBoard[x] = (int)Piece.Type.w_pawn;
                             break;
                         case '♟':
-                            board[x] = (int)Piece.Type.b_pawn;
+                            newBoard[x] = (int)Piece.Type.b_pawn;
                             break;
                         case '♘':
-                            board[x] = (int)Piece.Type.w_knight;
+                            newBoard[x] = (int)Piece.Type.w_knight;
                             break;
                         case '♞':
-                            board[x] = (int)Piece.Type.b_knight;
+                            newBoard[x] = (int)Piece.Type.b_knight;
                             break;
                         case '♗':
-                            board[x] = (int)Piece.Type.w_bishop;
+                            newBoard[x] = (int)Piece.Type.w_bishop;
                             break;
                         case '♝':
-                            board[x] = (int)Piece.Type.b_bishop;
+                            newBoard[x] = (int)Piece.Type.b_bishop;
                             break;
                         case '♖':
-                            board[x] = (int)Piece.Type.w_rook;
+                            newBoard[x] = (int)Piece.Type.w_rook;
                             break;
                         case '♜':
-                            board[x] = (int)Piece.Type.b_rook;
+                            newBoard[x] = (int)Piece.Type.b_rook;
                             break;
                         case '♕':
-                            board[x] = (int)Piece.Type.w_queen;
+                            newBoard[x] = (int)Piece.Type.w_queen;
                             break;
                         case '♛':
-                            board[x] = (int)Piece.Type.b_queen;
+                            newBoard[x] = (int)Piece.Type.b_queen;
                             break;
                         case '♔':
-                            board[x] = (int)Piece.Type.w_king;
+                            newBoard[x] = (int)Piece.Type.w_king;
                             break;
                         case '♚':
-                            board[x] = (int)Piece.Type.b_king;
+                            newBoard[x] = (int)Piece.Type.b_king;
                             break;
                     }
                     x += 1;
                 }
                 x += 2;         // skip blocker pieces
             }
-            return board;
+            // assigning class board array to equal the new board
+            board = newBoard;
+            // returning newBoard back to test class
+            return newBoard;
         }
         #endregion
+        /// <summary>
+        /// Populates board array with blocker pieces
+        /// </summary>
+        /// <param name="b"></param>
+        public static void Create_Blocker_Border(int[] b)
+        {
+            // blocker pieces
+            for (int x = 0; x < 21; x++)
+            {
+                b[x] = (int)Piece.Type.blockerPiece;        // first 2 rows
+            }
+            for (int x = 100; x < 120; x++)
+            {
+                b[x] = (int)Piece.Type.blockerPiece;        // final 2 rows
+            }
+            for (int x = 30; x < 91; x += 10)
+            {
+                b[x] = (int)Piece.Type.blockerPiece;        // left column
+            }
+            for (int x = 29; x < 100; x += 10)
+            {
+                b[x] = (int)Piece.Type.blockerPiece;        // right column
+            }
+        }
+
     }
+
+    
 
 }

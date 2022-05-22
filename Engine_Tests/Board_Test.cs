@@ -37,11 +37,11 @@ namespace Engine_Tests
 
             // Act
             p1 = b.Get_Piece_From_Square("a1");
-            p2 = b.Get_Piece_From_Square("a2");
-            p3 = b.Get_Piece_From_Square("a3");
-            p4 = b.Get_Piece_From_Square("a4");
-            p5 = b.Get_Piece_From_Square("a5");
-            p6 = b.Get_Piece_From_Square("a6");
+            p2 = b.Get_Piece_From_Square("b1");
+            p3 = b.Get_Piece_From_Square("c1");
+            p4 = b.Get_Piece_From_Square("d1");
+            p5 = b.Get_Piece_From_Square("e1");
+            p6 = b.Get_Piece_From_Square("f1");
 
             // Assert
             Assert.IsTrue(p1 == Piece.Type.b_pawn);
@@ -135,7 +135,6 @@ namespace Engine_Tests
         {
             // Arrange
             List<int> move_list = new List<int>();
-            Piece.Type piece;
             string board = @"^^^^^^^^
                             ^^^^^♘^
                             ^^^^^^^^
@@ -145,7 +144,8 @@ namespace Engine_Tests
                             ^^^^^^^^
                             ^^^^^^^^"; // d5
             b = new Board();
-            b.Convert_From_ASCII(board);
+            int[] test_board = new int[120];
+            test_board = b.Convert_From_ASCII(board);
 
             // Act
 
@@ -233,14 +233,14 @@ namespace Engine_Tests
             // needs to test text output; test each board[x] = PIECE_INTEGER outputs correct piece in ASCII
             // Arrange
             string text_board = @"^^^^^^^^
-                             ^^^^^^^^
-                             ^^^^^^^^
-                            ^^^^^^^^
-                             ^^^^^^^^
-                             ^^^^^^^^
-                             ^^^^^^^^
-                             ^^^^^^^^";
-            int[] board = new int[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^
+                                ^^^^^^^^";
+            int[] board = new int[120] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                                      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                                         -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
                                         -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
@@ -251,7 +251,7 @@ namespace Engine_Tests
                                         -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
                                         -1, 0, 0, 0, 0, 0, 0, 0, 0, -1,
                                       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-                                      -1, -1, -1, -1 , -1, -1, -1, -1, -1, -1,};
+                                      -1, -1, -1, -1 , -1, -1, -1, -1, -1, -1};
             int[] test_text_board;
             Board b = new Board();
 
@@ -259,7 +259,10 @@ namespace Engine_Tests
             test_text_board = b.Convert_From_ASCII(text_board);
 
             // Assert
-            Assert.IsTrue(board == test_text_board, "Test Failed: ASCII board did not generate properly");
+            // checking board generated as expected
+            Assert.IsTrue(Enumerable.SequenceEqual(board, test_text_board), "Test Failed: ASCII board did not generate properly");
+            // checking generated board is the same as the current real board 
+            Assert.IsTrue(Enumerable.SequenceEqual(b.board, test_text_board), "Test Failed: ASCII board did not reassign the actual board properly");
         }
 
     }
