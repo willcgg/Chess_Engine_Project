@@ -53,9 +53,10 @@ This paper details the analysis, design, and testing of chess engines in general
   - [Project Links](#project-links)
   - [Trello](#trello)
   - [GitHub](#github)
+  - [Gantt Chart](#gantt-chart)
 - [Conclusion](#conclusion)
   - [Critique of Work](#critique-of-work)
-    - [Short Comings](#short-comings)
+  - [Short Comings](#short-comings)
   - [Evaluation](#evaluation)
   - [Future Work](#future-work)
 - [Appendix](#appendix)
@@ -101,7 +102,7 @@ An engines quality is usually evaluated based on two criteria:
 - Speed - How fast it finds a list of potential 'good' moves
 - Accuracy - How fast it finds the best move out of these moves
 
-Dietrich Prinz's (1951) implementation on a Ferranti Mark 1 at the University of Manchester was one of the first commercially available chess engines. The Ferranti Mark 1 lacked power, so it was limited because it could only find the best move when a position was two moves away from checkmate. The next engine the world saw was by a gentleman named Bernstein (1957). It was the first complete chess engine to run on a computer (IBM 704), which could play a game from start to finish, taking roughly 8 minutes to make a move. It was a type B implementation, a selective technique that attempts to cut processing times by examining variations as far as possible. Then only evaluate when a reasonable amount of instability in the position is detected. It then prunes unnecessary, redundant variations to cut processing times further. It is then run through a function to evaluate the position's stability (e.g. en prise). See Figure 1 for a "Crude definition" of this type of algorithm. (Bernstein, 2022; Chessprogramming.org, 2022)
+Dietrich Prinz's (1951) implementation on a Ferranti Mark 1 at the University of Manchester was one of the first commercially available chess engines. The Ferranti Mark 1 lacked power, so it was limited because it could only find the best move when a position was two moves away from checkmate. The next engine the world saw was by a gentleman named Bernstein (1957). It was the first complete chess engine to run on a computer (IBM 704), which could play a game from start to finish, taking roughly 8 minutes to make a move. It was a type B implementation, a selective technique that attempts to cut processing times by examining variations as far as possible. Then only evaluate when a reasonable amount of instability in the position is detected. It then prunes unnecessary, redundant variations to cut processing times further. Finally, it is run through a function to evaluate the position's stability (e.g. en prise). See Figure 1 for a "Crude definition" of this type of algorithm. (Bernstein, 2022; Chessprogramming.org, 2022)
 
 ![Figure 1](https://github.com/willcgg/Chess_Engine_Project/blob/master/Write%20Up/Images/crude_definition.PNG?raw=true)
 
@@ -167,7 +168,7 @@ Figure 6: Summary of Stockfishes process to generating a move list
 <div style='page-break-after: always'></div>
 
 ### Stockfish - Move Evaluation
-Once Stockfish has generated its set of possible legal moves, it needs to evaluate to return the best possible move for this set. Until 2018 when AlphaZero, spoken about below, drastically outperformed Stockfish, Stockfish relied solely on a classical evaluation of the position to retrieve the best move. Since then, they have integrated a neural network to assist in evaluations of more balanced positions to close the gap. For this next section, I will be focusing more on the classical evaluation and later look into the benefits brought by AI.
+Once Stockfish has generated its set of possible legal moves, it needs to evaluate to return the best possible move for this set. Until 2018 when AlphaZero, spoken about below, drastically outperformed Stockfish, Stockfish relied solely on a classical evaluation of the position to retrieve the best move. Since then, they have integrated a neural network to assist in evaluations of more balanced positions to close the gap. However, for this next section, I will be focusing more on the classical evaluation and later look into the benefits brought by AI.
 
 Without neural networks, Stockfish's classical evaluation relies on pro chess concepts such as:
 - Tempo
@@ -290,7 +291,7 @@ Figure 11: Directed acrylic graph example
 
 #### Transposition Table
 
-Transposition tables are used alongside search functions; they are stored as hash tables which store information on all branches of variations previously explored and their results. This is so these searches do not have to keep being re-done, saving computation time. In cases where the depth of the information kept in the table is not enough, it provides valuable insight, especially when it comes to move-ordering. The main reason for implementing these is to save considerable search time.
+Transposition tables are used alongside search functions; they are stored as hash tables which store information on all branches of variations previously explored and their results. This is so these searches do not have to keep being re-done, saving computation time. In cases where the depth of the information kept in the table is not enough, it still provides valuable insight, especially when it comes to move-ordering. The main reason for implementing these is to save considerable search time.
 
 Standard hashing functions used alongside these tables include:
 - Zobrist Hashing
@@ -310,16 +311,16 @@ Alpha-beta algorithms provide significant enhancements to the minimax algorithm 
 - Consider all possible white moves
 - Consider all possible response moves to each move
 
-Firstly, we pick one of the white candidate moves, then we consider every possible response by black and come up with an evaluation score for each. For example, it comes back with a lower bound evaluation score of even (~0) in one variation. Then another black wins a rook; we can safely cut this move from the search tree as this is not as good a move as the previous. This can be done without analysing any further possible responses from black due to the lower bound retrieved from the first transposition we evaluated. As you can imagine, from the previously discussed resource estimation section, this comes with considerable time 'savings' due to it no longer having to analyse every single move and counter move. (Alpha-Beta - Chessprogramming wiki, 2022)
+Firstly, we pick one of the white candidate moves, then we consider every possible response by black and come up with an evaluation score for each. For example, it comes back with a lower bound evaluation score of even (~0) in one variation. Then another black wins a rook; we can safely cut this move from the search tree as this is obviously not as good a move as the previous. This can be done without analysing any further possible responses from black due to the lower bound retrieved from the first transposition we evaluated being even and the following losing a rook. As you can imagine, from the previously discussed resource estimation section, this comes with considerable time 'savings' due to it no longer having to analyse every single move and counter move. (Alpha-Beta - Chessprogramming wiki, 2022)
 
 Alpha-beta algorithms often utilise the following things to work:
-- Iterative deepening (Discussed above)
+- Iterative deepening (See Glossary)
 - Transposition Table 
 - Aspiration Windows (See Glossary)
 
 #### Keeping a Minimal Search Tree
 
-Minimising a search tree is primarily dependent on how good the move ordering of a search algorithm is. When best moves variations are searched for first, there is often no need to store any other variations because they are usually 'weaker' moves. Alpha-beta pruning algorithm paired with the evaluation function attempts to solve this problem by utilising endgame tablebases. These are essentially big tables of precalculated moves generated by exhaustive retrograde analysis (See glossary). During an engine's search & evaluation, if it notices certain material combinations, it can effectively query this table to determine the outcomes of these positions definitively and act as a helper by providing optimal moves. (Endgame Tablebases - Chessprogramming wiki, 2022; Search Tree - Chessprogramming wiki, 2022)
+Minimising a search tree is primarily dependent on how good the move ordering of a search algorithm is. When best moves variations are searched for first, there is often no need to store any other variations because they are usually followed by 'weaker' moves. Alpha-beta pruning algorithm paired with the evaluation function attempts to solve this problem by utilising endgame tablebases. These are essentially big tables of precalculated moves generated by exhaustive retrograde analysis (See glossary). During an engine's search & evaluation, if it notices certain material combinations, it can effectively query this table to determine the outcomes of these positions definitively and act as a helper by providing optimal moves. (Endgame Tablebases - Chessprogramming wiki, 2022; Search Tree - Chessprogramming wiki, 2022)
 
 ![Figure 12](https://www.ics.uci.edu/~eppstein/180a/deep-prune.gif)
 
@@ -492,14 +493,13 @@ PGN will need to be stored regardless, mainly to complete the functionality of t
 
 ### Language Choice
 
-The language I will be using to produce the engine will be C#. C# has several advantages, such as:
-- Familiarity
+The language I will be using to produce the engine will be C#. This is for many reasons, although the main advantages C# gives over other languages are listed below, such as:
 - Portability
 - Object-oriented nature
 - Static language
 
 Which due to the reasons listed above, it is easier to find errors, understand the code, and write it than a language such as python for example. C#'s main advantage is that it is an object-oriented language; this makes the code 
-- highly efficient
+- Highly efficient
 - Reusable
 - Flexible
 - Scalable
@@ -507,7 +507,7 @@ Which due to the reasons listed above, it is easier to find errors, understand t
 
 Additionally, the chess programming world is primarily dominated by C and C++ languages, meaning a vast community of developers and resources are available. Some of the most robust engines written in other languages were eventually revised and developed in C. For example, Booot, written by Alex Morozov in Delphi, was rewritten due to running into too many 64-bit bugs. It is also commonly used for web and windows applications which fits the project's needs. 
 
-The main difference between statically typed and dynamically typed languages is variables and how each handles them. With static languages, all variables and their types are already known at run time as the programmer, as I will have already declared them. This is advantageous as it means a lot of more trivial hard to detect bugs are caught early on.
+The main difference between statically typed and dynamically typed languages is variables and how each handles them. With static languages, all variables and their types are already known at run time as the programmer, as I will have already declared and defined them down to specific data type. This is advantageous as it means a lot of more trivial hard to detect bugs are caught early on.
 
 On the other hand, dynamically typed languages do not know the types associated with run-time values/variables/fields, e.t.c. They are allowing programmers to skip the process of thinking about the type of each variable used. Although many dynamically typed languages also allow you to provide type information if required, for example, to take care of a bug. Finding bugs inside more significant projects can be much more difficult. Hence, dynamic languages are mainly used as scripting languages due to their usefulness in developing solutions quickly and the much smaller nature of scripts compared to more significant projects, the main reason why I chose a static language such as C#. (Lynn, 2021)
 
@@ -529,30 +529,30 @@ It comprises three parts: model, view, and controller—each with particular pur
   This section is responsible for handling and maintaining the data involved with the solution. In addition, it is the model that will typically connect to any databases/sources utilised within the solution.
 - View
   
-  This section displays the information from the model layer to the user. Developers often write the view in a friendly and easy to understand way. This layer also allows users to interact and change data for the controller to pass to the model to update the back-end and then back to the controller to update the view.
+  This section displays the information from the model layer to the user. Developers often write the view in a friendly and easy to understand way. This layer also allows users to interact and change data for the controller to pass to the model to update the back-end and then vice versa.
 - Controller
   
-  Finally, this section is responsible for the data flow between the model and view components. It takes any changes from the view and passes them to the model to update and vice versa.
+  Finally, as previously mentioned this section is responsible for the data flow between the model and view components. It takes any changes from the view and passes them to the model to update and vice versa.
 
 (Svirca, 2019; TutorialsPoint, 2022)
 
 To make this project more manageable, instead of creating one titanic project, I split it up into three separate parts:
 - Testing
   
-  Testing is the part of the project that is responsible for ensuring the code stays bug/error-free. It is vital to write bug-free code at the start of a project. There will likely be problems when implementing the search and evaluation functions. It will be an automated test routine which will run every time the project is run to ensure everything is working as expected.
+  Testing is the part of the project that is responsible for ensuring the code stays bug/error-free. It is vital to write bug-free code at the start of a project. Or there will likely be problems when implementing the search and evaluation functions later down the line. It will be an automated test routine which will run every time the project is run to ensure everything is working as expected.
 - Engine
   
   Responsible for the 'brains' of the solution. The engine project section will make up the model/controller part of the solution and the main bulk of code. I refer to it as both the model and controller here as it will be responsible for keeping the data on the GUI accurate when the engine makes a move and vice versa for when the player makes a move from the GUI. It will be responsible for handling all the data involved in the solution, such as moves, pieces, 50 ply count, e.t.c. It will implement most of the things discussed in the project analysis section. It will be home to the Search & Evaluate functions which are responsible for finding all moves and then filtering them down to the 'best move' in a given chess position (See Appendices B & C for roughly how this will work)
 - GUI
   
-  This project section is self-explanatory, the 'View' section of the MVC architecture mentioned above. It is essentially just the project's graphical user interface. It gives the user control over the solution and allows them to interact with the engine quickly.
+  This project section is self-explanatory, the 'View' section of the MVC architecture mentioned above. It is essentially just the project's graphical user interface. It gives the user control over the solution and allows them to interact with the engine quickly and easily.
 
 The segmentation of these projects made me concentrate a lot more on what each section is supposed to achieve. Ultimately this led to:
 - Much less duplicated code
 - Highly modularised code
 - Fewer anti-patterns in code
 
-The use of this alongside the TDD approach, spoken about below, helped me split code up into appropriate objects avoiding the 'God object' anti-pattern. The 'God Object' anti-pattern is when a programmer puts too many functions/methods inside one class or object. IT is an object that attempts to solve every problem, hence the name 'God Object'. This is a problem as it makes it hard to:
+The use of this alongside the TDD approach, spoken about below, helped me split code up into appropriate objects avoiding the 'God object' anti-pattern. The 'God Object' anti-pattern is when a programmer puts too many functions/methods inside one class or object. It is an object that attempts to solve every problem, hence the name 'God Object'. This is a problem as it makes it hard to:
 - Test
 - Maintain
 - Document
@@ -586,11 +586,11 @@ Figure 22: Movement vectors for 10x12 array representations example
 
 ### Program Flow
 
-Now that I have worked out the language, structure, board representation, and the different use cases, I need to work out the flow of the different solutions. 
+Now that I have worked out the language, structure, and board representation, I need to work out the flow of the different solutions. 
 
 #### Engine
 
-Firstly, thinking about the engine flow of things is the most difficult because it is more likely not a continuously running solution. However, if it were, it would look something like seen in Appendix A: Figure 27. The main functionality of the engine needs to be:
+Firstly, thinking about the engine flow of things is the most difficult because it is more likely not a continuously running solution. However, if it were, it would look something like seen in Appendix A: Figure 28. The main functionality of the engine needs to have is the following:
 
 1. Take custom state input (E.g. FEN or PGN)
 2. Search for all possible moves given a position
@@ -603,13 +603,15 @@ Other than taking custom FEN input, the engine needs to:
 - Evaluate move lists for the best move
 - Update GUI with info
   
+Which I will futher explore the flow of in the sections below.
+  
 ##### Search Algorithm
 
-To design the search algorithm flow was relatively simple as it is a pretty linear function. It is simply passed a board position. It assigns it as the root node on the search tree and then proceeds to check the transposition table for previous search results for move ordering purposes. It then evaluates each position in order of 'importance' and compares it with the successive prioritised variations. It does this by comparing the resulting positions lower bound evaluation score, cutting off if the score is lower than the previous positions. As previously mentioned in the alpha-beta section, if the lower bound is higher than the next variation lower bound, it stops there and returns the best move found. If not, the algorithm will check the subsequent variations for a better resulting position for whichever side it is searching currently. (See Appendix B: Figure 28 for flowchart)
+To design the search algorithm flow was relatively simple as it is a pretty linear function. It is simply passed a board position. It assigns it as the root node on the search tree and then proceeds to check the transposition table for previous search results for move ordering purposes. It then evaluates each position in order of 'importance' and compares it with the successive prioritised variations. It does this by comparing the resulting positions lower bound evaluation score, cutting off if the score is lower than the previous positions. As previously mentioned in the alpha-beta section, if the lower bound is higher than the next variation lower bound, it stops there and returns the best move found. If not, the algorithm will check the subsequent variations for a better resulting position for whichever side it is searching currently. (See Appendix B: Figure 29 for flowchart)
 
 ##### Evaluate Algorithm
 
-The evaluate functions flow is pretty similar in that it is a pretty linear function that simply checks the position against specific criteria. First, it will need to check material balance as this is arguably one of the best ways to tell who is winning a match. 'Next', we will check things like piece-square tables and space/mobility. The only other functionality the evaluate function needs is to work out the upper and lower bounds of certain variations the search algorithm throws at it. This is for alpha-beta enhancements I will be attempting to implement into this solution. (See Appendix C: Figure 29 for flowchart)
+The evaluate functions flow is pretty similar in that it is a pretty linear function that simply checks the position against specific criteria. First, it will need to check material balance as this is arguably one of the best ways to tell who is winning a match. Next, we will check things like piece-square tables and space/mobility. The only other functionality the evaluate function needs is to work out the upper and lower bounds of certain variations the search algorithm throws at it. This is for alpha-beta enhancements I will be attempting to implement into this solution. (See Appendix C: Figure 30 for flowchart)
 
 #### GUI Interface
 
@@ -618,7 +620,7 @@ GUI program flow was slightly more tricky due to the number of possible interact
 - Change state, i.e. Next/Back buttons in-game
 - Move pieces and interact with the board
 
-We need to evaluate these individually and take inputting states to work out the program flow. Inputting state requires a check as to whether the FEN string provided is valid. If it is not valid, the program needs to return a message to the user and wait for further interaction. If valid, the program needs to call and pass the FEN string to the FEN handler to deconstruct and convert into program code to represent board attributes(See Appendix D: Figure 30). 
+We need to evaluate these individually to investigate each parts flow. For example, take inputting states, to work out the program flow we need to first think about what checks need to be done. Inputting state requires a check as to whether the FEN string provided is valid. If it is not valid, the program needs to return a message to the user and wait for further interaction. If valid, the program needs to call and pass the FEN string to the FEN handler to deconstruct and convert into program code to represent board attributes(See Appendix D: Figure 31). 
 
 Next, make the change of state feature, specifically the back button. For this to work, we need to check if the current program state has any data available for the last state of the board. If it does not just return the current board state, update the GUI, and finally return to the waiting state for further interactions. The next button will do the previous steps again but check for future positions in the board's object state. Again, update the GUI and return to the wait state if none are held.
 
@@ -636,7 +638,7 @@ I used test-driven development for several reasons listed below:
 - Keeps code bug free
 - Makes writing the code simpler
 
-Due to this project including many different methods and functions, will sometimes become hard to manage and keep bug-free. Using this development approach will provide significant advantages in managing this by forcing myself to think about each method's actual required functionality before writing it. It essentially consists of these five steps:
+Due to this project including many different methods and functions, it will sometimes become hard to manage and keep bug-free. Using this development approach will provide significant advantages in managing this by forcing myself to think about each method's actual required functionality before writing it. It essentially consists of these five steps:
 - Write a test
 - Run tests
 - Write some code
@@ -662,20 +664,26 @@ As explained previously, testing is a vital part of this project, progressing in
 #### Engine
 
 To test the engine side of the project, I chose to use C# unit tests for several reasons, such as:
-Speed - When using unit tests, the development process becomes a lot simpler due to you, the programmer having to affectively 'define' its functionality first and what/if it needs to return anything. This makes the development process a lot faster and easier as you know the exact functionality required.
+- Speed - When using unit tests, the development process becomes a lot simpler due to you, the programmer having to affectively 'define' its functionality first and what/if it needs to return anything. This makes the development process a lot faster and easier as you know the exact functionality required before you start developing the solution.
 - Quality of code - The code quality when utilising unit testing becomes a lot better; this is because you can define unit tests very specifically and test every part of the function down to tiny details.
 - Find bugs easily - This is as the unit tests allow you to run through and debug code line by line seeing the state of all objects/variables after each line.
-- Facilitates change - Due to unit tests testing each component of a solution individually. Therefore, finding and changing the defective section of code is much simpler if there are any problems.
+- Facilitates change - Since unit tests test each component of a solution individually. Finding and changing the defective section of code is much simpler, if there are any problems.
 - Design - Forces developers to think about the design of a component before implementing it. This helps keep the focus on the functionality of that specific component and its responsibilities.
 (PerformanceLab, 2022)
 
-To test the board representation, I wrote the tests seen in Appendix G: Figure 33. These essentially passed through valid FEN strings into the FEN_Handler to convert into a board and properties. As can be seen from the appendix mentioned previously, I first create a string representation of what the board should look like and create and set all the local variables to what the board properties should be after it has been passed the FEN. The FEN is then passed into the functions for the solution to convert to actual board properties. Then the existing board properties are tested against the expected outputs. If they all match, the test should pass; if not, they will fail.
+To test the board representation and the FEN handler at the same time, I wrote the tests seen in Appendix G: Figure 34. These essentially passed through valid FEN strings into the FEN_Handler to convert into a board and properties. As can be seen from the appendix mentioned previously, I first create a string representation of what the board should look like and create and set all the local variables to the expected board properties after it has been passed the FEN. The FEN is then passed into the functions for the solution to convert to actual board properties. Then the existing board properties are tested against the expected outputs. If they all match, the test should pass; if not, they will fail. Additionally, this tests board representation due to it populating the board array, this is also one of the checks for the test to pass. 
 
-Next, to test piece movement, I first had to test the engine's ability to generate valid legal moves. To do this, I created a string representation of the board and passed it into the function to convert. I would next manually calculate how many moves the pieces could get from the square. Once I had the squares, I would first check the count of moves returned to see if it is as expected; then, if it passes, check that the moves are precisely the anticipated moves. This was mainly fine to write; however, it was getting quite confusing to reference each square by number due to squares being indexes in the board array. To combat this, I created a Square enum in the board class to hold every square and its array index for ease in testing (See Appendix H: Figure 35). This allowed me to parse squares to their array index by simply calling an enum parser; this made testing much more straightforward to understand.
+Next, to test piece movement, I first had to test the engine's ability to generate valid legal moves. To do this, I created a string representation of the board and passed it into the function to convert. I would next manually calculate how many moves the pieces could get from the square. Once I had the squares, I would first check the count of moves returned to see if it is as expected; then, if it passes, check that the moves are precisely the anticipated moves. This was mainly fine to write; however, it got quite confusing to reference each square due to squares being indexes in the board array. To combat this, I created a Square enum in the board class to hold every square and its array index for ease in testing (See Appendix H: Figure 36). This allowed me to parse squares to their array index by simply calling an enum parser; this made testing much more straightforward to understand.
+
+Due to the lack of progression in the project I never got round to creating tests for the rest of the functionality. However, if I were to go about testing the rest of the projects functionality, I know that due to the 'helper' functions I have created such as the square enum and the ASCII converter; it will be a lot easier to create the tests than they would have been.
 
 #### GUI
 
-To test the GUI, I mainly just used user acceptance testing by giving random people my solution and seeing if they would be able to work out how to use my GUI solution. As a result, 9/10 of my tested users knew how to operate the program off the bat with no previous information except one, which did not understand what FEN was. Hence, they did not know much about chess and my GUI.
+To test the GUI, I mainly just used user acceptance testing by giving random people my solution and seeing if they would be able to work out how to use my GUI solution. As a result, 9/10 of my tested users knew how to operate the program off the bat with no previous information except one, which did not understand what FEN was. Hence, they did not know much about chess and my GUI. Although based on their responses after explaining a bit about it they understood how to use it easily.
+
+<img src="./Images/GUI.png" alt="drawing" width="800"/>
+
+Figure 24: Project GUI Example
 
 <div style='page-break-after: always'></div>
 
@@ -690,7 +698,6 @@ For the project management, I chose to use GitHub to keep an online copy of and 
 ### Trello
 
 I decided to use Trello for several reasons:
-- Familiarity
 - Ease of use
 - Free to use
 - Kanban-style of structure
@@ -706,66 +713,70 @@ Trello allowed me to create tickets with numbers for importance/priority easily,
 
 <img src="./images/Project_Management.png" alt="drawing" width="600"/>
 
-Figure 24: Trello Project Management Board
+Figure 25: Trello Project Management Board
 
 When I was developing a solution for each ticket, I would move it first into the 'Writing Tests' section to determine the functionality required of this code section, then move along to the 'Doing' section. This section was for when I was working on implementing the feature of the code. Once that ticket is complete and fully functional, it will be moved to the 'Done' section.
+
+Additionally, whenver I came accross a ticket that required some kind of experimentation in the project. I would first give the ticket a number, for example, #001; then I would proceed to branch off the main branch calling it the ticket name plus ticket number. This made it clear for each branch which feature I was specifically working on. This made the project a lot easier to manage and clear on what was going on with it at any point.
 
 ### GitHub
 
 I chose GitHub to track code for many reasons, such as those listed below:
-- Used in the industry: Become the industry standard for tracking projects and versioning.
-- Online repository: Code is accessible and saved online, meaning any locally corrupt files without GitHub would cause catastrophic delays; they can easily be overwritten with previous versions.
+- Used in the industry: The industry standard for tracking projects and versioning.
+- Online repository: Code is accessible and saved online, meaning any locally corrupt files without GitHub would cause catastrophic delays; can easily be overwritten with previous versions.
 - Developer documentation: This allows me to easily add a project readme beneath the project for any essential information other developers would need to carry on with the project.
 - Tracks changes: Any commits that cause significant breakages in other code sections can easily be 'backtracked' onto a previous commit where the code worked.
 - Integration options: This comes with integration options for many common platforms such as Google Cloud, Amazon, and even GitHub pages. GitHub Pages will be beneficial if there is the time to make the engine available to access the web at the end of the project.
 - Collaboration: As stated before, this will be a solo project. However, it is a commonly used solution to aid in collaborative projects in the industry due to features such as merging. (Novoseltseva, 2020)
 
-Initially, in the project, I created a separate branch called 'development' to work on any changes I was working on, then merged to main/master upon completing any features. However, this was not only redundant as it meant all changes were going onto one branch, but unnecessary and confusing due to its naming scheme. To tackle this, I decided to merge all my branches, then specifically branch off from the main/master when there was a particular ticket that required some experimentation with the code to complete. I did this as it meant I could experiment and commit code without it affecting the main branches currently functional code.
+Initially, in the project, I created a separate branch called 'development' to work on any changes I was working on, then merged to main/master upon completing any features. However, this was not only redundant as it meant all changes were going onto one branch, but unnecessary and confusing due to its naming scheme. To tackle this, I decided to merge all my branches, then only branch off from the main/master when there was a particular ticket that required some experimentation with the code to complete. I did this as it meant I could experiment and commit code without it affecting the main branches currently functional code.
 
 The ticket names would be assigned with a brief title of the feature followed by a ticket number, e.g. #001, #002, e.t.c. This made it much more straightforward and also meant a log of the changes made to implement each feature was taken down. Useful for anytime I needed to look back at a particular code block to reuse a similar piece of functionality or syntax reminder. Also, particularly useful for future use when looking to improve each part of the solution; allows you to quickly see how each feature was done. This also significantly increased the quality of my code as each branch was clear about what feature/code I needed to implement on that branch by the name.
 
-[![](https://mermaid.ink/img/pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)](https://mermaid.live/edit#pako:eNptklFLAzEMx79K6INPO9idgvPe1G0ycCrqEOFA6prdKr30aHPKEL-73fXObWqeSvJL_kmaT7G0CkUuSknMBUEw1mwQLtfo_cuESk34cufsGy4ZHnWFJjgiqCTj1LpKMsBzsGQ-T8bjGPMB15bgET1rKqPzTuMSYUGaW7-HPBtmaTI8S7LRALKRitiFlU4dYmkXmk5u9gMAeXqiDhWvFrPoGGtfG7npyh1F9ZATRdM0OR4O4LTLntt3lK9h7p7qbFf_3Bj7AbdkNnCNpTRtit8nZlQ3DA8c1gIa2167Gn37l2tJJYJvkT3b1eibPpBoiezXnPFr9jd2j7VDjxSqbwGIo2aHaU9OB-1FHb3d98Bv-_9jZsTOqiYWkqRgplC2dE_0h3JO0my8_tljPhr2A6LXJcFfxbOe2JoYiArDZWkVbvNz6y8Er7HCQuThqXAlG8OFKOgroE29PcWJ0mydyFfSeBwI2bB92NBS5Owa7KGxlqWTVUd9fQM87eDS)
+### Gantt Chart
 
-Figure 25: Gantt Chart of expected project progression
+As mentioned previously, Trello comes with no options to create/generate any burn down or gantt charts from the board. Therefore I created a rough expectation of how the project will progress(See Figure 26). I chose to develop the GUI roughly alongside the Engine as obviously many features are kind of linked with each other, this would force me to think about the GUI integration aswell when developing these sections of code.
+
+However, due to problems during the first part of project it ended up looking like a much more squished version with development only starting around January/February. 
+
+[![](https://mermaid.ink/img/pako:eNqVk92K2zAQhV9l0EWvYkjcFLa-S2KnBJp22b9SCCyqNXXUyJKR5F3Csu_eiRU1UWhpO1di9Gnm6EjzwmojkBWs4dr7jQYKL71CWGzRucdKN1Lj47U1P7D2cCdbVJQIoOAel8a23AN8pcjW66wsw54jXBoNH-5XIVFK1ym-h7nhVsAbuJZYowMo8nE-ycbvs_xqBPlEBHqlu97DracOIBGW1ScYovhFrM0T8m8kNBY6RjEdH4mZUuYZPmu1h4_YcDUcGTpeiVRTsp10WWy5bhDcIOQsinexy1JqOlsPnEuQtxGJXgQzQy7YcIOdRYeayh8A-JMdwx3pPD2W1M1Zj8k0yiCHgmlpnAh60HrXXtwj0Rn0wU6bZwcPXEkRPDkRC-68ShRcPkuls447R7_pkoimz1Zww7Uw7ZntQWkk5tzJOuSrJ676aM6pxhy9R5vupreNnn-xkm5834XsHTr_G_mJ67TMs_GUlvEremtEH8qRcFgJ5H85E-dlRn9j76T7lz4lOtlo-C9th2Aj1iINoRQ0xi-H_Ib5Lba4YQUtBbe7DdvoV-L67jCylZDeWFZ858rhiPHem9u9rlnhbY8RKiVvLG-P1OtPuEckIQ)](https://mermaid.live/edit#pako:eNqVk92K2zAQhV9l0EWvYkjcFLa-S2KnBJp22b9SCCyqNXXUyJKR5F3Csu_eiRU1UWhpO1di9Gnm6EjzwmojkBWs4dr7jQYKL71CWGzRucdKN1Lj47U1P7D2cCdbVJQIoOAel8a23AN8pcjW66wsw54jXBoNH-5XIVFK1ym-h7nhVsAbuJZYowMo8nE-ycbvs_xqBPlEBHqlu97DracOIBGW1ScYovhFrM0T8m8kNBY6RjEdH4mZUuYZPmu1h4_YcDUcGTpeiVRTsp10WWy5bhDcIOQsinexy1JqOlsPnEuQtxGJXgQzQy7YcIOdRYeayh8A-JMdwx3pPD2W1M1Zj8k0yiCHgmlpnAh60HrXXtwj0Rn0wU6bZwcPXEkRPDkRC-68ShRcPkuls447R7_pkoimz1Zww7Uw7ZntQWkk5tzJOuSrJ676aM6pxhy9R5vupreNnn-xkm5834XsHTr_G_mJ67TMs_GUlvEremtEH8qRcFgJ5H85E-dlRn9j76T7lz4lOtlo-C9th2Aj1iINoRQ0xi-H_Ib5Lba4YQUtBbe7DdvoV-L67jCylZDeWFZ858rhiPHem9u9rlnhbY8RKiVvLG-P1OtPuEckIQ)
+
+Figure 26: Gantt Chart of expected project progression
 
 <div style='page-break-after: always'></div>
 
 ## Conclusion
 
-In conclusion, this was an extremely worthwhile project for me due to the personal growth and development gained from taking on a project of this size. It introduced me to many a problem which can often come up in industry and issues in taking on projects such as this, e.g. importance of following a software lifecycle, analysis paralysis, magic numbers, and poltergeist classes, to name a few. It got me thinking about developing software from an industry perspective, developing solutions to developer problems which ultimately saved much time in coding some of these solutions, for example, the ASCII board converter gone into a bit more detail in the following evalutation section.
-
-<div style='page-break-after: always'></div>
+In conclusion, this was an extremely worthwhile project for me due to the personal growth and development gained from taking on a project of this size. It introduced me to many a problem which can often come up in industry and issues in taking on bigger projects such as this, e.g. importance of following a software lifecycle, analysis paralysis, magic numbers, and poltergeist classes, to name a few. It got me thinking about developing software from an industry perspective, developing solutions to developer problems which ultimately saved much time in coding some of these sections. For example, the ASCII board converter and the square enum previously mentioned and further gone into a bit more detail in the following evalutation section.
 
 ### Critique of Work
 
 One of the main critiques I would have to make would be the rushing of the development of my solution. Due to problems arising in my personal life, development did not get started until the second semester. This put significant setbacks and pressure on all parts of the project. Ultimately due to it needing to be done in such a short time. This eventually led to analysis paralysis, further slowing the production of the solution. To tackle this, if I were to do this project again, I would have researched and analysed the problem to break it down a lot more and then started developing a lot earlier than I did. 
 
-I made a few mistakes following the development lifecycle during the development process. These being:
+I also made a few mistakes following the development lifecycle during the development process. These being:
 
 - Not writing any tests before developing
 
-This mistake was mainly due to inexperience, panic and the desire to get too much functionality done too quickly. Due to a lack of research, I struggled to see the path to the end goal when starting the project. I was starting on a blank canvas; due to this, I lacked the knowledge of what tests I would even need to write to get started. This resulted in sloppy initial code I had quickly tried to develop due to time running out. I ended up writing a load of code to test its functionality leading to my next mistake.
+This mistake was mainly due to inexperience, panic and the desire to get too much functionality done too quickly. Due to a lack of research, I struggled to see the path to the end goal when starting the project. I was starting on a blank canvas; due to this, I lacked the knowledge of what tests I would even need to write to get started. This resulted in not only sloppy initial code I had quickly tried to develop due to time running out. But also a bit of analysis paralysis when thinking about the unit tests required. Instead of trying to write some functional tests forcing myself to think about the functionality before, I ended up writing a load of code which I would need to later test leading to my next mistake.
 
-- Writing too many tests before developing
+- Writing too many tests before developing/refactoring
 
-This partly links in with my previous mistake in leading to this big mistake. This was as it wasted a lot of development time having to go back and forth not only refactoring code but also the tests due to changes made in the engine's structure. One of these was when I implemented the Move class to hold all the information about making a move in the game. Before this, I had written the tests and method to take in all the parameters individually but later down the line found benefits in creating one move object for this.
+This partly links in with my previous mistake in the way it lead into this mistake; writing way too many tests before refactoring code. This wasted a lot of development time having to go back and forth not only refactoring code but also the tests due to changes made in the engine's structure after finally refactoring some code. One of these was when I implemented the Move class to hold all the information about making a move in the game. Before this, I had written the tests and method to take in all the parameters individually but later down the line found benefits in creating one move object for keeping the code concise and more easily readable.
 
-Due to these reasons, not much functionality of the solution was implemented. It was essentially hitting very few of my project goals, as seen from the Trello board(Figure 24) for managing these goals. 
+Due to these reasons tied in with other issues, meant not much functionality of the solution was actually implemented. It was essentially hitting very few of my project goals, as seen from the Trello board (Figure 25) and the online repository. 
 
-#### Short Comings
+### Short Comings
 
 Overall, there are several shortcomings of the project that I wanted to address, these being:
-- GUI Interaction - There was minimal GUI interaction implemented into the final solution, which was disappointing overall. I wanted to implement moving pieces around the board at least. However, this never got around to being implemented due to development struggles. The only interaction implemented was the change of board state with FEN strings. It would have been good to have pieces being able to be moved, and even when selected, showing legal moves.
-- Engine Search & Evaluate - This was another section of the project I never really got fully round to completing. Another big shame as this was what was going to make up the main bulk and complexity of the project. I partly got around to coding a function to return valid moves for a piece. However, because it was a last-minute rush, I did not manage to get fully functional(Only partially works for sliding pieces).
+- GUI Interaction - There was minimal GUI interaction implemented into the final solution, which was disappointing overall. I wanted to implement moving pieces around the board at least. However, this never got around to being implemented due to development struggles mentioned. The only interaction implemented was the change of board state with FEN strings. It would have been good to have pieces being able to be moved, and even when selected, showing legal moves.
+- Engine Search & Evaluate - This was another section of the project I never really got fully round to completing. Another big shame as this was what was going to make up the main bulk and complexity of the project. I partly got around to coding a function to return valid moves for a piece. However, because it was a last-minute rush, I did not manage to get fully functional(Only partially works for sliding pieces and knights only when blocked by friendly pieces).
 - Testing - Even in testing, there were several shortcomings, those being minimal tests written and passed all checks. This is mainly due to the lack of functionality implemented into the solution. It meant none of the function calls in the tests for the pieces altered the board state, meaning no checks would work as expected regardless.
-
-<div style='page-break-after: always'></div>
 
 ### Evaluation
 
-This development lifecycle taught me many lessons and the importance of writing tests first during development. However, when it came to cases where the feature was what I thought would be a minor. In most of these cases, it usually burned me due to some unexplained errors popping up late into production, such as when the GUI and engine were confusing piece colours. This was annoying as it brought up unexpected board array indexes as valid moves for each side's pawn piece.
+This development lifecycle taught me many lessons and the importance of writing tests first during development. Especially in cases where it seemed to be just a minor feature to implement. In most of these cases where I decided to cowboy it and develop without testing, it usually burned me due to some unexplained errors popping up later into production. For example, when the GUI and engine were confusing piece colours with each other. This was annoying as it brought up unexpected board array indexes as valid moves for each side's pawn piece's.
 
-Due to the way I encoded pieces and the board in general, I encountered a few issues while writing the tests. Each piece from each side was assigned a numeric identifier, and the board array was 120 in length. It proved challenging to populate these arrays (See Figure 26 below) manually, Mainly when setting up custom board positions to test. To combat this, I wrote a custom function within the code to take in a string representation of a chessboard and convert it to an actual board array in memory (See Appendix F: Figure 32). This meant that I could set up simple custom board positions to test code functionality more easily using a string representation of the board. 
+Due to the way I encoded pieces and the board in general, I encountered a few issues while writing the tests. Each piece from each side was assigned a numeric identifier, and the board array was 120 in length. It proved challenging to populate these arrays (See Figure 27 below) manually, Mainly when setting up custom board positions to test. To combat this, I wrote a custom function within the code to take in a string representation of a chessboard and convert it to an actual board array in memory (See Appendix F: Figure 33). This meant that I could set up simple custom board positions to test code functionality more easily using a string representation of the board. 
 
 ```c#
         [TestMethod]
@@ -789,22 +800,20 @@ Due to the way I encoded pieces and the board in general, I encountered a few is
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
             };
 ```
-Figure 26: Manually populating 120 element array
+Figure 27: Manually populating 120 element array
 
 This choice of development came in handy in a few cases throughout development. One of these is during the writing of the Get_Valid_Legal_Moves function. This function was complicated to write due to it needing to:
 
 1. Return valid moves
 2. Be called for any piece
 
-First, I had to write tests for each piece going into the function to check that valid moves returned are the same as expected; then write the code to return these moves. This scenario is perfect for TDD as it meant I could write the test for a specific piece, write the code for that piece or type of piece, and then write the next test. To do this, I first tried to test the piece with the most precise movement, e.g. the knight (See Appendix H: Figure 34). Then once I had gotten that bit working, I would write code for sliding pieces, e.g. bishops, queens, rooks, and then finally, pawns due to their more complex movement rules. After this, it would just be 'special' moves such as promotions, castling, en-passant, checks, pins, e.t.c. As you can see from the small increments of functionality, this scenario is a perfect example of where TDD can benefit development.
-
-<div style='page-break-after: always'></div>
+First, I had to write tests for each piece going into the function to check that valid moves returned are the same as expected; then write the code to return these moves. This scenario is perfect for TDD as it meant I could write the test for a specific piece, write the code for that piece or type of piece, and then write the next test. To do this, I first tried to test the piece with the most precise movement, e.g. the knight (See Appendix H: Figure 35). Then once I had gotten that bit working, I would write code for sliding pieces, e.g. bishops, queens, rooks, and then finally, pawns due to their more complex movement rules. After this, it would just be 'special' moves such as promotions, castling, en-passant, checks, pins, e.t.c. As you can see from the small increments of functionality, this scenario is a perfect example of where TDD can benefit development.
 
 ### Future Work
 
-There is much potential future work for this project in most aspects due to the lack of code I managed to get done in all areas—for example, testing, the GUI, and the engine itself. If I had more time, I would try to get the GUI as interactive as possible with the possibility of moving pieces and fixing up the engine's code to search, evaluate and display the results of the best move to the user. The main noteworthy future work that would provide significant advantages to the project would be using CI/CD pipelines with automated testing, which I will go into below.
+There is much potential future work for this project in most aspects of it due to the lack of code I managed to get done in all areas—for example, testing, the GUI, and the engine itself. If I had more time, I would try to get the GUI as interactive as possible with the possibility of moving pieces, fixing up the engine's code to search, and finally the evaluate function to display the results of the best move to the user. The main noteworthy future work that would provide significant advantages to the project would be using CI/CD pipelines with the automated tests I created, which I will go into below.
 
-Testing could have been taken a lot further while also considering aspects of CI. For example, all unit tests could have been set up on Github actions, so all tests are automatically run against the code for every commit. This would be tremendously valuable as it would allow us to see the commit and the developer working on that commit (Blame) that caused an error or threw up a failed test. Isolating the complete source of any faults makes them a lot simpler to fix, creating a faster mean time to resolve problems. As well to this fault isolation, the use of this CI in-turn:
+Testing could have been taken a lot further while also considering aspects of CI. For example, all unit tests could have been set up on Github actions, so all tests are automatically run against the code for every commit. This would be tremendously valuable as it would allow us to see the commit and the developer working on that commit (Blame) that caused an error or threw up a failed test. Isolating the complete source of any faults makes them a lot simpler to fix, creating a faster mean time to resolve problems. As well to this fault isolation, the use of this CI in-turn gives the following advantages:
 - Faster Mean Time to Resolution
   
   This fault isolation makes finding resolutions easier due to all the fault details provided to you by the test results, including even the developer responsible, as mentioned previously.
@@ -827,7 +836,7 @@ Testing could have been taken a lot further while also considering aspects of CI
 
 ### Appendix A: Engine Framework Flowchart
 
-Figure 27: Chess Engine Program Flowchart
+Figure 28: Chess Engine Program Flowchart
 
 <img src="./Images/mermaid-diagram-20220521222102.png" alt="drawing"/>
 
@@ -835,7 +844,7 @@ Figure 27: Chess Engine Program Flowchart
 
 ### Appendix B: Engine Search Algorithm Flowchart
 
-Figure 28: Chess Engine Search Board Function Flowchart
+Figure 29: Chess Engine Search Board Function Flowchart
 
 <img src="./images/mermaid-diagram-20220521214951.png" height="900"/>
 
@@ -843,7 +852,7 @@ Figure 28: Chess Engine Search Board Function Flowchart
 
 ### Appendix C: Engine Evaluate Algorithm Flowchart
 
-Figure 29: Evaluate function Flowchart
+Figure 30: Evaluate function Flowchart
 
 <img src="./Images/mermaid-diagram-20220521215122.png" height="900"/>
 
@@ -851,7 +860,7 @@ Figure 29: Evaluate function Flowchart
 
 ### Appendix D: Graphical User Interface Project Flowchart
 
-Figure 30: Project GUI Flowchart
+Figure 31: Project GUI Flowchart
 
 <img src="./Images/mermaid-diagram-20220521223809.png" alt="drawing"/>
 
@@ -889,7 +898,7 @@ graph TD
 
 ### Appendix E: Engine Class Diagram
 
-Figure 31: Engine's Class Diagram
+Figure 32: Engine's Class Diagram
 
 <img src="./Images/mermaid-diagram-20220521223015.png" alt="drawing" height="900"/>
 
@@ -897,7 +906,7 @@ Figure 31: Engine's Class Diagram
 
 ### Appendix F: Custom Text to Board Converter
 
-Figure 32: Code block for the function
+Figure 33: Code block for the function
 
 ```c#
 public int[] Convert_From_ASCII(string ASCII_Board)
@@ -964,7 +973,7 @@ public int[] Convert_From_ASCII(string ASCII_Board)
 
 ### Appendix G: Example of a Unit test
 
-Figure 33: FEN_Handler Test
+Figure 34: FEN_Handler Test
 
 ```c#
         /// <summary>
@@ -1015,7 +1024,7 @@ Figure 33: FEN_Handler Test
 
 ### Appendix H: Knight Valid Moves Function Test
 
-Figure 34: Unit test for Get_Valid_Moves function for knight piece
+Figure 35: Unit test for Get_Valid_Moves function for knight piece
 
 ```c#
 [TestMethod]
@@ -1054,7 +1063,7 @@ Figure 34: Unit test for Get_Valid_Moves function for knight piece
         }
 ```
 
-Figure 35: Square enum
+Figure 36: Square enum
 ```c#
 public enum Square
         {
@@ -1132,6 +1141,10 @@ Key:
 
 Word - Meaning
 
+Iterative deepening - A search technique which takes advantage of both the completeness of breadth-first searches and the memory efficiency of depth-first search. It works similar to DFS but instead of exploring a brannch all the way out first it assesses its child nodes from left to right first to see if a solution can be found earlier.
+
+Aspiration Window - Essentially applies a tighter window around the upper and lower bounds of an evaluation meaning more cut-offs are achieved, also meaning search time is reduced. The main drawback to this is if the true score is outside of the window then another search must be done with slightly expanded window. Typical window sizes are 1/2 pawn piece value.
+
 Retrograde Analysis - A technique used within chess engines used to determine what moves were played to get to a certain position, analysing a chess position backwards essentially.
 
 Transposition - A transposition is essentially two or more variations of moves, that may or may not be equal in number of moves, that end up in the same position.
@@ -1140,6 +1153,8 @@ Transposition - A transposition is essentially two or more variations of moves, 
 
 ## Acknowledgements
 I am extremely grateful to Mr Allan Calaghan. This project would not have been feasible without his help and guidance throughout. 
+
+I would also like to extend my sincere thanks to Chess Programming Wiki for which this project would not have been possible without.
 
 <div style='page-break-after: always'></div>
 
